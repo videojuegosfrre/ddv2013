@@ -1,23 +1,23 @@
-GAME NAME
-=========
+*GAME NAME*
+==========
 Game Design Document Outline
 ----------------------------
 Versión 0.1 (Draft) 05/09/2013
 ------------------------------
 
-1. Title Page
+1 - Title Page
 -------------
   1. Game Name
   2. Copyright Information
   3. Version Number, author, date
 
-2. Table of Contents
+2 - Table of Contents
 --------------------
 
-3. Design History
+3 - Design History
 -----------------
 
-4. Section I - Game Overview
+4 - Section I - Game Overview
 ----------------------------
   1. Game Concept
   2. Feature Set
@@ -32,7 +32,7 @@ Versión 0.1 (Draft) 05/09/2013
     4. Number of weapons
     5. Etc.
 
-5. Section II - Gameplay and Mechanics
+5 - Section II - Gameplay and Mechanics
 --------------------------------------
   1. Gameplay
     1. Game Progression
@@ -65,7 +65,7 @@ Versión 0.1 (Draft) 05/09/2013
   5. Replaying and Saving
   6. Cheats and Easter Eggs
 
-6. Section III – Story, Setting and Character
+6 - Section III – Story, Setting and Character
 ---------------------------------------------
   1. Story and Narrative
     1. Back story
