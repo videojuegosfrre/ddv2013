@@ -11,6 +11,9 @@ Integrantes
 * Seba, Sebastián J. <https://github.com/ssebastianj>
 * Vallejos, Lucía B. <https://github.com/luvallejos>
 
+Colaboradores
+-------------
+
 Licencia
 --------
 Ver [LICENSE.txt](LICENSE.txt)
