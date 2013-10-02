@@ -1,0 +1,3125 @@
+<zuiprezi>
+  <version>7</version>
+  <zui-table>
+    <settings>
+      
+      <autoplay>
+        
+        <delay>4000</delay>
+        
+      </autoplay>
+      
+      <bounds x="-370346.76450084825" y="-206756.59359246228" width="754432.8531232171" height="413513.1871849245"/>
+      <aspectratio>off</aspectratio>
+      <languages>
+        <language>es</language>
+      </languages>
+      <mode type="normal"/>
+    </settings>
+    <object id="2_3844867" type="button" x="-142876.78975291635" y="52791.18436817799" r="0" s="78.99559637487253" class="roundrect">
+      <type>roundrect</type>
+      <size>
+        <w>799.0364277320799</w>
+        <h>600</h>
+      </size>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    </object>
+    <object id="19_1555333" type="button" x="183.26934996449512" y="-14877.743908590537" r="0" s="636.7308766679001" class="invisible">
+      <type>invisible</type>
+      <size>
+        <w>1163.6939323738084</w>
+        <h>603.7614619173779</h>
+      </size>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    </object>
+    <object id="21_1555333" type="button" x="159245.34330055802" y="-39671.02025596323" r="0" s="367.118980659057" class="invisible">
+      <type>invisible</type>
+      <size>
+        <w>792.7822491077425</w>
+        <h>594.5866868308069</h>
+      </size>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    </object>
+    <object id="17_1555333" type="button" x="146405.3217580185" y="-53973.940542059274" r="12.664604869869923" s="98.71815818339437" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    </object>
+    <object id="20_1555333" type="button" x="-220700.86458281672" y="53434.43583094927" r="0" s="230.6560069509085" class="invisible">
+      <type>invisible</type>
+      <size>
+        <w>971.65991902834</w>
+        <h>600</h>
+      </size>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    </object>
+    <object id="8_1555333" type="button" x="-304490.807557807" y="57839.79424025451" r="0" s="113.1486307549179" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    </object>
+    <object id="10_1555333" type="image" x="-19779.112792992586" y="89142.65318223469" r="0" s="321.4373883854264">
+      <source w="2181" h="731" bt="110.95" bl="-365">280445185<url>280445185.swf</url></source>
+      <sourceUrl>ground.swf</sourceUrl>
+      <extra>
+        <fixed_avm1_pos>1</fixed_avm1_pos>
+      </extra>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    <resource><id>280445185</id><url>http://0103.static.prezi.com.s3.amazonaws.com/media/4/f/5/e3f2c1f526b38aa137321a673857ac39efa08.swf</url></resource></object>
+    <object id="0_3671642" type="image" x="-92324.91368362147" y="35117.174194010724" r="0" s="34.601100071515475">
+      <source w="969" h="674">837302253<url>837302253.png</url></source>
+      <sourceUrl>http://0103.static.prezi.com.s3.amazonaws.com/media/1/8/a/79286678afdebf6b1c2ee7ead4c716502cd59.png</sourceUrl>
+    <resource><id>837302253</id><url>http://0103.static.prezi.com.s3.amazonaws.com/media/1/8/a/79286678afdebf6b1c2ee7ead4c716502cd59.png</url></resource></object>
+    <object id="40_1555333" type="text" x="-142069.25883252226" y="54120.01236342905" r="0" s="93.08568806467916" class="body">
+      <height>374.4609375</height>
+      <width>548</width>
+      <p>
+        <text><![CDATA[¿Cuántos videojuegos los han emocionado?]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Excitar la adrenalina o las hormonas es fácil]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Son lo más explotado por la publicidad y el cine]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Especialmente para públicos más jóvenes]]></text>
+      </p>
+      <p>
+        <text><![CDATA[Pero, ¿y otro tipo de emociones?]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Reír con un juego es infrecuente, pero llorar es algo prácticamente inexistente]]></text>
+      </p>
+      <p>
+        <text><![CDATA[¿Cómo estimular el intelecto del jugador?]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Más allá de la explotación óptima de patrones del juego – crear dilemas morales, simbolismos, etc.]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+    </object>
+    <object id="32_1555333" type="button" x="-117692.96578647073" y="-100495.93474352716" r="0" s="167.11076309571297" class="invisible">
+      <type>invisible</type>
+      <size>
+        <w>876.895549230353</w>
+        <h>1021.1268485762182</h>
+      </size>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    </object>
+    <object id="4_1555333" type="image" x="-105369.11403712831" y="-68243.48459592921" r="0" s="309.12375551383604">
+      <source w="369" h="357">280430697<url>280430697.swf</url></source>
+      <sourceUrl>float platform.swf</sourceUrl>
+      <extra>
+        <fixed_avm1_pos>1</fixed_avm1_pos>
+      </extra>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    <resource><id>280430697</id><url>http://0103.static.prezi.com.s3.amazonaws.com/media/2/2/b/21a785fb37ad9b79fd17d2ad05680c0b5e40b.swf</url></resource></object>
+    <object id="5_1555333" type="image" x="-231782.57716951927" y="82909.45273313607" r="0" s="313.83139700413864">
+      <source w="130" h="190">280435071<url>280435071.swf</url></source>
+      <sourceUrl>csobb.swf</sourceUrl>
+      <extra>
+        <fixed_avm1_pos>1</fixed_avm1_pos>
+      </extra>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    <resource><id>280435071</id><url>http://0103.static.prezi.com.s3.amazonaws.com/media/5/4/2/34890957c82a5cc59e9c591d66084ac1c025a.swf</url></resource></object>
+    <object id="6_1555333" type="image" x="135802.06807722268" y="39675.17816104505" r="0" s="320.98902341820695">
+      <source w="470" h="430">280436719<url>280436719.swf</url></source>
+      <sourceUrl>szorny.swf</sourceUrl>
+      <extra>
+        <fixed_avm1_pos>1</fixed_avm1_pos>
+      </extra>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    <resource><id>280436719</id><url>http://0103.static.prezi.com.s3.amazonaws.com/media/2/6/b/543a2b6530d5c073b60b4e61603069c9aed71.swf</url></resource></object>
+    <object id="7_1555333" type="image" x="-304493.5833476235" y="68821.22313679745" r="0" s="325.1429495976364">
+      <source w="75" h="115">280437883<url>280437883.swf</url></source>
+      <sourceUrl>dude.swf</sourceUrl>
+      <extra>
+        <fixed_avm1_pos>1</fixed_avm1_pos>
+      </extra>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    <resource><id>280437883</id><url>http://0103.static.prezi.com.s3.amazonaws.com/media/6/7/8/aebc9a67765fabd051293bcd4a14299f6b436.swf</url></resource></object>
+    <object id="11_1555333" type="shape" x="-228884.58340230642" y="43097.723242059415" r="-4.114241748031782" s="336.5406747473337" class="line2">
+      <geom type="arrow">
+        <sp>-141.3450250371695 45.16732400892497</sp>
+        <ep>141.3450250371695 45.16732400892497</ep>
+        <b>-90.33464801784994</b>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    </object>
+    <object id="12_1555333" type="shape" x="-125481.86562559275" y="-53711.56196122918" r="-90" s="193.5045602827059" class="line2">
+      <geom type="arrow">
+        <sp>-137.96803607720506 0</sp>
+        <ep>137.96803607720506 0</ep>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    </object>
+    <object id="13_1555333" type="shape" x="46471.53132143891" y="-111770.44071884596" r="26.605049775576884" s="329.38569060056403" class="line2">
+      <geom type="arrow">
+        <sp>-217.0929821279421 36.003173754746726</sp>
+        <ep>217.0929821279421 36.003173754746726</ep>
+        <b>-72.00634750949345</b>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    </object>
+    <object id="16_1555333" type="button" x="-108208.13236832632" y="-152982.66275722755" r="0" s="88.85150815041246" class="bracket">
+      <type>bracket</type>
+      <size>
+        <w>972.093023255814</w>
+        <h>600</h>
+      </size>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    </object>
+    <object id="18_1555333" type="button" x="297259.76607440726" y="-33843.13908284927" r="0" s="163.38383864243917" class="bracket">
+      <type>bracket</type>
+      <size>
+        <w>797.3421926910299</w>
+        <h>600</h>
+      </size>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    </object>
+    <object id="14_1555333" type="shape" x="216371.88339227083" y="-25185.440676685957" r="2.4415684319305804" s="366.5719247601972" class="line2">
+      <geom type="arrow">
+        <sp>-92.1295776520854 18.58362888547818</sp>
+        <ep>92.1295776520854 18.58362888547818</ep>
+        <b>-37.16725777095636</b>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    </object>
+    <object id="27_1555333" type="image" x="353295.6562420894" y="-4388.1560062973895" r="0" s="410.539098403727">
+      <source w="150" h="105" bt="-30" bl="-35">280555171<url>280555171.swf</url></source>
+      <sourceUrl>chest.swf</sourceUrl>
+      <extra>
+        <fixed_avm1_pos>1</fixed_avm1_pos>
+      </extra>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    <resource><id>280555171</id><url>http://0103.static.prezi.com.s3.amazonaws.com/media/2/9/e/4070ca2f69c9b7402032cf6ec0f99adcbdd4d.swf</url></resource></object>
+    <object id="31_1555333" type="text" x="-222265.5144301987" y="103142.8340722153" r="0" s="644.0725433749097" class="head">
+      <height>23.988</height>
+      <width>-110.4</width>
+      <p>
+        <text><![CDATA[Obstacle 1]]></text>
+      </p>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    </object>
+    <object id="0_3740769" type="image" x="97634.28544523484" y="-63485.1469961405" r="0" s="9.592315147794888">
+      <source w="2000" h="2791">462640982<url>462640982.png</url></source>
+    <resource><id>462640982</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/6/6/c/8a932e42863bf3933b4ee58ebfea3345a3e35.png</url></resource></object>
+    <object id="0_25727657" type="image" x="-11368.30800921487" y="-165108.61359546683" r="0" s="69.41318320435559">
+      <source w="413" h="583">853956987<url>853956987.png</url></source>
+      <sourceUrl>homero-pensando.png</sourceUrl>
+    <resource><id>853956987</id><url>http://0103.static.prezi.com.s3.amazonaws.com/media/8/d/f/709d185abb94eab3a8307f60e31a075c90838.png</url></resource></object>
+    <object id="36_1555333" type="text" x="147812.82973061208" y="-85272.81887035324" r="0" s="710.0458252944335" class="head">
+      <height>23.988</height>
+      <width>-108</width>
+      <p>
+        <text><![CDATA[$$$$$$$$$]]></text>
+      </p>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    </object>
+    <object id="38_1555333" type="text" x="-348402.32375194895" y="20454.588007892988" r="0" s="711.479266369095" class="strong">
+      <height>30</height>
+      <width>-42.864000000000004</width>
+      <p>
+        <text><![CDATA[Start]]></text>
+      </p>
+      <meta>
+        <parentTemplate>obstacles</parentTemplate>
+      </meta>
+    </object>
+    <object id="39_1555333" type="text" x="-295394.69620427274" y="35548.66811593717" r="0" s="58.38968889406516" class="body">
+      <height>259.2421875</height>
+      <width>962.8</width>
+      <p>
+        <text><![CDATA[Los videojuegos son:]]></text>
+      </p>
+      <p listType="bullet" indent="3">
+        <text><![CDATA[Una extensión de la idea clásica de los juegos]]></text>
+      </p>
+      <p listType="bullet" indent="4">
+        <text><![CDATA[Divertirse y aprender]]></text>
+      </p>
+      <p listType="bullet" indent="3">
+        <text><![CDATA[Una nueva forma de expresión artística]]></text>
+      </p>
+      <p listType="bullet" indent="4">
+        <text><![CDATA[Como en su día lo fue el cine]]></text>
+      </p>
+      <p listType="bullet" indent="4">
+        <text><![CDATA[Las capacidades de los ordenadores modernos]]></text>
+      </p>
+      <p listType="bullet" indent="5">
+        <text><![CDATA[Posibilidades de expresión e interacción nuevas]]></text>
+      </p>
+      <p listType="bullet" indent="3">
+        <text><![CDATA[Una industria de entretenimiento]]></text>
+      </p>
+      <p listType="bullet" indent="4">
+        <text><![CDATA[Son productos de consumo]]></text>
+      </p>
+    </object>
+    <object id="41_1555333" type="text" x="-108866.30900245158" y="-155233.3120300728" r="0" s="108.35476815397273" class="body">
+      <height>230.4375</height>
+      <width>737.7</width>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Desarrollo típico de un videojuego]]></text>
+      </p>
+      <p listType="bullet" indent="2">
+        <text><![CDATA[Concepto: la idea fundamental “en 25 palabras”]]></text>
+      </p>
+      <p listType="bullet" indent="2">
+        <text><![CDATA[Pre-producción: desarrollar la base e implicaciones de esa idea]]></text>
+      </p>
+      <p listType="bullet" indent="2">
+        <text><![CDATA[Producción: construir la funcionalidad y contenidos]]></text>
+      </p>
+      <p listType="bullet" indent="2">
+        <text><![CDATA[QA y cierre: asegurar la estabilidad y solidez del juego]]></text>
+      </p>
+      <p listType="bullet" indent="2">
+        <text><![CDATA[Post-release: parches, expansiones, explotación, servicios de post-venta, soporte a los usuarios]]></text>
+      </p>
+    </object>
+    <object id="2_25727657" type="image" x="175991.08313839906" y="-63816.49507218121" r="12.664604869869926" s="30.936398694329306">
+      <source w="590" h="441">853995711<url>853995711.jpg</url></source>
+      <sourceUrl>starcraftever041116_01.jpg</sourceUrl>
+    <resource><id>853995711</id><url>http://0103.static.prezi.com.s3.amazonaws.com/media/6/d/9/3de3c65f62f56cf0fee2448e92fc552f469bf.jpg</url></resource></object>
+    <object id="42_1555333" type="text" x="152580.12096690838" y="-72077.18184503344" r="12.664604869869926" s="128.353450056071" class="strong">
+      <height>30</height>
+      <width>308.70290248569745</width>
+      <p>
+        <text><![CDATA[Una Oportunidad de  Trabajo]]></text>
+      </p>
+    </object>
+    <object id="43_1555333" type="text" x="287547.98831356707" y="-25596.57267530247" r="0" s="176.8057517936381" class="body">
+      <height>403.265625</height>
+      <width>542.4668829400418</width>
+      <p>
+        <text><![CDATA[Verifican que el contenido y funcionalidad del juego son correctos y están completos]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Hay que jugarse cada misión:]]></text>
+      </p>
+      <p listType="bullet" indent="3">
+        <text><![CDATA[en cada idioma, en cada nivel de dificultad...]]></text>
+      </p>
+      <p listType="bullet" indent="3">
+        <text><![CDATA[...ganando de cada forma posible, perdiendo de cada manera imaginable, tocando (y sin tocar) cada cosa tocable...]]></text>
+      </p>
+      <p listType="bullet" indent="3">
+        <text><![CDATA[...y tragándose todas las secuencias y cinemáticas in-game]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[No es raro que el número de bugs y problemas encontrados supere el millar]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+    </object>
+    <object id="0_3059311" type="text" x="-266778.7144244589" y="-168649.6530401761" r="0" s="777.6378972653777" class="head">
+      <height>47.976</height>
+      <width>-249.6</width>
+      <p align="center">
+        <text><![CDATA[Experto en VideoJuegos]]></text>
+      </p>
+      <p align="center">
+        <text color="4420372"><![CDATA[Level 1]]></text>
+      </p>
+    </object>
+    <object id="2_3059311" type="text" x="-223962.47865879125" y="15505.523329753112" r="0" s="198.7266627261242" class="body">
+      <height>28.8046875</height>
+      <width>268.1</width>
+      <p align="center">
+        <text><![CDATA[Objective 1 Continued]]></text>
+      </p>
+    </object>
+    <object id="3_3059311" type="text" x="-144406.19054814088" y="33665.09156655196" r="0" s="109.41452111314287" class="strong">
+      <height>30</height>
+      <width>198.45</width>
+      <p align="center">
+        <text><![CDATA[Impacto Social]]></text>
+      </p>
+    </object>
+    <object id="4_3059311" type="text" x="-110047.13811823261" y="-172360.81905254596" r="0" s="198.7266627261242" class="strong">
+      <height>30</height>
+      <width>348.10651729959244</width>
+      <p align="center">
+        <text><![CDATA[Quiero ser parte de esto... Que onda?]]></text>
+      </p>
+    </object>
+    <object id="3_25727657" type="image" x="165233.97448451832" y="-27540.382866524054" r="-3.326879309457482" s="44.75587570637372">
+      <source w="728" h="400">854005459<url>854005459.jpg</url></source>
+      <sourceUrl>Razer-Sponsors-League-of-Legends-Tournament-Series.jpg</sourceUrl>
+    <resource><id>854005459</id><url>http://0103.static.prezi.com.s3.amazonaws.com/media/0/4/5/a4fb4c1b5c009aba33c9cc9fe4b11a649eae8.jpg</url></resource></object>
+    <object id="5_3059311" type="text" x="138928.74272058232" y="-55141.40396317349" r="12.664604869869926" s="97.58661789058577" class="body">
+      <height>316.8515625</height>
+      <width>548</width>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <p>
+        <text><![CDATA[Haciendo dinero con videojuegos...]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Un sueldo promedio de la industria es de al menos USD 80.000 ]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Se puede vivir incluso de jugar videojuegos. Lim Yo Hwan gana jugando al Star Craft $400,000 anualmente.]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Se puede ganar particpando en Torneos. El torneo de League of Legends Season 2 ofrecio 5 millones de dolares en premios.]]></text>
+      </p>
+    </object>
+    <object id="1_2725710" type="text" x="-7961.071893692361" y="-148535.82681264493" r="0" s="198.7266627261242" class="strong">
+      <height>30</height>
+      <width>-241.344</width>
+      <p>
+        <text><![CDATA[El concepto: "La Gran Idea"]]></text>
+      </p>
+    </object>
+    <object id="1_3671642" type="text" x="-271327.7791772411" y="-136326.06557103788" r="0" s="237.71472784942924" class="strong">
+      <height>60</height>
+      <width>552</width>
+      <p>
+        <text><![CDATA[                                      ]]></text>
+      </p>
+      <p align="center">
+        <text><![CDATA[Justo Miguel Vargas - JUTI 2012- UTN FRRe]]></text>
+      </p>
+    </object>
+    <object id="7_3671642" type="text" x="-306210.39081406983" y="25213.05039173435" r="0" s="87.51331077852765" class="strong">
+      <height>30</height>
+      <width>-199.584</width>
+      <p>
+        <text><![CDATA[Que es un Videojuego?]]></text>
+      </p>
+    </object>
+    <object id="0_3676509" type="button" x="211390.02060133772" y="-46793.63039351821" r="0" s="40.76230243848732" class="invisible">
+      <type>invisible</type>
+      <size>
+        <w>797.6154992548435</w>
+        <h>600</h>
+      </size>
+    </object>
+    <object id="1_3676509" type="text" x="210790.97401080487" y="-57314.121060427664" r="0" s="86.21130652926202" class="strong">
+      <height>30</height>
+      <width>-99.024</width>
+      <p>
+        <text><![CDATA[Produccion]]></text>
+      </p>
+    </object>
+    <object id="3_3676509" type="button" x="254928.22567788896" y="-122673.14308669257" r="12.664604869869923" s="197.43631636678873" class="bracket">
+      <type>bracket</type>
+      <size>
+        <w>400</w>
+        <h>300</h>
+      </size>
+    </object>
+    <object id="4_3676509" type="text" x="259075.068191697" y="-141135.00383588462" r="12.664604869869923" s="170.81202910472737" class="strong">
+      <height>30</height>
+      <width>214.86869149747417</width>
+      <p align="center">
+        <text><![CDATA[Para Saber Mas...]]></text>
+      </p>
+    </object>
+    <object id="5_3676509" type="text" x="256283.95214768453" y="-118329.34049240884" r="12.664604869869923" s="141.166966202254" class="body">
+      <height>259.2421875</height>
+      <width>518.5879336611545</width>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Jugar mucho y variado]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Analizar juegos al margen del gusto personal]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Cursar la materia de VideoJuegos :P]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Y, por supuesto, hacer juegos]]></text>
+      </p>
+      <p listType="bullet" indent="3">
+        <text><![CDATA[No importa que sean pequeños]]></text>
+      </p>
+      <p listType="bullet" indent="3">
+        <text><![CDATA[No importa que sean clones]]></text>
+      </p>
+      <p listType="bullet" indent="3">
+        <text><![CDATA[No importa que sean feos]]></text>
+      </p>
+      <p listType="bullet" indent="3">
+        <text><![CDATA[Lo que importa es terminarlos]]></text>
+      </p>
+      <p align="center">
+        <text><![CDATA[]]></text>
+      </p>
+    </object>
+    <object id="6_3676509" type="button" x="123379.158620696" y="745.2145973122455" r="0" s="11.132531208931079" class="invisible">
+      <type>invisible</type>
+      <size>
+        <w>1051.4048040952944</w>
+        <h>599</h>
+      </size>
+    </object>
+    <object id="10_3676509" type="button" x="255612.07656599654" y="-120490.16575037043" r="0" s="4.652226310930537" class="invisible">
+      <type>invisible</type>
+      <size>
+        <w>796.0122699386503</w>
+        <h>600</h>
+      </size>
+    </object>
+    <object id="0_3739377" type="text" x="39245.7608180849" y="-88667.60077523507" r="0" s="171.63423882333672" class="body">
+      <height>345.65625</height>
+      <width>548</width>
+      <p listType="bullet" indent="1">
+        <text color="1657497"><![CDATA[Esa idea tan etérea puesta en una sola frase]]></text>
+      </p>
+      <p listType="bullet" indent="3">
+        <text color="1657497"><![CDATA[“Un juego de estrategia de Romanos”]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text color="1657497"><![CDATA[Hay que refinarla y concretarla, sin tampoco profundizar mucho]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text color="1657497"><![CDATA[Es el momento de explorar alternativas y no cerrarse puertas poniendo detalles u opciones secundarias]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text color="1657497"><![CDATA[Buscar la esencia de lo que merecería la pena hacer]]></text>
+      </p>
+      <p listType="bullet" indent="2">
+        <text color="1657497"><![CDATA[“En tiempo real, con tropas y sin manejo de economía o investigación”]]></text>
+      </p>
+      <p listType="bullet" indent="2">
+        <text color="1657497"><![CDATA[“Con un profundo uso táctico del terreno”]]></text>
+      </p>
+    </object>
+    <object id="1_25727657" type="image" x="-81744.63665126647" y="-53272.45255154756" r="0" s="43.117756903738226">
+      <source w="1854" h="1223">849175699<url>849175699.png</url></source>
+      <sourceUrl>Arrow-Next-icon.png</sourceUrl>
+    <resource><id>849175699</id><url>http://0103.static.prezi.com.s3.amazonaws.com/media/d/f/2/965e925ca7e5979279221a92c3c6f065ab5e8.png</url></resource></object>
+    <object id="14_4" type="text" x="121358.36665533445" y="1580.1257268387976" r="-1.8950516659769213e-51" s="12.581152173236456" class="body">
+      <height>345.65625</height>
+      <width>484.61835877118864</width>
+      <p>
+        <text color="16248250"><![CDATA[Aquí exploramos las posibilidades abiertas por el concepto]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text color="16248250"><![CDATA[“Campaña single-player basada en misiones”]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text color="16248250"><![CDATA[“Con posibilidad de multiplayer”]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text color="16248250"><![CDATA[“Con un motor 3D para potenciar la animación”]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text color="16248250"><![CDATA[“Las tropas usarán formaciones especiales para darles más profundidad táctica”]]></text>
+      </p>
+      <p>
+        <text color="16248250"><![CDATA[Y tenemos la primera estimación de tiempo y coste de desarrollo]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="6_3676509"/>
+      </layout>
+    </object>
+    <object id="19_4" type="image" x="126457.24435664044" y="775.389109669681" r="-2.1178888112670017e-51" s="12.229636094750095">
+      <source w="399" h="400">854030791<mask x="45" y="0" w="308" h="400"/>
+      <url>854030791.jpg</url></source>
+      <sourceUrl>http://0103.static.prezi.com.s3.amazonaws.com/media/1/c/a/9ca1b4296c84dc1d432251fbba42d8bd80614.jpg</sourceUrl>
+      <layout>
+        <layout-element role="image" parent-id="6_3676509"/>
+      </layout>
+    <resource><id>854030791</id><url>http://0103.static.prezi.com.s3.amazonaws.com/media/1/c/a/9ca1b4296c84dc1d432251fbba42d8bd80614.jpg</url></resource></object>
+    <object id="13_4" type="text" x="121712.00240474615" y="-1203.2222171302965" r="-1.3854781254760144e-45" s="23.852102827371862" class="strong">
+      <height>30</height>
+      <width>286.90397303768634</width>
+      <p>
+        <text color="16775176"><![CDATA[Pre-Produccion]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="6_3676509"/>
+      </layout>
+    </object>
+    <object id="31_25727657" type="image" x="143108.7374384836" y="6914.0835348403225" r="-13.21051994718103" s="19.12451896369907">
+      <source w="470" h="325">854038805<url>854038805.jpg</url></source>
+      <sourceUrl>tired.jpg</sourceUrl>
+    <resource><id>854038805</id><url>http://0103.static.prezi.com.s3.amazonaws.com/media/e/2/0/498cc31a7f63517227acc4511796c6a6b66af.jpg</url></resource></object>
+    <object id="32_25727657" type="button" x="201262.94765834985" y="-50652.98147650599" r="-10.83726194420833" s="13.685477089169739" class="invisible">
+      <type>invisible</type>
+      <size>
+        <w>801.220188811853</w>
+        <h>984.1598510065578</h>
+      </size>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+      <layout>
+        <frametype value="OVERVIEW"/>
+      </layout>
+    </object>
+    <object id="33_25727657" type="button" x="204061.3482015013" y="-53105.20551049009" r="-10.837261944208342" s="4.589988114068221" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="34_25727657" type="button" x="200543.5442190528" y="-54555.36487492324" r="-10.83726194420832" s="4.589988114068214" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="35_25727657" type="button" x="199743.564308657" y="-48616.248529258715" r="-10.83726194420832" s="4.589988114068214" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="36_25727657" type="button" x="203514.47153624633" y="-49337.981640973216" r="-10.83726194420832" s="4.589988114068214" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="37_25727657" type="button" x="197786.0665951146" y="-51903.922521210785" r="-10.83726194420832" s="4.589988114068214" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="38_25727657" type="shape" x="200967.25661174874" y="-52428.43047699963" r="-100.83726194420834" s="13.320278750214074" class="line1">
+      <geom type="arrow">
+        <sp>-71.34485042779959 0</sp>
+        <ep>71.34485042779957 0</ep>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="39_25727657" type="shape" x="202043.88760692536" y="-52089.2135474663" r="-25.83726194420834" s="13.320278750214076" class="line1">
+      <geom type="arrow">
+        <sp>-77.26733118300176 0</sp>
+        <ep>77.26733118300177 0</ep>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="40_25727657" type="shape" x="200062.27101232126" y="-51717.53218793794" r="-175.8372619442083" s="13.320278750214099" class="line1">
+      <geom type="arrow">
+        <sp>-79.42041110003953 0</sp>
+        <ep>79.42041110003953 0</ep>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="41_25727657" type="shape" x="200680.27492594242" y="-50692.87486008076" r="-65.2447654870739" s="13.320278750214083" class="line1">
+      <geom type="arrow">
+        <sp>78.36047548502081 0</sp>
+        <ep>-78.36047548502083 0</ep>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="42_25727657" type="shape" x="201881.06502541463" y="-50922.68906223773" r="-136.76075190969362" s="13.320278750214081" class="line1">
+      <geom type="arrow">
+        <sp>78.68183701046924 0</sp>
+        <ep>-78.68183701046922 0</ep>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="43_25727657" type="shape" x="201117.67257288966" y="-51636.37411813522" r="-10.837261944208324" s="8.988867440925837" class="poly2">
+      <geom type="circle">
+        <r>10.611498465253687</r>
+      </geom>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="81_25727657" type="image" x="197921.66288713296" y="-50963.30376733779" r="-10.837261944208342" s="0.853129898858713">
+      <source w="1680" h="1231">854109057<url>854109057.jpe</url></source>
+      <sourceUrl>http://tecnonautas.net/wp-content/uploads/2013/08/Wordpress-para-Android.jpg</sourceUrl>
+    <resource><id>854109057</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/2/7/d/753eeb881fe04213f318b8b0f1a6fa0ebc855.jpe</url></resource></object>
+    <object id="46_25727657" type="text" x="197521.12214952425" y="-51850.65581682374" r="-10.837261944208334" s="5.838590388222542" class="body">
+      <height>115.21875</height>
+      <width>390.9237784827681</width>
+      <p>
+        <text><![CDATA[- Lenguaje de Programacion: JAVA]]></text>
+      </p>
+      <p>
+        <text><![CDATA[- IDE: Eclipse]]></text>
+      </p>
+      <p>
+        <text><![CDATA[- Muy de moda ultimamente]]></text>
+      </p>
+      <p>
+        <text><![CDATA[- Curva de Aprendizaje (Media/Alta)]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="37_25727657"/>
+      </layout>
+    </object>
+    <object id="86_25727657" type="image" x="201662.83546341571" y="-55714.4269039294" r="14.701124548454562" s="1.16610598776713">
+      <source w="1240" h="930">854148185<url>854148185.jpe</url></source>
+      <sourceUrl>http://cdn.imore.com/sites/imore.com/files/styles/large/public/field/image/2013/09/iphone_ipad_general_ios_7_hero.jpg?itok=5e0purNY</sourceUrl>
+    <resource><id>854148185</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/b/a/0/e5afd2fc01abb09d49bb1d97b10cf3d9e5cec.jpe</url></resource></object>
+    <object id="87_25727657" type="image" x="200804.59672388842" y="-53487.33245273371" r="-10.837261944208327" s="3.665147624217665">
+      <source w="543" h="267">854154713<url>854154713.jpe</url></source>
+      <sourceUrl>http://cdn.gizmocrazed.com/wp-content/uploads/2011/12/iphone-best-games.jpg</sourceUrl>
+    <resource><id>854154713</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/9/c/8/1a6d085c70ef6a1680ccdd644c0874e961175.jpe</url></resource></object>
+    <object id="88_25727657" type="image" x="199084.90377271708" y="-55409.366294743224" r="-30.18039475048971" s="2.52285504121962">
+      <source w="610" h="392">854156403<url>854156403.jpe</url></source>
+      <sourceUrl>http://i.i.cbsi.com/cnwk.1d/i/tim2/2013/09/16/iOS_7_gaming_head_art_610x392.jpg</sourceUrl>
+    <resource><id>854156403</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/4/4/3/58e19c760e078d20387439b6b13b8fc309634.jpe</url></resource></object>
+    <object id="48_25727657" type="text" x="200212.42967829492" y="-54469.92304866542" r="-10.83726194420833" s="5.838590388222542" class="body">
+      <height>201.6328125</height>
+      <width>390.9237784827681</width>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Lenguaje de Programacion: Objective C]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Muy Buscado en la actualidad]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Curva de Aprendizaje (Media/Alta)]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Se necesita una mac y un iphone/ipod/ipad]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="34_25727657"/>
+      </layout>
+    </object>
+    <object id="90_25727657" type="image" x="203862.6860963131" y="-54315.287291234104" r="-10.837261944208342" s="3.4969256508584734">
+      <source w="795" h="297">854161315<url>854161315.png</url></source>
+      <sourceUrl>http://forum.unity3d.com/attachment.php?attachmentid=16698&amp;stc=1&amp;d=1295263006</sourceUrl>
+    <resource><id>854161315</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/2/d/2/812e8f5706ecfee788f8adc5885fb39a002f0.png</url></resource></object>
+    <object id="91_25727657" type="image" x="204312.55987701213" y="-51794.82485673132" r="-10.837261944208338" s="3.585042484053264">
+      <source w="580" h="280">854170317<url>854170317.jpe</url></source>
+      <sourceUrl>http://ipadstatic.com/2013/05/juegos-unity-ios.jpg</sourceUrl>
+    <resource><id>854170317</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/8/8/9/89fe4df583b55ab8d42ef4496659fb894ea32.jpe</url></resource></object>
+    <object id="92_25727657" type="image" x="206390.45642199033" y="-53273.94203043981" r="-10.837261944208338" s="4.633426487387479">
+      <source w="600" h="258">854174521<url>854174521.jpe</url></source>
+      <sourceUrl>http://www.blogcdn.com/downloadsquad.switched.com/media/2011/03/unity-android.jpg</sourceUrl>
+    <resource><id>854174521</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/7/c/b/3ef300cb7c41e4ffe7cd03e87e22e0ef18a98.jpe</url></resource></object>
+    <object id="93_25727657" type="image" x="207434.95869177196" y="-51760.85777855247" r="-10.837261944208342" s="4.3339873606515535">
+      <source w="640" h="441">854176081<url>854176081.jpe</url></source>
+      <sourceUrl>http://4.bp.blogspot.com/-iQjskceXIbU/UHmYDjBsD3I/AAAAAAAAByo/PJ5HcLhZFMo/s640/20090819_unity3d_cod2_shot2.jpg</sourceUrl>
+    <resource><id>854176081</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/5/2/8/478b39ebd0edc77601030f8d6c2d7fc34f554.jpe</url></resource></object>
+    <object id="50_25727657" type="text" x="203904.60416008972" y="-53041.375701704135" r="-10.837261944208342" s="5.838590388222545" class="body">
+      <height>259.2421875</height>
+      <width>390.9237784827681</width>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Lenguaje de Programacion: JavaScript / Boo (UnityScript) / C#]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Exporta los desarrollos facilmente a iOS/Android/Web]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[IDE propietaria pero gratuita]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Modelado 3d Facil y Rapido]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Curva de Aprendizaje: Media / Alta]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="33_25727657"/>
+      </layout>
+    </object>
+    <object id="94_25727657" type="image" x="202484.53474707072" y="-49966.156632366576" r="-10.837261944208318" s="0.7286699741827826">
+      <source w="1600" h="1493">854186117<url>854186117.png</url></source>
+      <sourceUrl>http://ipeas.org.br/Imagens/tecnologias/adobe-flash-logo-large-5000x4667.png</sourceUrl>
+    <resource><id>854186117</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/d/2/d/a04d89318b3c9afa44bdbb2ee184ee0014ff1.png</url></resource></object>
+    <object id="96_25727657" type="image" x="204434.5724280608" y="-50245.08422271294" r="-10.83726194420833" s="1.1922140786329465">
+      <source w="1063" h="1052">854186661<url>854186661.png</url></source>
+      <sourceUrl>http://www.ewingenterprise.com/wp-content/uploads/2010/11/flash_builder_4_mnemonic_png.png</sourceUrl>
+    <resource><id>854186661</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/e/8/4/e3c0141a84cadade49741b0a043bc173689cd.png</url></resource></object>
+    <object id="97_25727657" type="image" x="205733.27238445447" y="-48664.82583515008" r="-10.83726194420832" s="6.067582304912167">
+      <source w="320" h="315">854188657<url>854188657.jpe</url></source>
+      <sourceUrl>http://3.bp.blogspot.com/-FryWhMSGZQE/ThhE-lUHhQI/AAAAAAAAAEI/Sq0oK17cc9w/s320/Miniclip+Flash+Game+Collection.jpg</sourceUrl>
+    <resource><id>854188657</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/f/5/1/b8bef8696eb42cc46f3051fc7c4150f760794.jpe</url></resource></object>
+    <object id="99_25727657" type="image" x="203522.25529384252" y="-47503.98193787119" r="-10.83726194420832" s="3.923368361189073">
+      <source w="620" h="240">854195817<url>854195817.png</url></source>
+      <sourceUrl>http://www.gamesetwatch.com/120223-ios_and_flash.png</sourceUrl>
+    <resource><id>854195817</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/c/b/4/b9f0c96190cdb72c33b62f93e802270577ae0.png</url></resource></object>
+    <object id="52_25727657" type="text" x="203563.07502091295" y="-48842.011720099465" r="-10.83726194420833" s="5.838590388222542" class="body">
+      <height>201.6328125</height>
+      <width>390.9237784827681</width>
+      <p>
+        <text><![CDATA[- Lenguaje de Programacion: Action Script 3]]></text>
+      </p>
+      <p>
+        <text><![CDATA[- IDE: Eclipse / Flash Builder]]></text>
+      </p>
+      <p>
+        <text><![CDATA[- Facilidad de interaccion entre elementos graficos y el codigo. ]]></text>
+      </p>
+      <p>
+        <text><![CDATA[- Exportacion a iOS y Android]]></text>
+      </p>
+      <p>
+        <text><![CDATA[- Curva Aprendizaje: Facil/Media ]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="36_25727657"/>
+      </layout>
+    </object>
+    <object id="100_25727657" type="image" x="200652.3587349423" y="-49180.76295206618" r="-10.83726194420832" s="1.0127931659207368">
+      <source w="800" h="600">854198375<url>854198375.jpe</url></source>
+      <sourceUrl>http://farm5.static.flickr.com/4093/4818277806_c6feddb9ec_b.jpg</sourceUrl>
+    <resource><id>854198375</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/2/0/2/bd6d2e4359cb1993b32d983f9241814d41c62.jpe</url></resource></object>
+    <object id="101_25727657" type="image" x="199112.84914856814" y="-48889.733493934924" r="-10.83726194420833" s="0.7545340099930204">
+      <source w="1104" h="816">854200067<url>854200067.png</url></source>
+      <sourceUrl>http://blog.stencyl.com/wp-content/uploads/2012/04/Screen-shot-2012-04-24-at-10.07.43-PM.png</sourceUrl>
+    <resource><id>854200067</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/0/a/9/6b311968453aa937b73af0062a3a7129d6816.png</url></resource></object>
+    <object id="53_25727657" type="text" x="199555.9998276087" y="-49510.45520074695" r="-10.837261944208342" s="10.11896267190559" class="strong">
+      <height>30</height>
+      <width>220.4993900181616</width>
+      <p align="center">
+        <text><![CDATA[Otras Herramientas]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="35_25727657"/>
+      </layout>
+    </object>
+    <object id="55_25727657" type="button" x="221659.38885249602" y="-50113.0160134083" r="12.664604869869926" s="17.6301498296798" class="invisible">
+      <type>invisible</type>
+      <size>
+        <w>765.9223516663259</w>
+        <h>746.4647399611758</h>
+      </size>
+      <meta>
+        <parentObjlib>convergent-4</parentObjlib>
+      </meta>
+      <layout>
+        <frametype value="OVERVIEW"/>
+      </layout>
+    </object>
+    <object id="56_25727657" type="button" x="220773.46183783814" y="-46458.94591585391" r="12.664604869869923" s="6.36060117924259" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>convergent-4</parentObjlib>
+      </meta>
+    </object>
+    <object id="57_25727657" type="button" x="216893.78998789308" y="-51887.08020245514" r="12.664604869869928" s="3.418004097974347" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>convergent-4</parentObjlib>
+      </meta>
+    </object>
+    <object id="58_25727657" type="button" x="226784.04791749196" y="-49664.00081503323" r="12.664604869869926" s="3.458465495935287" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>convergent-4</parentObjlib>
+      </meta>
+    </object>
+    <object id="59_25727657" type="button" x="219357.56013500193" y="-54012.37884244407" r="12.664604869869928" s="3.418004097974347" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>convergent-4</parentObjlib>
+      </meta>
+    </object>
+    <object id="212_25727657" type="button" x="225329.15506525015" y="-52669.40937983091" r="12.664604869869926" s="4.820913177110882" class="invisible">
+      <type>invisible</type>
+      <size>
+        <w>578.9250432349507</w>
+        <h>576.7504009405654</h>
+      </size>
+      <meta>
+        <parentObjlib>growth1</parentObjlib>
+      </meta>
+      <layout>
+        <frametype value="OVERVIEW"/>
+      </layout>
+    </object>
+    <object id="60_25727657" type="button" x="225329.0350537739" y="-52669.35079005642" r="12.664604869869928" s="3.418004097974347" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>convergent-4</parentObjlib>
+      </meta>
+    </object>
+    <object id="61_25727657" type="button" x="222101.91892533706" y="-52368.40861424561" r="12.664604869869928" s="3.418004097974347" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>convergent-4</parentObjlib>
+      </meta>
+    </object>
+    <object id="62_25727657" type="shape" x="221604.1235701525" y="-49966.68467940611" r="102.66460486986993" s="17.36140522257102" class="line1">
+      <geom type="arrow">
+        <sp>-50.18743804863784 0</sp>
+        <ep>50.18743804863784 0</ep>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>convergent-4</parentObjlib>
+      </meta>
+    </object>
+    <object id="63_25727657" type="shape" x="223653.15627734564" y="-49886.701185642545" r="-52.33977062483786" s="17.361405222571015" class="line1">
+      <geom type="arrow">
+        <sp>90.52388693428937 -5.085844526414362</sp>
+        <ep>-90.52388693428937 -5.085844526414363</ep>
+        <b>-10.171689052828723</b>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>convergent-4</parentObjlib>
+      </meta>
+    </object>
+    <object id="64_25727657" type="shape" x="224470.46012358027" y="-48130.08417313352" r="-21.2217826220852" s="17.36140522257103" class="line1">
+      <geom type="arrow">
+        <sp>69.03769158841045 -5.5937909200319735</sp>
+        <ep>-69.03769158841047 -5.593790920032014</ep>
+        <b>-11.187581840063988</b>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>convergent-4</parentObjlib>
+      </meta>
+    </object>
+    <object id="65_25727657" type="shape" x="219718.58547531764" y="-50724.31445334899" r="-102.3310196354223" s="17.361405222571022" class="line1">
+      <geom type="arrow">
+        <sp>90.52388693428934 5.085844526414364</sp>
+        <ep>-90.52388693428932 5.0858445264143635</ep>
+        <b>10.171689052828729</b>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>convergent-4</parentObjlib>
+      </meta>
+    </object>
+    <object id="66_25727657" type="shape" x="218190.67735440977" y="-49534.72565661103" r="-133.75177399492216" s="17.36140522257102" class="line1">
+      <geom type="arrow">
+        <sp>65.4892196277384 5.593790920032013</sp>
+        <ep>-65.48921962773838 5.593790920031972</ep>
+        <b>11.187581840063984</b>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>convergent-4</parentObjlib>
+      </meta>
+    </object>
+    <object id="67_25727657" type="text" x="222851.61221620886" y="-55702.286061924155" r="12.664604869869914" s="24.98964033910878" class="head">
+      <height>23.988</height>
+      <width>504</width>
+      <p align="center">
+        <text><![CDATA[Convenciones Para El Desarrollo]]></text>
+      </p>
+    </object>
+    <object id="4_25727657" type="image" x="217452.46949839033" y="-51575.9042246319" r="24.841086516502934" s="1.2589512977506307">
+      <source w="640" h="480">856650361<url>856650361.jpe</url></source>
+      <sourceUrl>https://lh4.googleusercontent.com/-w4DCuqPX0D8/TYKb2Sq8XiI/AAAAAAAAC4E/BNeZSRMCUe0/s1600/screen1.jpg</sourceUrl>
+    <resource><id>856650361</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/9/2/b/6d8a79f9003fc564b3f7a58e83a8fa06f86c3.jpe</url></resource></object>
+    <object id="5_25727657" type="image" x="216622.52670612684" y="-51163.108056726065" r="-19.64029371598223" s="1.3641492819741774">
+      <source w="400" h="240">856651915<url>856651915.jpe</url></source>
+      <sourceUrl>http://www.nintenderos.com/wp-content/uploads/2013/08/89895_3ds_zalbw_080713_scrn01.jpg</sourceUrl>
+    <resource><id>856651915</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/1/0/b/89291a9ca2797928c399ee755020e0078c54e.jpe</url></resource></object>
+    <object id="7_25727657" type="image" x="217308.40724045513" y="-52485.64681809853" r="38.403634559664276" s="1.1311247525042263">
+      <source w="847" h="598">856656693<url>856656693.jpe</url></source>
+      <sourceUrl>http://www.thehungergamesadventures.com/news/wp-content/uploads/2013/01/Top-Menu.jpg</sourceUrl>
+    <resource><id>856656693</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/1/8/a/3ffa5b5fa73b869760858f92b2c9589388654.jpe</url></resource></object>
+    <object id="68_25727657" type="text" x="216399.6822732452" y="-52485.43478993208" r="12.664604869869923" s="7.535238658639532" class="strong">
+      <height>30</height>
+      <width>220.4993900181616</width>
+      <p align="center">
+        <text><![CDATA[Elementos]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="57_25727657"/>
+      </layout>
+    </object>
+    <object id="6_25727657" type="image" x="216248.51175002064" y="-51517.856705688195" r="38.40363455966427" s="0.2604782804450698">
+      <source w="1024" h="768">856653137<url>856653137.jpe</url></source>
+      <sourceUrl>http://fc05.deviantart.net/fs70/f/2009/344/b/3/Luigi_clasic_Power_ups_by_xXLightsourceXx.jpg</sourceUrl>
+    <resource><id>856653137</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/6/e/4/2d291e0ea9405fdb465f33a1885e48b105a68.jpe</url></resource></object>
+    <object id="69_25727657" type="text" x="216516.6780854014" y="-52053.10310000548" r="12.664604869869926" s="4.347794673405053" class="body">
+      <height>144.0234375</height>
+      <width>390.9237784827681</width>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Elementos básicos.]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Elementos útiles.]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Elementos de estilo]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="57_25727657"/>
+      </layout>
+    </object>
+    <object id="268_25727657" type="image" x="222670.3" y="-45653.2" r="12.664604869869923" s="2.101933227073344">
+      <source w="373" h="387">856995605<url>856995605.jpe</url></source>
+      <sourceUrl>http://www.noiselandarcade.net/images/tim_skelly.jpg</sourceUrl>
+    <resource><id>856995605</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/b/b/4/90d2314370a2be16ac0cb2258c291dd91b6e1.jpe</url></resource></object>
+    <object id="78_25727657" type="text" x="221007.1817259694" y="-47504.725821473156" r="12.664604869869923" s="22.583228256508256" class="head">
+      <height>23.988</height>
+      <width>220.4993900181616</width>
+      <p align="center">
+        <text><![CDATA[Producto Final]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="56_25727657"/>
+      </layout>
+    </object>
+    <object id="80_25727657" type="image" x="209460.0630309059" y="-38347.07737002772" r="0" s="40.953237547306955">
+      <source w="400" h="301">854060741<url>854060741.png</url></source>
+      <sourceUrl>Mario Bros Caracteristicas.png</sourceUrl>
+    <resource><id>854060741</id><url>http://0103.static.prezi.com.s3.amazonaws.com/media/1/c/3/043c9acf5d23204a48f22cf19bff72f75a4ac.png</url></resource></object>
+    <object id="44_25727657" type="text" x="202526.82878984266" y="-45517.606360552425" r="-10.837261944208342" s="40.53609754806188" class="head">
+      <height>47.976</height>
+      <width>270.7421875</width>
+      <p align="center">
+        <text><![CDATA[Herramientas De Desarrollo]]></text>
+      </p>
+    </object>
+    <object id="79_25727657" type="text" x="220600.99654244192" y="-45947.66208512543" r="12.664604869869914" s="8.090858622186575" class="body">
+      <height>316.8515625</height>
+      <width>518.8451995200089</width>
+      <p>
+        <text><![CDATA[Que según Tim Skelly:]]></text>
+      </p>
+      <p listType="bullet" indent="2">
+        <text><![CDATA[La tarea de un videojuego es llevar al usuario a un estado mental de alta involucración: el “estado de flow”.]]></text>
+      </p>
+      <p>
+        <text><![CDATA[Todos los juegos son similares:]]></text>
+      </p>
+      <p indent="1">
+        <text><![CDATA[1) Presentan un objetivo]]></text>
+      </p>
+      <p indent="1">
+        <text><![CDATA[2) Dan feedback del progreso]]></text>
+      </p>
+      <p indent="1">
+        <text><![CDATA[3) Ajustan las dificultades al avance de forma de ser siempre un poquito más que las habilidades del jugador]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="56_25727657"/>
+      </layout>
+    </object>
+    <object id="83_25727657" type="image" x="198616.96488503471" y="-52967.59523240689" r="2.982623085383339" s="2.0325203789452666">
+      <source w="651" h="400">854117515<url>854117515.jpe</url></source>
+      <sourceUrl>http://ubunlog.com.ar/wp-content/uploads/sites/34/2013/05/c9080749a3b2d05ae531df10c1a42a11.jpg</sourceUrl>
+    <resource><id>854117515</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/f/a/a/b7f9769d63031408233601bce9bffbec14015.jpe</url></resource></object>
+    <object id="84_25727657" type="image" x="196474.99275023903" y="-52556.95021153226" r="-30.18039475048971" s="2.4382605443604346">
+      <source w="500" h="330">854121025<url>854121025.gif</url></source>
+      <sourceUrl>http://deliriacosmica.mex.tl/imagesnew/8/8/1/1/1/eclipse_logo_30.gif</sourceUrl>
+    <resource><id>854121025</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/b/d/5/ed9dceebc418d99ae4661c6b810cc4db0b3f6.gif</url></resource></object>
+    <object id="82_25727657" type="image" x="197564.3362402671" y="-52795.88902137205" r="-10.837261944208326" s="1.4602133031579112">
+      <source w="800" h="779">854113795<url>854113795.jpe</url></source>
+      <sourceUrl>http://www.revistasumma.com/media/images/width/800/3570-android.jpg</sourceUrl>
+    <resource><id>854113795</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/b/4/7/ea0a7f6ba7247fb95b3f515ad2a72f4c16b7b.jpe</url></resource></object>
+    <object id="85_25727657" type="image" x="200362.44007626962" y="-55694.49097680553" r="-10.83726194420833" s="4.399695151357008">
+      <source w="256" h="256">854139533<url>854139533.jpe</url></source>
+      <sourceUrl>http://www.famouslogos.org/wp-content/uploads/2013/04/ios-logo.jpg</sourceUrl>
+    <resource><id>854139533</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/4/c/4/147d23bfa958a812981f0387cede238a89ce6.jpe</url></resource></object>
+    <object id="95_25727657" type="image" x="203352.30297668956" y="-50398.49147424698" r="-10.83726194420832" s="2.9568316174036493">
+      <source w="400" h="400">854186349<url>854186349.png</url></source>
+      <sourceUrl>http://sicklebrick.com/wp-content/uploads/2011/10/as3logo.png</sourceUrl>
+    <resource><id>854186349</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/2/3/6/0f10878da5100ec1ce47da56b511515546a88.png</url></resource></object>
+    <object id="98_25727657" type="image" x="203523.59994581863" y="-49730.37483151415" r="-10.83726194420832" s="0.4280097909656653">
+      <source w="1230" h="1334">854192729<url>854192729.jpe</url></source>
+      <sourceUrl>http://blog.proyectografico.com/wp-content/uploads/2011/05/Adobe.jpeg</sourceUrl>
+    <resource><id>854192729</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/e/9/e/084557bdcaa8ae2dda885f5585946e5bfbd1a.jpe</url></resource></object>
+    <object id="102_25727657" type="image" x="201025.47042674496" y="-48099.66276328289" r="-10.837261944208327" s="1.2979054723904888">
+      <source w="600" h="450">854202903<url>854202903.jpe</url></source>
+      <sourceUrl>http://screenshots.en.sftcdn.net/en/scrn/14000/14436/game-maker-3.jpg</sourceUrl>
+    <resource><id>854202903</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/d/4/0/80f49709a2e122e058747e334681901e29f1c.jpe</url></resource></object>
+    <object id="103_25727657" type="image" x="199800.49247651914" y="-48238.16191682104" r="-10.83726194420832" s="1.72525680493221">
+      <source w="601" h="203">854213815<url>854213815.png</url></source>
+      <sourceUrl>http://www.python.org/community/logos/python-logo-master-v3-TM.png</sourceUrl>
+    <resource><id>854213815</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/7/8/a/053cfc731f4a74193338743ad5da32f81cf9a.png</url></resource></object>
+    <object id="104_25727657" type="image" x="198420.70415965377" y="-47661.715460980486" r="-10.837261944208326" s="3.2920663375954318">
+      <source w="243" h="300">854220323<url>854220323.jpe</url></source>
+      <sourceUrl>http://www.david-amador.com/wp-content/uploads/2013/07/6821OT_cov-243x300.jpg</sourceUrl>
+    <resource><id>854220323</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/3/8/b/a8fa021695bbdbce94054ed9907eb5dee738a.jpe</url></resource></object>
+    <object id="105_25727657" type="image" x="199986.0544492207" y="-47060.714490793805" r="-10.837261944208326" s="1.9947012625919978">
+      <source w="800" h="318">854224405<url>854224405.jpe</url></source>
+      <sourceUrl>http://www.thegamecreators.com/products/DarkGDK/content/gdk_logo.jpg</sourceUrl>
+    <resource><id>854224405</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/3/f/6/14188d4dab62b390d27475002698945a56557.jpe</url></resource></object>
+    <object id="22_25727657" type="text" x="219338.08162339227" y="-53910.856351735434" r="12.664604869869926" s="12.135577212125556" class="head">
+      <height>47.976</height>
+      <width>220.4993900181616</width>
+      <p align="center">
+        <text><![CDATA[Elementos]]></text>
+      </p>
+      <p align="center">
+        <text><![CDATA[Básicos]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="10_25727657"/>
+      </layout>
+    </object>
+    <object id="25_25727657" type="button" x="219357.80208228185" y="-54012.58955154923" r="12.664604869869912" s="2.851943640470868" class="invisible">
+      <type>invisible</type>
+      <size>
+        <w>846.7622200845855</w>
+        <h>847.9470000203407</h>
+      </size>
+      <meta>
+        <parentObjlib>aroundatopic3</parentObjlib>
+      </meta>
+      <layout>
+        <frametype value="OVERVIEW"/>
+      </layout>
+    </object>
+    <object id="26_25727657" type="shape" x="219835.82845327328" y="-53207.5370938433" r="149.21728416918603" s="2.7275196013987495" class="line3">
+      <geom type="arrow">
+        <sp>-197.20590235566291 27.531418226979024</sp>
+        <ep>197.2059023556629 27.531418226979024</ep>
+        <b>-55.06283645395805</b>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>aroundatopic3</parentObjlib>
+      </meta>
+    </object>
+    <object id="27_25727657" type="button" x="219346.42985170972" y="-54012.843158074356" r="12.664604869869914" s="1.9327748007524903" class="circle">
+      <type>circle</type>
+      <size>
+        <w>799.9999999999999</w>
+        <h>799.9999999999999</h>
+      </size>
+      <meta>
+        <parentObjlib>aroundatopic3</parentObjlib>
+      </meta>
+    </object>
+    <object id="28_25727657" type="button" x="219118.21154100087" y="-53027.74890415112" r="12.664604869869917" s="0.4379785728385819" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>aroundatopic3</parentObjlib>
+      </meta>
+    </object>
+    <object id="29_25727657" type="button" x="218378.2693608327" y="-54268.87236075223" r="12.664604869869917" s="0.4379785728385817" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>aroundatopic3</parentObjlib>
+      </meta>
+    </object>
+    <object id="30_25727657" type="button" x="220331.97258363987" y="-53742.32854212563" r="12.664604869869917" s="0.4379785728385819" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>aroundatopic3</parentObjlib>
+      </meta>
+    </object>
+    <object id="45_25727657" type="shape" x="218543.5438814032" y="-53528.31540477745" r="-120.782715830814" s="2.7275196013987495" class="line3">
+      <geom type="arrow">
+        <sp>-203.14020618193277 31.247592366535695</sp>
+        <ep>203.1402061819328 31.247592366535695</ep>
+        <b>-62.49518473307139</b>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>aroundatopic3</parentObjlib>
+      </meta>
+    </object>
+    <object id="47_25727657" type="shape" x="218869.7746475443" y="-54822.85255972092" r="-30.782715830814" s="2.7275196013987513" class="line3">
+      <geom type="arrow">
+        <sp>-199.7517158556983 28.982432325095242</sp>
+        <ep>199.7517158556983 28.982432325095242</ep>
+        <b>-57.964864650190485</b>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>aroundatopic3</parentObjlib>
+      </meta>
+    </object>
+    <object id="49_25727657" type="button" x="219594.18916751965" y="-54980.76166370895" r="12.664604869869917" s="0.4379785728385819" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>aroundatopic3</parentObjlib>
+      </meta>
+    </object>
+    <object id="51_25727657" type="shape" x="220154.08037414754" y="-54488.00333081497" r="59.21728416918601" s="2.7275196013987495" class="line3">
+      <geom type="arrow">
+        <sp>-199.85765684093147 29.301877971965094</sp>
+        <ep>199.8576568409315 29.301877971965094</ep>
+        <b>-58.60375594393019</b>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>aroundatopic3</parentObjlib>
+      </meta>
+    </object>
+    <object id="115_25727657" type="image" x="219675.6770440584" y="-55054.40490480185" r="12.664604869869926" s="0.06691106693484748">
+      <source w="1024" h="768">856698089<url>856698089.jpe</url></source>
+      <sourceUrl>http://37prime.com/news/wp-content/uploads/2013/03/Angry-Birds-Seasons-Power-Ups-splash-screen.jpg</sourceUrl>
+    <resource><id>856698089</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/c/b/4/3e9ea3a53a3889ea3fb745e802496eb013626.jpe</url></resource></object>
+    <object id="54_25727657" type="text" x="219572.70465944053" y="-55071.15742026447" r="12.664604869869919" s="0.9655556222606438" class="strong">
+      <height>60</height>
+      <width>220.4993900181616</width>
+      <p align="center">
+        <text><![CDATA[Power-Ups]]></text>
+      </p>
+      <p align="center">
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="49_25727657"/>
+      </layout>
+    </object>
+    <object id="117_25727657" type="image" x="219509.98680261953" y="-54935.699593043326" r="12.664604869869923" s="0.14840253844910226">
+      <source w="390" h="400">856699617<url>856699617.jpe</url></source>
+      <sourceUrl>http://3.bp.blogspot.com/-kZJlhkjAfL0/UWknQMp6buI/AAAAAAAAAI8/ce92Si0Na88/s400/2stripe.jpg</sourceUrl>
+    <resource><id>856699617</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/c/8/c/55e5a9eb15b804e760e586b565ebbf4a7958c.jpe</url></resource></object>
+    <object id="116_25727657" type="image" x="219598.98471174945" y="-54892.816522303336" r="12.664604869869926" s="0.23432355017598291">
+      <source w="406" h="405">856698147<url>856698147.png</url></source>
+      <sourceUrl>http://i305.photobucket.com/albums/nn206/Lil-Supersonic09/MARIOKARTWIIITEMS.png</sourceUrl>
+    <resource><id>856698147</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/c/1/c/7688940a3a7cf9884eb2cefb72257bbb0556b.png</url></resource></object>
+    <object id="118_25727657" type="image" x="219704.5143553966" y="-54961.18083797578" r="12.66460486986992" s="0.25623932858255327">
+      <source w="480" h="270">856703751<url>856703751.jpe</url></source>
+      <sourceUrl>http://mimg.ugo.com/201010/63092/cuts/power1_480x270.jpg</sourceUrl>
+    <resource><id>856703751</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/2/7/c/224b8db626fd89d000b01f0c06de1d941c801.jpe</url></resource></object>
+    <object id="71_25727657" type="text" x="219573.3836214855" y="-55003.17899128637" r="12.664604869869917" s="0.5571207205929521" class="body">
+      <height>201.6328125</height>
+      <width>443.7257716442966</width>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Elementos que mejoran temporalmente las habilidades del avatar.]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Introducido por Pacman]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Pacman introduce además el componente estratégico.]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="49_25727657"/>
+      </layout>
+    </object>
+    <object id="119_25727657" type="image" x="220435.39103931296" y="-53737.086691171644" r="12.66460486986992" s="0.22333642685205238">
+      <source w="333" h="448">856712131<url>856712131.jpe</url></source>
+      <sourceUrl>http://upload.wikimedia.org/wikipedia/en/8/87/Akalabeth_box.JPG</sourceUrl>
+    <resource><id>856712131</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/1/a/8/24e4734dbdff0997709b0e0db9e106d135bfe.jpe</url></resource></object>
+    <object id="89_25727657" type="text" x="220318.07029966256" y="-53830.611219833125" r="12.664604869869919" s="0.9655556222606438" class="strong">
+      <height>60</height>
+      <width>220.4993900181616</width>
+      <p align="center">
+        <text><![CDATA[Hechizos Mágicos]]></text>
+      </p>
+      <p align="center">
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="30_25727657"/>
+      </layout>
+    </object>
+    <object id="120_25727657" type="image" x="220396.36123000176" y="-53647.591587018615" r="12.66460486986992" s="0.15341352916825768">
+      <source w="300" h="427">856714701<url>856714701.png</url></source>
+      <sourceUrl>http://upload.wikimedia.org/wikipedia/en/6/6e/HP_prisoner_of_azkaban.png</sourceUrl>
+    <resource><id>856714701</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/d/9/2/4e1e1328e1d131220a8fc11f80b448b20c198.png</url></resource></object>
+    <object id="121_25727657" type="image" x="220304.50444948912" y="-53665.61490660499" r="12.664604869869923" s="0.07840843262090016">
+      <source w="1600" h="1200">856715109<url>856715109.jpe</url></source>
+      <sourceUrl>http://4.bp.blogspot.com/-OwqL0RUdcwE/UPQPVF3-3sI/AAAAAAAACF4/KTuED3rOA1E/s1600/world_of_warcraft-2.jpg</sourceUrl>
+    <resource><id>856715109</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/e/f/a/c2ca40aa152223dfd8f8ce6e52b8aa69c84bf.jpe</url></resource></object>
+    <object id="106_25727657" type="text" x="220287.01599862514" y="-53758.5203248048" r="12.664604869869917" s="0.5571207205929521" class="body">
+      <height>172.828125</height>
+      <width>390.9237784827681</width>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Introducidos por Akalabeth (Primer Juego de ROl). Viene de los RPGs clásicos.]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Originalmente sólo se utilizaba con fines estratégicos...]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="30_25727657"/>
+      </layout>
+    </object>
+    <object id="168_25727657" type="image" x="218549.35" y="-54272.05" r="12.664604869869917" s="0.1536834976632755">
+      <source w="602" h="480">856753671<url>856753671.jpe</url></source>
+      <sourceUrl>http://3.bp.blogspot.com/_el9kjTSU7Aw/SxPpGmkPb9I/AAAAAAAAAHE/IkMHAPTveOw/s1600/Castlevania+3+-+Dracula's+Curse+(U)_09.jpg</sourceUrl>
+    <resource><id>856753671</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/4/3/2/94ef941a61ac792d975df2fe6e7bcf208aa0f.jpe</url></resource></object>
+    <object id="169_25727657" type="image" x="218514.1" y="-54163.65" r="12.664604869869917" s="0.0802376121585166">
+      <source w="1280" h="787">856763755<url>856763755.jpe</url></source>
+      <sourceUrl>http://pcgamesabandonware.com/mod/upload/pc_es/images/ba/9a/56/ce/0a/9b/fa/26/e8/ed/9e/10/b2/cc/8f/46/mkombat2.jpg</sourceUrl>
+    <resource><id>856763755</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/1/9/4/a96bee949b851a37647d4b827d08fd98c2086.jpe</url></resource></object>
+    <object id="170_25727657" type="image" x="218362.25" y="-54147.5" r="12.664604869869917" s="0.17057772587507247">
+      <source w="700" h="285">856771925<url>856771925.jpe</url></source>
+      <sourceUrl>http://www.iceflowstudios.com/v3/wp-content/uploads/2012/06/LateRender.jpg</sourceUrl>
+    <resource><id>856771925</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/a/d/f/8813b9b2c9a50a8967271bdad9a6ecb0864fa.jpe</url></resource></object>
+    <object id="27_4" type="text" x="218367.4892155618" y="-54264.95689159833" r="12.664604869869926" s="0.4957274164772053" class="body">
+      <height>288.046875</height>
+      <width>532.4531737453405</width>
+      <p>
+        <text><![CDATA[Introducidos por los primeros RPGs (en juegos como Pacman, las vidas se pierden al primer error)]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <p>
+        <text><![CDATA[Se diseña para perdonar errores y disminuir la frustración.]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <p>
+        <text><![CDATA[Tron introduce el concepto de hitpoints a cambio de habilidades.]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="29_25727657"/>
+      </layout>
+    </object>
+    <object id="29_4" type="text" x="218397.65" y="-54358.95" r="12.66460486986992" s="0.893460152053705" class="strong">
+      <height>90</height>
+      <width>233.6024877079713</width>
+      <p align="center">
+        <text><![CDATA[Barras de vida / “hit points”]]></text>
+      </p>
+      <p align="center">
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="29_25727657"/>
+      </layout>
+    </object>
+    <object id="144_25727657" type="button" x="222105.34999999995" y="-52435.59999999997" r="12.66460486986992" s="3.850025700778238" class="invisible">
+      <type>invisible</type>
+      <size>
+        <w>615.5458533708671</w>
+        <h>600</h>
+      </size>
+      <meta>
+        <parentObjlib>aroundatopic4</parentObjlib>
+      </meta>
+      <layout>
+        <frametype value="OVERVIEW"/>
+      </layout>
+    </object>
+    <object id="145_25727657" type="shape" x="221887.13379786702" y="-51416.33557309897" r="-167.5209714877896" s="2.723696731591471" class="line3">
+      <geom type="arrow">
+        <sp>-155.67200424562853 16.370844841076117</sp>
+        <ep>155.67200424562856 16.370844841076117</ep>
+        <b>-32.741689682152234</b>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>aroundatopic4</parentObjlib>
+      </meta>
+    </object>
+    <object id="146_25727657" type="button" x="222095.7106982669" y="-52394.75481861212" r="12.66460486986992" s="1.9300658389447432" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>aroundatopic4</parentObjlib>
+      </meta>
+    </object>
+    <object id="147_25727657" type="button" x="222498.1301132401" y="-51441.895552753005" r="12.664604869869917" s="0.4373647055499719" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>aroundatopic4</parentObjlib>
+      </meta>
+    </object>
+    <object id="148_25727657" type="button" x="221224.61205101007" y="-52880.06197096167" r="12.664604869869923" s="0.43736470554997176" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>aroundatopic4</parentObjlib>
+      </meta>
+    </object>
+    <object id="149_25727657" type="button" x="223109.1460273948" y="-52477.71065594948" r="12.66460486986992" s="0.437364705549972" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>aroundatopic4</parentObjlib>
+      </meta>
+    </object>
+    <object id="150_25727657" type="shape" x="221117.73110039416" y="-52279.22576349097" r="-95.68082089190742" s="2.723696731591467" class="line3">
+      <geom type="arrow">
+        <sp>-149.23233201549027 15.335150489310646</sp>
+        <ep>149.23233201549027 15.335150489310646</ep>
+        <b>-30.67030097862129</b>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>aroundatopic4</parentObjlib>
+      </meta>
+    </object>
+    <object id="151_25727657" type="shape" x="221699.66689474919" y="-53270.26839822653" r="-24.334069042554102" s="2.723696731591469" class="line3">
+      <geom type="arrow">
+        <sp>-150.447717859142 16.517590520722585</sp>
+        <ep>150.44771785914196 16.517590520722585</ep>
+        <b>-33.03518104144517</b>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>aroundatopic4</parentObjlib>
+      </meta>
+    </object>
+    <object id="152_25727657" type="button" x="222306.84563914736" y="-53359.031567423066" r="12.66460486986992" s="0.4373647055499719" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>aroundatopic4</parentObjlib>
+      </meta>
+    </object>
+    <object id="153_25727657" type="shape" x="222830.76820350255" y="-53027.36757670015" r="48.543414669628675" s="2.723696731591468" class="line3">
+      <geom type="arrow">
+        <sp>-154.90894343128284 16.52768740755201</sp>
+        <ep>154.90894343128286 16.52768740755201</ep>
+        <b>-33.05537481510402</b>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>aroundatopic4</parentObjlib>
+      </meta>
+    </object>
+    <object id="154_25727657" type="button" x="221343.66462045163" y="-51702.962453798435" r="12.664604869869917" s="0.4373647055499719" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>aroundatopic4</parentObjlib>
+      </meta>
+    </object>
+    <object id="155_25727657" type="shape" x="222934.16103448562" y="-51874.899826607034" r="120.79198824959852" s="2.7236967315914695" class="line3">
+      <geom type="arrow">
+        <sp>-154.70139483057577 17.778412420494277</sp>
+        <ep>154.70139483057577 17.778412420494277</ep>
+        <b>-35.556824840988554</b>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>aroundatopic4</parentObjlib>
+      </meta>
+    </object>
+    <object id="178_25727657" type="image" x="222440.45" y="-53354.45" r="12.664604869869923" s="0.07291050399737357">
+      <source w="937" h="1348">856794541<url>856794541.jpe</url></source>
+      <sourceUrl>http://www.oldgames.sk/images/magazine/zzap64/1985/07/zzap030098.jpg</sourceUrl>
+    <resource><id>856794541</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/b/e/1/8321609051274e5053be745b2ecd07be29bd0.jpe</url></resource></object>
+    <object id="156_25727657" type="text" x="222328.01323553413" y="-53456.03544690289" r="12.66460486986992" s="0.9642023071703693" class="strong">
+      <height>60</height>
+      <width>220.4993900181616</width>
+      <p align="center">
+        <text><![CDATA[Personalización de los Personajes]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="152_25727657"/>
+      </layout>
+    </object>
+    <object id="179_25727657" type="image" x="222427" y="-53253.4" r="12.664604869869919" s="0.2582210018522833">
+      <source w="640" h="266">856798645<url>856798645.jpe</url></source>
+      <sourceUrl>http://www.rockstargames.com//rockstar/local_data/US/img/news/gtaquiz.jpg</sourceUrl>
+    <resource><id>856798645</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/b/f/8/6a65e8c891af31d3b84a89d683ac1f5ecb892.jpe</url></resource></object>
+    <object id="180_25727657" type="image" x="222293.19999999998" y="-53237.95" r="12.664604869869923" s="0.17782948536662524">
+      <source w="380" h="380">856799837<url>856799837.jpe</url></source>
+      <sourceUrl>http://scene7.samsclub.com/is/image/samsclub/0001008668053_A?$img_size_380x380$</sourceUrl>
+    <resource><id>856799837</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/d/7/5/f8e7d5d4225e6ad88b8ee4daae7afb729abbb.jpe</url></resource></object>
+    <object id="181_25727657" type="image" x="222188.35" y="-53273.65" r="12.66460486986992" s="0.16986914512667503">
+      <source w="416" h="284">856807473<url>856807473.jpe</url></source>
+      <sourceUrl>http://www.blogcdn.com/www.joystiq.com/media/2008/03/masterchiefut3ftw.jpg</sourceUrl>
+    <resource><id>856807473</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/0/a/1/59b229b0e4f702c0790c310c20026f3ba133a.jpe</url></resource></object>
+    <object id="157_25727657" type="text" x="222275.89077671437" y="-53351.86979316347" r="12.664604869869926" s="0.5563398646164549" class="body">
+      <height>259.2421875</height>
+      <width>390.9237784827681</width>
+      <p>
+        <text><![CDATA[Luego de aparecer en Ultima III, es utilizado en casi todo juego 3D y muchos 2D.]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <p>
+        <text><![CDATA[Aumenta la inmersión.]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <p>
+        <text><![CDATA[Es un concepto directamente tomado de los RPGs]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="152_25727657"/>
+      </layout>
+    </object>
+    <object id="158_25727657" type="text" x="223126.7345503221" y="-52562.97568686827" r="12.664604869869926" s="0.9642023071703705" class="strong">
+      <height>30</height>
+      <width>220.4993900181616</width>
+      <p align="center">
+        <text><![CDATA[Mira de Rifle ]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="149_25727657"/>
+      </layout>
+    </object>
+    <object id="182_25727657" type="image" x="223213.39999999994" y="-52385.149999999994" r="12.664604869869926" s="0.1653962432421479">
+      <source w="704" h="400">856821349<url>856821349.jpe</url></source>
+      <sourceUrl>http://www.awesome-engine.com/graphics/snapshot20080608153927.jpg</sourceUrl>
+    <resource><id>856821349</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/2/4/1/740fd71a01aeceddff078174288a9ea7379f8.jpe</url></resource></object>
+    <object id="183_25727657" type="image" x="223089.55" y="-52365.8" r="12.664604869869926" s="0.2495034040989556">
+      <source w="410" h="410">856829145<url>856829145.jpe</url></source>
+      <sourceUrl>http://img2.targetimg2.com/wcsstore/TargetSAS//img/p/12/75/12757132.jpg</sourceUrl>
+    <resource><id>856829145</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/c/b/6/3644ec2fd61941929766f0ab7546d4df32f7e.jpe</url></resource></object>
+    <object id="184_25727657" type="image" x="222982.35" y="-52433.39999999999" r="12.664604869869926" s="0.1960775503825038">
+      <source w="483" h="360">856832451<url>856832451.png</url></source>
+      <sourceUrl>http://images1.wikia.nocookie.net/__cb20120811042236/callofduty/images/3/3e/Dragnov_sniper_view.PNG</sourceUrl>
+    <resource><id>856832451</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/8/e/2/fc4d212dae07c3e257682faf5e00ca090bcde.png</url></resource></object>
+    <object id="159_25727657" type="text" x="223118.0403518585" y="-52490.06627433704" r="12.664604869869926" s="0.556339864616455" class="body">
+      <height>172.828125</height>
+      <width>502.1119639353967</width>
+      <p>
+        <text><![CDATA[Introducidos por Golgo13, es la primer arma que apuesta a la precisión en los juegos de reflejos.]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <p>
+        <text><![CDATA[Aumenta el realismo, la inmersión, etc.]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="149_25727657"/>
+      </layout>
+    </object>
+    <object id="185_25727657" type="image" x="222612.00000000003" y="-51375.15" r="12.66460486986992" s="0.40384399133329385">
+      <source w="160" h="161">856840633<url>856840633.jpe</url></source>
+      <sourceUrl>http://xbox360media.ign.com/xbox360/image/object/143/14333978/Galpus_dl2010_Wii-VirtualConsoleboxart_160w.jpg</sourceUrl>
+    <resource><id>856840633</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/a/c/0/19c01366c4e4c836525b08b877462da749c61.jpe</url></resource></object>
+    <object id="160_25727657" type="text" x="222508.87678308625" y="-51523.73828079385" r="12.664604869869926" s="0.9642023071703697" class="strong">
+      <height>90</height>
+      <width>220.4993900181616</width>
+      <p align="center">
+        <text><![CDATA[Adquisición de los poderes del enemigo ]]></text>
+      </p>
+      <p align="center">
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="147_25727657"/>
+      </layout>
+    </object>
+    <object id="187_25727657" type="image" x="222399.1" y="-51398.9" r="12.664604869869917" s="0.06457689715418669">
+      <source w="1836" h="1054">856843149<url>856843149.png</url></source>
+      <sourceUrl>http://images1.wikia.nocookie.net/__cb20110827072251/kirby/en/images/f/f8/Sword_Kirby_KRTDL.png</sourceUrl>
+    <resource><id>856843149</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/4/2/a/1629c485e554d0e2cf51e35b8c79ef9a1d3e8.png</url></resource></object>
+    <object id="161_25727657" type="text" x="222496.46678602262" y="-51460.23127897819" r="12.664604869869926" s="0.5563398646164547" class="body">
+      <height>115.21875</height>
+      <width>521.0277197054039</width>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Aparecieron con juegos como Galpus, Megaman]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Rompen la linealidad y comportamiento del personaje]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="147_25727657"/>
+      </layout>
+    </object>
+    <object id="188_25727657" type="image" x="221471.50000000003" y="-51654.1" r="12.66460486986992" s="0.1806633831347893">
+      <source w="640" h="446">856849227<url>856849227.png</url></source>
+      <sourceUrl>http://atariage.com/7800/screenshots/s_Robotron_12.png</sourceUrl>
+    <resource><id>856849227</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/5/b/5/1e264a7faf8ceb4f6e599f42e567ae0f7e064.png</url></resource></object>
+    <object id="189_25727657" type="image" x="221363.35" y="-51573.85" r="12.66460486986992" s="0.0576049320086496">
+      <source w="2048" h="1536">856854371<url>856854371.jpe</url></source>
+      <sourceUrl>http://appsized.files.wordpress.com/2012/10/wpid-photo-sep-30-2012-1055-pm.jpg</sourceUrl>
+    <resource><id>856854371</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/2/0/a/e70724f996f4819dc114c1e2bdb4221a20bc4.jpe</url></resource></object>
+    <object id="190_25727657" type="image" x="221227.45" y="-51650.55" r="12.66460486986992" s="0.1326942659121026">
+      <source w="800" h="600">856854615<url>856854615.jpe</url></source>
+      <sourceUrl>http://images1.wikia.nocookie.net/__cb20120506115228/aoe3/images/5/54/Pic1.jpg</sourceUrl>
+    <resource><id>856854615</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/e/7/6/e6d8313acd9344e96d298ce306b158115ab5d.jpe</url></resource></object>
+    <object id="162_25727657" type="text" x="221358.08221683826" y="-51774.116333278274" r="12.66460486986992" s="0.9642023071703695" class="strong">
+      <height>60</height>
+      <width>220.4993900181616</width>
+      <p align="center">
+        <text><![CDATA[Fuego Omnidireccional ]]></text>
+      </p>
+      <p align="center">
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="154_25727657"/>
+      </layout>
+    </object>
+    <object id="163_25727657" type="text" x="221308.898303608" y="-51714.04896332337" r="12.664604869869926" s="0.5563398646164547" class="body">
+      <height>86.4140625</height>
+      <width>390.9237784827681</width>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Aparecio en Robotron 2084]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Lo popularizaron luego los juegos tipo "tower defense"]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="154_25727657"/>
+      </layout>
+    </object>
+    <object id="122_25727657" type="image" x="221353.6617529046" y="-52868.51901023887" r="37.739263050354545" s="0.05981728915307392">
+      <source w="1440" h="1152">856725215<url>856725215.jpe</url></source>
+      <sourceUrl>http://gamesdbase.com/Media/SYSTEM/Commodore_Amiga/Snap/big/Bionic_Commando_-_1988_-_Capcom_Co.,_Ltd..jpg</sourceUrl>
+    <resource><id>856725215</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/d/4/3/2c20a2c265e658c726ee7cb7611303492ec6a.jpe</url></resource></object>
+    <object id="107_25727657" type="text" x="221240.6124741926" y="-52958.841074426906" r="12.664604869869938" s="0.9655556222606426" class="strong">
+      <height>60</height>
+      <width>220.4993900181616</width>
+      <p align="center">
+        <text><![CDATA[Ganchos para Colgarse]]></text>
+      </p>
+      <p align="center">
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="28_25727657"/>
+      </layout>
+    </object>
+    <object id="123_25727657" type="image" x="221293.8660929012" y="-52795.73554931264" r="-8.827684541033523" s="0.22182975297249646">
+      <source w="300" h="300">856726413<url>856726413.jpe</url></source>
+      <sourceUrl>http://fotos.starmedia.com/imagenes/2013/03/tom-raider-supera-1-millon-jugadores-1-300x300.jpg</sourceUrl>
+    <resource><id>856726413</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/e/1/2/ad6fc3a0096790142ecee9fd4dae9e9668a2c.jpe</url></resource></object>
+    <object id="125_25727657" type="image" x="221099.18482224346" y="-52836.34712627377" r="12.664604869869926" s="0.060836001781432135">
+      <source w="1044" h="1200">856731977<url>856731977.jpe</url></source>
+      <sourceUrl>http://mco-s2-p.mlstatic.com/castlevania-castelvania-lord-of-shadows-para-ps3-1496-MCO4073726442_042013-F.jpg</sourceUrl>
+    <resource><id>856731977</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/2/8/7/2e7ca2e70f725ce126a9245c54d179fa4481f.jpe</url></resource></object>
+    <object id="108_25727657" type="text" x="221198.4796819391" y="-52900.71062893716" r="12.664604869869926" s="0.5571207205929523" class="body">
+      <height>201.6328125</height>
+      <width>390.9237784827681</width>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Aparecen por primera vez en Bionic Commando (Capcom). ]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Múltiples reencarnaciones, Lara Croft, EarthWorm Jim, QuakeII.]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Introducen el concepto de herramientas]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="28_25727657"/>
+      </layout>
+    </object>
+    <object id="124_25727657" type="image" x="221188.80926003816" y="-52763.46822628787" r="29.70339786984005" s="0.22266568550441287">
+      <source w="550" h="310">856728935<url>856728935.jpe</url></source>
+      <sourceUrl>http://www.destructoid.com/elephant/ul/82651-Earthworm%20Jim%20VC.jpg</sourceUrl>
+    <resource><id>856728935</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/0/9/4/16db1a7588984462d0fb46c85f7bcd666ead3.jpe</url></resource></object>
+    <object id="173_25727657" type="image" x="219256.59999999998" y="-53086.65" r="12.664604869869919" s="0.14672678197228842">
+      <source w="408" h="600">856780049<url>856780049.jpe</url></source>
+      <sourceUrl>http://www.arcade-museum.com/images/106/1067302129.jpg</sourceUrl>
+    <resource><id>856780049</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/7/5/c/e6553fb286b56a7c702aedd0257c3d630162b.jpe</url></resource></object>
+    <object id="171_25727657" type="text" x="219127.33463394668" y="-53140.03485569786" r="12.66460486986992" s="1.2100000000000002" class="strong">
+      <height>30</height>
+      <width>-96.624</width>
+      <p>
+        <text><![CDATA[Jefes (boss)]]></text>
+      </p>
+    </object>
+    <object id="174_25727657" type="image" x="219273.35" y="-52989.35" r="12.664604869869917" s="0.08401835368450086">
+      <source w="1024" h="768">856780887<url>856780887.jpe</url></source>
+      <sourceUrl>http://fc04.deviantart.net/fs70/f/2010/215/3/c/Sonic_2_last_Boss_HD_by_Billysan291.jpg</sourceUrl>
+    <resource><id>856780887</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/e/1/8/ea967dd29462c3c86e59c22b401bbe583b3ba.jpe</url></resource></object>
+    <object id="175_25727657" type="image" x="219231.45" y="-52890.2" r="12.66460486986992" s="0.20299579158863726">
+      <source w="400" h="350">856783711<url>856783711.jpe</url></source>
+      <sourceUrl>http://3.bp.blogspot.com/-aKS8d_Q9EMM/TaSkRCsPZAI/AAAAAAAAAN4/b6J-azuPkzw/s400/contra.jpg</sourceUrl>
+    <resource><id>856783711</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/1/a/5/f76701f66c7300d0e7f61850334d4d7b0218e.jpe</url></resource></object>
+    <object id="176_25727657" type="image" x="219072.1" y="-52872.05" r="12.66460486986992" s="0.2745101654831112">
+      <source w="480" h="360">856786731<url>856786731.jpe</url></source>
+      <sourceUrl>http://www.gameinformer.com/resized-image.ashx/__size/610x0/__key/CommunityServer-Components-UserFiles/00-00-86-27-81-Attached+Files/2477.NUkzQ205bmVjRjAx_5F00_o_5F00_pokemon_2D00_bluered_2D002D002D00_final_2D00_rival_2D00_battle.jpg</sourceUrl>
+    <resource><id>856786731</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/4/5/a/6535839c3102e53a70920578d136e3bae64bf.jpe</url></resource></object>
+    <object id="172_25727657" type="text" x="219099.78094881543" y="-53020.953700702106" r="12.664604869869923" s="0.5131581182307067" class="body">
+      <height>374.4609375</height>
+      <width>445.20078125000003</width>
+      <p>
+        <text><![CDATA[Aparecen por primera vez en Gorf, de Midway.]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <p>
+        <text><![CDATA[Luego aparecen en multitud de tipos de juegos distintos.]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <p>
+        <text><![CDATA[Generan objetivos y climaxes intermedios, ofrecen la oportunidad de premiar al jugador. Mantienen el interés.]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <p>
+        <text><![CDATA[Crean zonas de relax (o anticlímax), y de comodidad. ]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+    </object>
+    <object id="177_25727657" type="text" x="222082.76746088875" y="-52302.287906558755" r="12.664604869869917" s="12.135577212125556" class="head">
+      <height>47.976</height>
+      <width>113.41611249508112</width>
+      <p align="center">
+        <text><![CDATA[Elementos Utiles]]></text>
+      </p>
+    </object>
+    <object id="186_25727657" type="image" x="222507.95" y="-51331.15" r="12.66460486986992" s="0.3573129477002">
+      <source w="256" h="224">856842999<url>856842999.png</url></source>
+      <sourceUrl>http://www.texturemonkey.com/HCG/blog2/megaman_(16).png</sourceUrl>
+    <resource><id>856842999</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/6/6/4/7da1a126a71905e6a310c699acc472e7039fd.png</url></resource></object>
+    <object id="213_25727657" type="button" x="225336.5576807406" y="-52662.28728689693" r="12.664604869869926" s="3.3596713814174852" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>growth1</parentObjlib>
+      </meta>
+      <layout>
+        <frametype value="OVERVIEW"/>
+      </layout>
+    </object>
+    <object id="214_25727657" type="button" x="224626.38212898624" y="-52818.059427452026" r="12.66460486986992" s="1.256193554004721" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>growth1</parentObjlib>
+      </meta>
+      <layout>
+        <frametype value="OVERVIEW"/>
+      </layout>
+    </object>
+    <object id="218_25727657" type="image" x="227013.2" y="-52500.1" r="12.66460486986992" s="1.4862318260231946">
+      <source w="512" h="448">856872307<url>856872307.png</url></source>
+      <sourceUrl>http://upload.wikimedia.org/wikipedia/en/2/2e/Double_Dragon_II_for_NES_screenshot.png</sourceUrl>
+    <resource><id>856872307</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/e/1/a/a936ff2921db07ba387b7893898e4ac4ab21c.png</url></resource></object>
+    <object id="215_25727657" type="text" x="226554.03350713907" y="-53154.625075666474" r="12.664604869869926" s="13.469519019230246" class="head">
+      <height>47.976</height>
+      <width>240.57555305887857</width>
+      <p>
+        <text><![CDATA[Elementos ]]></text>
+      </p>
+      <p>
+        <text><![CDATA[Útiles]]></text>
+      </p>
+    </object>
+    <object id="216_25727657" type="text" x="224684.30333067803" y="-53128.31790892651" r="12.664604869869923" s="2.0385081018878566" class="strong">
+      <height>30</height>
+      <width>270.7421875</width>
+      <p align="center">
+        <text><![CDATA[Otros Elementos de Estilo:]]></text>
+      </p>
+    </object>
+    <object id="219_25727657" type="image" x="226764.25" y="-51485.35" r="12.664604869869926" s="2.4030464890612997">
+      <source w="400" h="300">856875489<url>856875489.png</url></source>
+      <sourceUrl>http://upload.wikimedia.org/wikipedia/en/4/46/Street_Fighter_II_(arcade)_screenshot.png</sourceUrl>
+    <resource><id>856875489</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/5/d/6/5571b0fd4b9f936e9902db7979841e51ca0d1.png</url></resource></object>
+    <object id="220_25727657" type="image" x="225341.2" y="-51306.45" r="12.66460486986992" s="2.813653277110855">
+      <source w="400" h="254">856875909<url>856875909.png</url></source>
+      <sourceUrl>http://upload.wikimedia.org/wikipedia/en/4/4c/Jax_Fatality.png</sourceUrl>
+    <resource><id>856875909</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/4/5/2/00bbcf172a67378330aadf257aa312309e722.png</url></resource></object>
+    <object id="76_25727657" type="text" x="226539.54147956092" y="-48651.43875720304" r="12.664604869869914" s="12.279234857052465" class="head">
+      <height>23.988</height>
+      <width>220.4993900181616</width>
+      <p align="center">
+        <text><![CDATA[Tips]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="58_25727657"/>
+      </layout>
+    </object>
+    <object id="222_25727657" type="image" x="224895.9" y="-52555.25" r="12.66460486986992" s="0.5869391414135041">
+      <source w="500" h="375">856881985<url>856881985.jpe</url></source>
+      <sourceUrl>http://www.thegtaplace.com/downloads/screens/gtasa/trainers/CarSpawner.jpg</sourceUrl>
+    <resource><id>856881985</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/1/c/a/0a694bb4763e3841fe1958d785e31f72d320a.jpe</url></resource></object>
+    <object id="223_25727657" type="image" x="224611.8" y="-52573.65" r="12.664604869869926" s="0.6513321368751299">
+      <source w="320" h="240">856883463<url>856883463.jpe</url></source>
+      <sourceUrl>http://2.bp.blogspot.com/-uIdKEVz3LlI/UX3Om-HFYfI/AAAAAAAAMPc/C39v2haISqs/s320/candy-crush.jpg</sourceUrl>
+    <resource><id>856883463</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/0/9/4/280d1cbad8ad4e9510d6b39d3b1bbdb40b86f.jpe</url></resource></object>
+    <object id="217_25727657" type="text" x="225773.64464145826" y="-52261.01494503058" r="12.664604869869923" s="3.7320590416778665" class="body">
+      <height>316.8515625</height>
+      <width>384.1968012729608</width>
+      <p>
+        <text><![CDATA[Introducidos por Double Dragon y Renegade se hicieron famosos en “los de pelea” a partir de Street Fighter II.]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <p>
+        <text><![CDATA[Fue el factor diferenciante de DD. Ahora permiten nuevos niveles de habilidad.]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <p>
+        <text><![CDATA[Reencarnaron en los Fatalities de MK.]]></text>
+      </p>
+    </object>
+    <object id="221_25727657" type="text" x="224689.51525616352" y="-52835.20669063548" r="12.664604869869926" s="1.6847174395767408" class="body">
+      <height>201.6328125</height>
+      <width>511.71534684199406</width>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Vehículos.]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Reacciones en cadena.]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Manipulación del tiempo (bullet time)]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Spread shots (prácticamente en todos los juegos en que se dispara)]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Sidekicks / alter egos]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Comunidades en línea.]]></text>
+      </p>
+    </object>
+    <object id="224_25727657" type="image" x="224660.59999999998" y="-52380.24999999999" r="12.66460486986992" s="0.1302013216865393">
+      <source w="1600" h="1200">856884549<url>856884549.jpe</url></source>
+      <sourceUrl>http://www.mundogamers.com/new/app/webroot/uploaded/Max%20Payne%201%20y%202/1.jpg</sourceUrl>
+    <resource><id>856884549</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/d/3/9/134728bf6b328b3a6f054ea5c59c6a5620062.jpe</url></resource></object>
+    <object id="225_25727657" type="image" x="224344.65" y="-52644.8" r="12.664604869869923" s="0.49785601756864734">
+      <source w="570" h="198">856887851<url>856887851.jpe</url></source>
+      <sourceUrl>http://www.joystickdivision.com/SpreadShot%20(570%20x%20198).jpg</sourceUrl>
+    <resource><id>856887851</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/e/5/3/aec683fd4df7aa4de2196783f5ef81d657498.jpe</url></resource></object>
+    <object id="226_25727657" type="image" x="224440.8" y="-52429.65" r="12.664604869869923" s="0.23318690882543047">
+      <source w="800" h="450">856905875<url>856905875.jpe</url></source>
+      <sourceUrl>http://technology.inquirer.net/files/2013/05/video-game.jpg</sourceUrl>
+    <resource><id>856905875</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/b/7/f/9c1667e403bafbf669549b26588bfca0368fc.jpe</url></resource></object>
+    <object id="227_25727657" type="image" x="224282.75" y="-52545.25" r="12.66460486986992" s="0.11594736699587053">
+      <source w="720" h="479">856907187<url>856907187.jpe</url></source>
+      <sourceUrl>http://assets.sbnation.com/assets/2925183/DSC_5325.jpg</sourceUrl>
+    <resource><id>856907187</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/2/f/c/244e2fbe9223d85852b9a23df942b8add1bd1.jpe</url></resource></object>
+    <object id="228_25727657" type="button" x="226724.95" y="-49535.6" r="12.664604869869919" s="2.3343227474500283" class="invisible">
+      <type>invisible</type>
+      <size>
+        <w>801.220188811853</w>
+        <h>984.1799255032789</h>
+      </size>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+      <layout>
+        <frametype value="OVERVIEW"/>
+      </layout>
+    </object>
+    <object id="229_25727657" type="button" x="227522.42845435828" y="-49790.50741874829" r="12.664604869869912" s="1.0328021988373521" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="230_25727657" type="button" x="226935.24999999997" y="-50425.24999999997" r="12.664604869869926" s="1.0328021988373512" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="231_25727657" type="button" x="226228.6743674544" y="-49251.661484191085" r="12.664604869869917" s="1.0328021988373512" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="232_25727657" type="button" x="227071.5492237725" y="-49062.22500502501" r="12.664604869869917" s="1.0328021988373512" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="233_25727657" type="button" x="226119.75454305238" y="-50105.70802202345" r="12.664604869869917" s="1.0328021988373512" class="circle">
+      <type>circle</type>
+      <size>
+        <w>800</w>
+        <h>800</h>
+      </size>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="234_25727657" type="shape" x="226830.4462641603" y="-49961.140154533234" r="-77.33539513013008" s="2.9972219623362455" class="line1">
+      <geom type="arrow">
+        <sp>-71.34485042779959 0</sp>
+        <ep>71.34485042779957 0</ep>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="235_25727657" type="shape" x="227003.17868278752" y="-49761.40699813519" r="-2.3353950440944806" s="2.9972219623362415" class="line1">
+      <geom type="arrow">
+        <sp>-81.20382116089291 0</sp>
+        <ep>81.20382116089291 0</ep>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="236_25727657" type="shape" x="226572.71667650886" y="-49863.053126128245" r="-152.33539513013005" s="2.9972219623362473" class="line1">
+      <geom type="arrow">
+        <sp>-79.42041110003953 0</sp>
+        <ep>79.42041110003953 0</ep>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="237_25727657" type="shape" x="226608.29712253046" y="-49596.11510455072" r="-41.74289867299565" s="2.99722196233624" class="line1">
+      <geom type="arrow">
+        <sp>78.36047548502081 0</sp>
+        <ep>-78.36047548502083 0</ep>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="238_25727657" type="shape" x="226876.69726029047" y="-49535.78954125278" r="-113.25888509561534" s="2.997221962336239" class="line1">
+      <geom type="arrow">
+        <sp>78.68183701046924 0</sp>
+        <ep>-78.68183701046922 0</ep>
+        <t>8</t>
+      </geom>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="239_25727657" type="shape" x="226780.91283834897" y="-49746.85522335861" r="12.664604869869923" s="2.022602635852433" class="poly2">
+      <geom type="circle">
+        <r>10.611498465253687</r>
+      </geom>
+      <meta>
+        <parentObjlib>alternatives4</parentObjlib>
+      </meta>
+    </object>
+    <object id="254_25727657" type="image" x="226443.15" y="-49841.6" r="12.66460486986992" s="0.15971068003868832">
+      <source w="1516" h="1678">856937603<url>856937603.jpe</url></source>
+      <sourceUrl>http://i29.photobucket.com/albums/c291/wormyvn/cabal/cb_ic_show_case.jpg</sourceUrl>
+    <resource><id>856937603</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/1/6/e/3bbecdad50b569a1168b2cb4598b5545edf70.jpe</url></resource></object>
+    <object id="253_25727657" type="image" x="226139.05" y="-49816.8" r="12.664604869869926" s="0.21811333598471275">
+      <source w="1280" h="1002">856937583<url>856937583.jpe</url></source>
+      <sourceUrl>http://teamcarlson.net/GameUI_concept.jpg</sourceUrl>
+    <resource><id>856937583</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/2/7/9/3f9bdd968096095478452ea25c094410b40b9.jpe</url></resource></object>
+    <object id="255_25727657" type="image" x="225888.05" y="-49898.35" r="12.664604869869926" s="0.24423916253850927">
+      <source w="900" h="795">856937685<url>856937685.png</url></source>
+      <sourceUrl>http://fc04.deviantart.net/fs70/i/2010/149/9/8/Game_UI_by_nangeyi.png</sourceUrl>
+    <resource><id>856937685</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/c/1/4/735881584685ef4dfaa07af1a66b855232e3e.png</url></resource></object>
+    <object id="242_25727657" type="text" x="226128.313166723" y="-50177.14986216779" r="12.664604869869926" s="1.3137526375252935" class="body">
+      <height>316.8515625</height>
+      <width>454.5019026001718</width>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[¿Puede un usuario descubrir cómo usar el sistema?]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Una buena interfaz requiere poco aprendizaje (resulta obvio lo que hacer)]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[¿Qué guía al usuario a realizar acciones correctas?]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[¿Puede el usuario aprender sólo mediante el uso?]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Específicamente, ¿qué interpreta el usuario en la interfaz como claves?]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="233_25727657"/>
+      </layout>
+    </object>
+    <object id="257_25727657" type="image" x="227230.95" y="-50285.149999999994" r="12.664604869869917" s="0.8789074115027725">
+      <source w="300" h="238">856946037<url>856946037.jpe</url></source>
+      <sourceUrl>http://blogs.educared.org/red-pronino/otiliomontao/files/2011/09/atrapa-al-gato-300x238.jpg</sourceUrl>
+    <resource><id>856946037</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/7/d/a/05e9826bcf08cc3d53f34e33ad3583b7e8251.jpe</url></resource></object>
+    <object id="243_25727657" type="text" x="226976.78390733918" y="-50626.596634283436" r="12.664604869869937" s="2.2768875730778975" class="strong">
+      <height>30</height>
+      <width>220.4993900181616</width>
+      <p align="center">
+        <text><![CDATA[IA en los juegos]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="230_25727657"/>
+      </layout>
+    </object>
+    <object id="258_25727657" type="image" x="226852" y="-50190.299999999996" r="12.664604869869917" s="0.2228938604487306">
+      <source w="1200" h="1047">856947319<url>856947319.jpe</url></source>
+      <sourceUrl>http://us.123rf.com/400wm/400/400/darkink/darkink1208/darkink120800042/15216362-old-computer-game-galaxian.jpg</sourceUrl>
+    <resource><id>856947319</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/e/9/2/bcf66af229189b4b001aa283762d0be73197f.jpe</url></resource></object>
+    <object id="244_25727657" type="text" x="226871.386010905" y="-50477.04007635" r="12.664604869869935" s="1.313752637525294" class="body">
+      <height>172.828125</height>
+      <width>390.9237784827681</width>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Introducir IA que sea, de vez en cuando, más inteligente que el usuario. O al menos un poco inteligente.]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Una tecnica puede ser basada en probabilidades]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="230_25727657"/>
+      </layout>
+    </object>
+    <object id="264_25727657" type="image" x="227591.9" y="-49490.65" r="12.664604869869914" s="0.19533844030209013">
+      <source w="1103" h="664">856964471<url>856964471.png</url></source>
+      <sourceUrl>http://4.bp.blogspot.com/-nucvB_gPYnc/T75ixIMlJTI/AAAAAAAAAxk/qjRcD9qMZ_c/s1600/loading+game.png</sourceUrl>
+    <resource><id>856964471</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/b/2/6/9de9cc668785722999a27c473005ae90523d7.png</url></resource></object>
+    <object id="245_25727657" type="text" x="227565.21236169717" y="-49991.604053031864" r="12.664604869869919" s="2.2768875730778997" class="strong">
+      <height>30</height>
+      <width>220.4993900181616</width>
+      <p align="center">
+        <text><![CDATA[Loading.]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="229_25727657"/>
+      </layout>
+    </object>
+    <object id="265_25727657" type="image" x="227888.29999999996" y="-49565.19999999999" r="12.664604869869914" s="0.20685330159507315">
+      <source w="1280" h="1024">856964713<url>856964713.jpe</url></source>
+      <sourceUrl>http://media.moddb.com/images/mods/1/10/9345/loading_screen.jpg</sourceUrl>
+    <resource><id>856964713</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/1/6/2/09af8de8be79406eaa20eced3206e172e154b.jpe</url></resource></object>
+    <object id="266_25727657" type="image" x="227354.95" y="-49573.75000000001" r="12.664604869869926" s="0.21363911394868154">
+      <source w="1012" h="736">856967757<url>856967757.png</url></source>
+      <sourceUrl>http://3.bp.blogspot.com/_wV5JMD1OISg/TIgun7aVH3I/AAAAAAAA7Jg/a8P-wE-7vug/s1600/Load+Screen.PNG</sourceUrl>
+    <resource><id>856967757</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/4/2/f/176f1ef8f3b699ab1e1c920b1ef08608b9c8d.png</url></resource></object>
+    <object id="246_25727657" type="text" x="227524.28890922907" y="-49788.4413578219" r="12.66460486986992" s="1.3137526375252948" class="body">
+      <height>259.2421875</height>
+      <width>443.9224394748959</width>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Evitar el loading. Siempre. ]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[El GameCube no lo tiene, asi como la mayoria los juegos de Nintendo (!)]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Tampoco, por ejemplo, los programas de TV.]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Hace que uno no juega muchos juegos, si uno tiene 5 minutos juega al solitario…. no al Quake. ¿por qué?]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="229_25727657"/>
+      </layout>
+    </object>
+    <object id="247_25727657" type="text" x="227115.83313111134" y="-49264.17163930849" r="12.66460486986992" s="2.2768875730778975" class="strong">
+      <height>30</height>
+      <width>220.4993900181616</width>
+      <p align="center">
+        <text><![CDATA[Algunas mejoras]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="232_25727657"/>
+      </layout>
+    </object>
+    <object id="248_25727657" type="text" x="227014.08054895359" y="-49147.73061205213" r="12.664604869869926" s="1.3137526375252935" class="body">
+      <height>115.21875</height>
+      <width>390.9237784827681</width>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Aumentar la inmersión, aumentar la física, no imponer restricciones absurdas como:]]></text>
+      </p>
+      <p listType="bullet" indent="2">
+        <text><![CDATA[Muros Invisibles]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="232_25727657"/>
+      </layout>
+    </object>
+    <object id="249_25727657" type="text" x="226256.52038228174" y="-49463.235749181025" r="12.664604869869926" s="2.2768875730778975" class="strong">
+      <height>60</height>
+      <width>220.4993900181616</width>
+      <p align="center">
+        <text><![CDATA[Recomendaciones Generales]]></text>
+      </p>
+      <layout>
+        <layout-element role="title" parent-id="231_25727657"/>
+      </layout>
+    </object>
+    <object id="250_25727657" type="text" x="226206.51974980725" y="-49170.97049918706" r="12.664604869869926" s="1.3137526375252935" class="body">
+      <height>288.046875</height>
+      <width>390.9237784827681</width>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[No agregar elementos que no corresponden a la imagen mental del juego]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Fomentar el realismo –en ese contexto.]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Evitar ángulos de cámara cinemáticos, mejorar la actuación de voz, etc.]]></text>
+      </p>
+      <p listType="bullet" indent="1">
+        <text><![CDATA[Elegir adecuadamente la musica]]></text>
+      </p>
+      <p>
+        <text><![CDATA[]]></text>
+      </p>
+      <layout>
+        <layout-element role="body" parent-id="231_25727657"/>
+      </layout>
+    </object>
+    <object id="256_25727657" type="text" x="226182.18923003654" y="-50403.96079590294" r="12.66460486986992" s="1.5896406914056054" class="strong">
+      <height>30</height>
+      <width>-193.248</width>
+      <p>
+        <text><![CDATA[Amigabilidad al USR]]></text>
+      </p>
+    </object>
+    <object id="259_25727657" type="text" x="227500.0678117016" y="-50007.015622984516" r="12.66460486986992" s="2.50457633038569" class="strong">
+      <height>30</height>
+      <width>134.04000000000002</width>
+      <p align="right">
+        <text><![CDATA[.]]></text>
+      </p>
+    </object>
+    <object id="261_25727657" type="text" x="227519.6" y="-50002.65" r="12.66460486986992" s="2.50457633038569" class="strong">
+      <height>30</height>
+      <width>134.04000000000002</width>
+      <p align="right">
+        <text><![CDATA[.]]></text>
+      </p>
+    </object>
+    <object id="267_25727657" type="image" x="227051.65" y="-48870.85" r="12.664604869869914" s="1.022304779555493">
+      <source w="570" h="321">856986581<url>856986581.jpe</url></source>
+      <sourceUrl>http://s3.gamefreaks.co.nz/wp-content/uploads/2010/11/172135-5-screenshot.jpg</sourceUrl>
+    <resource><id>856986581</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/8/c/0/8e738e1c47e07fc15a8541c3b720f0f1dd869.jpe</url></resource></object>
+    <object id="269_25727657" type="text" x="294264.57395615877" y="-70955.13048198402" r="0" s="258.8613012010656" class="strong">
+      <height>30</height>
+      <width>-116.736</width>
+      <p>
+        <text><![CDATA[QA - Testing]]></text>
+      </p>
+    </object>
+    <object id="271_25727657" type="image" x="255436.4" y="-120213.29999999999" r="0" s="3.1370759289271697">
+      <source w="626" h="433">857023093<url>857023093.jpe</url></source>
+      <sourceUrl>http://d1435t697bgi2o.cloudfront.net/wp-content/uploads/2010/03/mmw_videogames.jpg</sourceUrl>
+    <resource><id>857023093</id><url>http://0103.static.prezi.com.s3.amazonaws.com/converted/7/f/7/7efcf431f45806c6e0343ee5afc0ca1929f7d.jpe</url></resource></object>
+    <object id="272_25727657" type="text" x="255976.09999999998" y="-120562.15000000001" r="0" s="0.5459996254899808" class="strong">
+      <height>30</height>
+      <width>-93.52800000000002</width>
+      <p>
+        <text><![CDATA[Gracias!....]]></text>
+      </p>
+    </object>
+  </zui-table>
+  <background>
+    <layer depth="151.21779698131917" fadescale="0.014548552114350535">
+      <object id="background299215035" type="image" x="-3581.7166786229914" y="43627.052995688806" r="0" s="548.4028438771968">
+        <source w="2314" h="1092">299215035<url>299215035.png</url></source>
+        <sourceUrl>temp platform pale.png</sourceUrl>
+      <resource><id>299215035</id><url>http://0103.static.prezi.com.s3.amazonaws.com/media/c/e/1/92b6ac14ba08a50e4d7255bda367b1aaee3ab.png</url></resource></object>
+    </layer>
+  </background>
+  <path>
+    <s>
+      <eagle o="0_3059311"/>
+    </s>
+    <s>
+      <eagle o="39_1555333"/>
+    </s>
+    <s>
+      <eagle o="8_1555333"/>
+    </s>
+    <s>
+      <buildin o="7_1555333"/>
+    </s>
+    <s>
+      <eagle o="40_1555333"/>
+    </s>
+    <s>
+      <eagle o="0_3671642"/>
+    </s>
+    <s>
+      <eagle o="36_1555333"/>
+    </s>
+    <s>
+      <eagle o="5_3059311"/>
+    </s>
+    <s>
+      <eagle o="2_25727657"/>
+    </s>
+    <s>
+      <eagle o="5_3059311"/>
+    </s>
+    <s>
+      <eagle o="3_25727657"/>
+    </s>
+    <s>
+      <eagle o="16_1555333"/>
+    </s>
+    <s>
+      <eagle o="1_25727657"/>
+    </s>
+    <s>
+      <eagle o="0_25727657"/>
+    </s>
+    <s>
+      <eagle o="0_3739377"/>
+    </s>
+    <s>
+      <eagle o="6_3676509"/>
+    </s>
+    <s>
+      <eagle o="31_25727657"/>
+    </s>
+    <s>
+      <eagle o="0_3676509"/>
+    </s>
+    <s>
+      <eagle o="32_25727657"/>
+    </s>
+    <s>
+      <eagle o="37_25727657"/>
+    </s>
+    <s>
+      <eagle o="34_25727657"/>
+    </s>
+    <s>
+      <eagle o="33_25727657"/>
+    </s>
+    <s>
+      <buildin o="91_25727657"/>
+    </s>
+    <s>
+      <eagle o="91_25727657"/>
+    </s>
+    <s>
+      <eagle o="92_25727657"/>
+    </s>
+    <s>
+      <eagle o="93_25727657"/>
+    </s>
+    <s>
+      <eagle o="36_25727657"/>
+    </s>
+    <s>
+      <eagle o="35_25727657"/>
+    </s>
+    <s>
+      <eagle o="100_25727657"/>
+    </s>
+    <s>
+      <eagle o="101_25727657"/>
+    </s>
+    <s>
+      <eagle o="102_25727657"/>
+    </s>
+    <s>
+      <eagle o="103_25727657"/>
+    </s>
+    <s>
+      <eagle o="104_25727657"/>
+    </s>
+    <s>
+      <eagle o="105_25727657"/>
+    </s>
+    <s>
+      <eagle o="55_25727657"/>
+    </s>
+    <s>
+      <eagle o="57_25727657"/>
+    </s>
+    <s>
+      <buildin o="7_25727657"/>
+    </s>
+    <s>
+      <buildin o="4_25727657"/>
+    </s>
+    <s>
+      <buildin o="5_25727657"/>
+    </s>
+    <s>
+      <buildin o="6_25727657"/>
+    </s>
+    <s>
+      <eagle o="7_25727657"/>
+    </s>
+    <s>
+      <eagle o="4_25727657"/>
+    </s>
+    <s>
+      <eagle o="5_25727657"/>
+    </s>
+    <s>
+      <eagle o="6_25727657"/>
+    </s>
+    <s>
+      <eagle o="59_25727657"/>
+    </s>
+    <s>
+      <buildin o="25_25727657"/>
+    </s>
+    <s>
+      <buildin o="22_25727657"/>
+    </s>
+    <s>
+      <buildin o="29_25727657"/>
+    </s>
+    <s>
+      <buildin o="49_25727657"/>
+    </s>
+    <s>
+      <buildin o="30_25727657"/>
+    </s>
+    <s>
+      <buildin o="28_25727657"/>
+    </s>
+    <s>
+      <eagle o="49_25727657"/>
+    </s>
+    <s>
+      <buildin o="115_25727657"/>
+    </s>
+    <s>
+      <buildin o="118_25727657"/>
+    </s>
+    <s>
+      <buildin o="116_25727657"/>
+    </s>
+    <s>
+      <buildin o="117_25727657"/>
+    </s>
+    <s>
+      <eagle o="115_25727657"/>
+    </s>
+    <s>
+      <eagle o="118_25727657"/>
+    </s>
+    <s>
+      <eagle o="116_25727657"/>
+    </s>
+    <s>
+      <eagle o="117_25727657"/>
+    </s>
+    <s>
+      <eagle o="30_25727657"/>
+    </s>
+    <s>
+      <buildin o="119_25727657"/>
+    </s>
+    <s>
+      <buildin o="120_25727657"/>
+    </s>
+    <s>
+      <buildin o="121_25727657"/>
+    </s>
+    <s>
+      <eagle o="119_25727657"/>
+    </s>
+    <s>
+      <eagle o="120_25727657"/>
+    </s>
+    <s>
+      <eagle o="121_25727657"/>
+    </s>
+    <s>
+      <eagle o="28_25727657"/>
+    </s>
+    <s>
+      <eagle o="173_25727657"/>
+    </s>
+    <s>
+      <eagle o="174_25727657"/>
+    </s>
+    <s>
+      <eagle o="175_25727657"/>
+    </s>
+    <s>
+      <eagle o="176_25727657"/>
+    </s>
+    <s>
+      <eagle o="29_25727657"/>
+    </s>
+    <s>
+      <eagle o="168_25727657"/>
+    </s>
+    <s>
+      <eagle o="169_25727657"/>
+    </s>
+    <s>
+      <eagle o="170_25727657"/>
+    </s>
+    <s>
+      <eagle o="61_25727657"/>
+    </s>
+    <s>
+      <eagle o="148_25727657"/>
+    </s>
+    <s>
+      <eagle o="122_25727657"/>
+    </s>
+    <s>
+      <eagle o="123_25727657"/>
+    </s>
+    <s>
+      <eagle o="124_25727657"/>
+    </s>
+    <s>
+      <eagle o="125_25727657"/>
+    </s>
+    <s>
+      <eagle o="152_25727657"/>
+    </s>
+    <s>
+      <eagle o="178_25727657"/>
+    </s>
+    <s>
+      <eagle o="179_25727657"/>
+    </s>
+    <s>
+      <eagle o="180_25727657"/>
+    </s>
+    <s>
+      <eagle o="181_25727657"/>
+    </s>
+    <s>
+      <eagle o="149_25727657"/>
+    </s>
+    <s>
+      <eagle o="182_25727657"/>
+    </s>
+    <s>
+      <eagle o="183_25727657"/>
+    </s>
+    <s>
+      <eagle o="184_25727657"/>
+    </s>
+    <s>
+      <eagle o="147_25727657"/>
+    </s>
+    <s>
+      <eagle o="185_25727657"/>
+    </s>
+    <s>
+      <eagle o="186_25727657"/>
+    </s>
+    <s>
+      <eagle o="187_25727657"/>
+    </s>
+    <s>
+      <eagle o="154_25727657"/>
+    </s>
+    <s>
+      <eagle o="188_25727657"/>
+    </s>
+    <s>
+      <eagle o="189_25727657"/>
+    </s>
+    <s>
+      <eagle o="190_25727657"/>
+    </s>
+    <s>
+      <eagle o="60_25727657"/>
+    </s>
+    <s>
+      <eagle o="218_25727657"/>
+    </s>
+    <s>
+      <eagle o="219_25727657"/>
+    </s>
+    <s>
+      <eagle o="220_25727657"/>
+    </s>
+    <s>
+      <eagle o="214_25727657"/>
+    </s>
+    <s>
+      <buildin o="222_25727657"/>
+    </s>
+    <s>
+      <buildin o="223_25727657"/>
+    </s>
+    <s>
+      <buildin o="224_25727657"/>
+    </s>
+    <s>
+      <buildin o="225_25727657"/>
+    </s>
+    <s>
+      <buildin o="226_25727657"/>
+    </s>
+    <s>
+      <buildin o="227_25727657"/>
+    </s>
+    <s>
+      <eagle o="222_25727657"/>
+    </s>
+    <s>
+      <eagle o="223_25727657"/>
+    </s>
+    <s>
+      <eagle o="224_25727657"/>
+    </s>
+    <s>
+      <eagle o="225_25727657"/>
+    </s>
+    <s>
+      <eagle o="226_25727657"/>
+    </s>
+    <s>
+      <eagle o="227_25727657"/>
+    </s>
+    <s>
+      <eagle o="58_25727657"/>
+    </s>
+    <s>
+      <eagle o="228_25727657"/>
+    </s>
+    <s>
+      <eagle o="233_25727657"/>
+    </s>
+    <s>
+      <eagle o="254_25727657"/>
+    </s>
+    <s>
+      <eagle o="253_25727657"/>
+    </s>
+    <s>
+      <eagle o="255_25727657"/>
+    </s>
+    <s>
+      <eagle o="230_25727657"/>
+    </s>
+    <s>
+      <eagle o="257_25727657"/>
+    </s>
+    <s>
+      <eagle o="258_25727657"/>
+    </s>
+    <s>
+      <eagle o="229_25727657"/>
+    </s>
+    <s>
+      <buildin o="245_25727657"/>
+    </s>
+    <s>
+      <buildin o="259_25727657"/>
+    </s>
+    <s>
+      <buildin o="261_25727657"/>
+    </s>
+    <s>
+      <buildin o="246_25727657"/>
+    </s>
+    <s>
+      <eagle o="265_25727657"/>
+    </s>
+    <s>
+      <eagle o="264_25727657"/>
+    </s>
+    <s>
+      <eagle o="266_25727657"/>
+    </s>
+    <s>
+      <eagle o="232_25727657"/>
+    </s>
+    <s>
+      <eagle o="231_25727657"/>
+    </s>
+    <s>
+      <eagle o="56_25727657"/>
+    </s>
+    <s>
+      <eagle o="268_25727657"/>
+    </s>
+    <s>
+      <eagle o="18_1555333"/>
+    </s>
+    <s>
+      <eagle o="3_3676509"/>
+    </s>
+    <s>
+      <eagle o="10_3676509"/>
+    </s>
+    <s>
+      <eagle o="271_25727657"/>
+    </s>
+    <s>
+      <eagle o="272_25727657"/>
+    </s>
+    <s>
+      <eagle o="19_1555333"/>
+    </s>
+    <s>
+      <eagle o="18_1555333"/>
+    </s>
+  </path>
+  <style type="text/css"><![CDATA[
+@font-face
+{
+	src: url('Fontin.swf');
+	fontFamily: body;
+}
+
+@font-face
+{
+	src: url('teletekst.swf');
+	fontFamily: head;
+}
+
+@font-face
+{
+	src: url('LobsterTwo.swf');
+	fontFamily: strong;
+}
+
+background
+{
+	gradEnd: #fff;
+	gradStart: #fff;
+}
+
+text
+{
+	padding: 1.2;
+}
+
+text.title
+{
+	color: #000;
+	fontFamily: head;
+}
+
+text.subtitle
+{
+	color: #194a99;
+	fontFamily: strong;
+}
+
+text.body
+{
+	color: #333;
+	fontFamily: body;
+}
+
+frame.circle
+{
+	borderColor: #fff;
+	borderThickness: 0;
+	gradEndColor: #194a99;
+	gradStartColor: #194a99;
+}
+
+frame.bracket
+{
+	borderColor: #fff;
+	borderThickness: 0;
+	gradEndColor: #318bff;
+	gradStartColor: #318bff;
+}
+
+frame.rectangle
+{
+	borderColor: #97f1ff;
+	borderThickness: 0;
+	gradEndColor: #318bff;
+	gradStartColor: #318bff;
+}
+
+arrow
+{
+	borderColor: #7f7f7f;
+	borderThickness: 0;
+	gradEndColor: #333;
+	gradStartColor: #333;
+}
+
+line
+{
+	color: #333;
+}
+
+line-arrow.style1
+{
+	color: #efefef;
+	gradEndColor: #efefef;
+	gradStartColor: #efefef;
+}
+
+line-arrow.style2
+{
+	color: #7a8082;
+	gradEndColor: #7a8082;
+	gradStartColor: #7a8082;
+}
+
+line-arrow.style3
+{
+	color: #333;
+	gradEndColor: #333;
+	gradStartColor: #333;
+}
+
+line-arrow.style4
+{
+	color: #318bff;
+	gradEndColor: #318bff;
+	gradStartColor: #318bff;
+}
+
+line-arrow.style5
+{
+	color: #194a99;
+	gradEndColor: #194a99;
+	gradStartColor: #194a99;
+}
+
+circle
+{
+	borderAlpha: 1;
+	lockTintAlpha: 0.6;
+	radius: 0;
+	thickness: 100;
+}
+
+shape
+{
+	borderAlpha: 1;
+	lockTintAlpha: 0.6;
+	radius: 0;
+	thickness: 100;
+}
+
+shape.style1
+{
+	borderColor: #efefef;
+	borderThickness: 0;
+	gradEndColor: #efefef;
+	gradStartColor: #efefef;
+}
+
+shape.style2
+{
+	borderColor: #7a8082;
+	borderThickness: 0;
+	gradEndColor: #7a8082;
+	gradStartColor: #7a8082;
+}
+
+shape.style3
+{
+	borderColor: #318bff;
+	borderThickness: 0;
+	gradEndColor: #318bff;
+	gradStartColor: #318bff;
+}
+
+shape.style4
+{
+	borderColor: #194a99;
+	borderThickness: 0;
+	gradEndColor: #194a99;
+	gradStartColor: #194a99;
+}
+
+shape.style5
+{
+	borderColor: #333;
+	borderThickness: 0;
+	gradEndColor: #333;
+	gradStartColor: #333;
+}
+
+free-line
+{
+	color: #333;
+}
+
+free-marker
+{
+	color: #00e1ff;
+}
+
+grid
+{
+	color: #ddd;
+}
+
+ZCircle
+{
+	borderAlpha: 1;
+	gradEndAlpha: 1;
+	gradStartAlpha: 1;
+	lockTintAlpha: 0;
+	radius: 0;
+	thickness: 100;
+}
+
+ZPoly
+{
+	borderAlpha: 1;
+	gradEndAlpha: 1;
+	gradStartAlpha: 1;
+	lockTintAlpha: 0;
+	radius: 15;
+	thickness: 100;
+}
+
+Background
+{
+	gradEnd: #fff;
+	gradStart: #e0faff;
+}
+
+ZLabel
+{
+	padding: 1.2;
+}
+
+ZLabel.head
+{
+	color: #ef0e71;
+	fontFamily: head;
+}
+
+.line5
+{
+	color: #210195;
+	gradEndColor: #210195;
+	gradStartColor: #210195;
+}
+
+.poly5
+{
+	borderColor: #210195;
+	borderThickness: 9;
+	color: #effcff;
+	gradEndColor: #fff;
+	gradStartColor: #fff;
+}
+
+ZLabel.strong
+{
+	color: #000;
+	fontFamily: strong;
+}
+
+.line1
+{
+	color: #f60;
+	gradEndColor: #f60;
+	gradStartColor: #f60;
+}
+
+.poly1
+{
+	borderColor: #f60;
+	borderThickness: 9;
+	color: #effcff;
+	gradEndColor: #fff;
+	gradStartColor: #fff;
+}
+
+ZLabel.body
+{
+	color: #210195;
+	fontFamily: body;
+}
+
+ZFrame.circle
+{
+	borderColor: #03b7d8;
+	borderThickness: 0;
+	gradEndAlpha: 1;
+	gradEndColor: #03b7d8;
+	gradStartAlpha: 1;
+	gradStartColor: #03b7d8;
+	thickness: 12;
+}
+
+.line4
+{
+	color: #03b7d8;
+	gradEndColor: #03b7d8;
+	gradStartColor: #03b7d8;
+}
+
+.poly4
+{
+	color: #effcff;
+	gradEndColor: #00d77d;
+	gradStartColor: #00d77d;
+}
+
+ZFrame.bracket
+{
+	borderColor: #ef0e71;
+	borderThickness: 0;
+	gradEndAlpha: 1;
+	gradEndColor: #ef0e71;
+	gradStartAlpha: 1;
+	gradStartColor: #ef0e71;
+	thickness: 12;
+}
+
+.line2
+{
+	color: #ef0e71;
+	gradEndColor: #ef0e71;
+	gradStartColor: #ef0e71;
+}
+
+.poly2
+{
+	borderColor: #f60;
+	borderThickness: 0;
+	gradEndColor: #f60;
+	gradStartColor: #f60;
+}
+
+ZFrame.roundrect
+{
+	borderColor: #faf789;
+	borderThickness: 0;
+	gradEndAlpha: 0.9;
+	gradEndColor: #faf789;
+	gradStartAlpha: 0.6;
+	gradStartColor: #faf789;
+	radius: 7;
+}
+
+ZArrow
+{
+	borderColor: #fff;
+	borderThickness: -1;
+	gradEndAlpha: 1;
+	gradEndColor: #000;
+	gradStartAlpha: 1;
+	gradStartColor: #000;
+	lockTintAlpha: 0;
+}
+
+.line3
+{
+	color: #00d77d;
+	gradEndAlpha: 1;
+	gradEndColor: #00d77d;
+	gradStartAlpha: 1;
+	gradStartColor: #00d77d;
+}
+
+.poly3
+{
+	borderColor: #00d77d;
+	borderThickness: 9;
+	color: #effcff;
+	gradEndColor: #fff;
+	gradStartColor: #fff;
+}
+
+ZLine
+{
+	alpha: 1;
+	color: #000;
+	gradEndAlpha: 1;
+	gradStartAlpha: 1;
+	lockTintAlpha: 0;
+}
+
+ZCurveLine
+{
+	color: #210195;
+}
+
+ZMarker
+{
+	alpha: 0.3;
+	color: #52ff59;
+}
+
+Grid
+{
+	color: #adb6b8;
+}
+
+point
+{
+	alpha: .5;
+	fillColor: #40abe6;
+	radius: 8;
+}
+
+]]></style>
+  <hash>5cda42d6</hash>
+<sync><oid>qjpqfgufmv6c</oid><title>experto-en-videojuegos-level-1</title><hash>5cda42d6</hash></sync><config>iM9UGcxeylgHj7VEmmyIap55vrZDMsi6pxFndnpDUovndTJf/JYniYDi3nnOICun/scrjWY30qi2C7qL5x3hcEAUpcHdEVbcrXP3JSX88FXBUXXUJCkieOqiIAs7z0MOCiYC4+CoOEduvM+P8nuWqZ2agoQ3vvV6kihZrISgugLIAfwUkUIOnPc34Kpp5q7IsVkbV6NcCt4b5QDfsyxvzPevrhb9qTQ3Awk1WrjoljbMXSpcdFBEEGMAPH9s88a6IdIfE3yihsM7S73hdbpFa6YT78BhTLwIIHYUxdF8J0mpw3fl4zqBHRkRJ6wF45NS6loObx/J/GK5+BgQLmMZ8Q==</config></zuiprezi>
