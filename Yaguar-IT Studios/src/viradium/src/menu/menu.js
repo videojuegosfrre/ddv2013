@@ -1,87 +1,102 @@
-/****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+var JetSprite = cc.Sprite.extend({
+  _currentRotation:0,
 
- http://www.cocos2d-x.org
+  ctor:function(){
+    this._super();
+    this.initWithFile(s_jet);
+  },
 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
+  update:function(dt){
+    this.setRotation(this._currentRotation);
+  },
 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
+  handleKey:function(e)
+  {
+    if(e === cc.KEY.left)
+    {
+      this._currentRotation--;
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+    }
+    else if(e === cc.KEY.right)
+      this._currentRotation++;
 
-var MyLayer = cc.Layer.extend({
-    isMouseDown:false,
-    helloImg:null,
-    helloLabel:null,
-    circle:null,
-    sprite:null,
+    if(this._currentRotation < 0) this._currentRotation = 360;
+    if(this._currentRotation > 360) this._currentRotation = 0;
+  },
 
-    init:function () {
+  handleTouch:function(touchLocation)
+  {
+    if(touchLocation.x < 300)
+      this._currentRotation = 0;
+    else
+      this._currentRotation = 180;
+  },
 
-        //////////////////////////////
-        // 1. super init first
-        this._super();
+  handleTouchMove:function(touchLocation){
+    // Gross use of hardcoded width,height params.
+    var angle = Math.atan2(touchLocation.x - 300,
+                           touchLocation.y - 300);
 
-        /////////////////////////////
-        // 2. add a menu item with "X" image, which is clicked to quit the program
-        //    you may modify it.
-        // ask director the window size
-        var size = cc.Director.getInstance().getVisibleSize();
+    angle = angle * (180/Math.PI);
+    this._currentRotation = angle;
 
-        // add a "close" icon to exit the progress. it's an autorelease object
-        var closeItem = cc.MenuItemImage.create(
-            s_CloseNormal,
-            s_CloseSelected,
-            function () {
-                cc.log("close");
-            },this);
-        closeItem.setAnchorPoint(cc.p(0.5, 0.5));
+  }
+});
 
-        var menu = cc.Menu.create(closeItem);
-        menu.setPosition(cc.p(0, 0));
-        this.addChild(menu, 1);
-        closeItem.setPosition(cc.p(size.width - 20, 20));
+var MenuLayer = cc.LayerColor.extend({
+    init:function()
+    {
+        this._super(new cc.Color4B(0, 0, 0, 255));
 
-        /////////////////////////////
-        // 3. add your codes below...
-        // add a label shows "Hello World"
-        // create and initialize a label
-        this.helloLabel = cc.LabelTTF.create("Hello World", "Impact", 38);
-        // position the label on the center of the screen
-        this.helloLabel.setPosition(cc.p(size.width / 2, size.height - 40));
-        // add the label as a child to this layer
-        this.addChild(this.helloLabel, 5);
+        var size = cc.Director.getInstance().getWinSize();
 
-        // add "Helloworld" splash screen"
-        this.sprite = cc.Sprite.create(s_HelloWorld);
-        this.sprite.setAnchorPoint(cc.p(0.5, 0.5));
-        this.sprite.setPosition(cc.p(size.width / 2, size.height / 2));
-        this.sprite.setScale(size.height/this.sprite.getContentSize().height);
-        this.addChild(this.sprite, 0);
+
+        cc.AudioEngine.getInstance().setEffectsVolume(0.5);
+        cc.AudioEngine.getInstance().setMusicVolume(0.5);
+
+        var menuItem1 = new cc.MenuItemFont.create("Play Sound", this.playSound, this);
+        var menuItem2 = new cc.MenuItemFont.create("Play Song", this.playSong, this);
+        var menuItem3 = new cc.MenuItemFont.create("Stop Playing Song", this.stopPlayingSound, this);
+        var menuItem4 = new cc.MenuItemFont.create("Exit", this.exit, this);
+
+        menuItem1.setPosition(new cc.Point(size.width / 2, size.height / 2+50));
+        menuItem2.setPosition(new cc.Point(size.width / 2, size.height / 2));
+        menuItem3.setPosition(new cc.Point(size.width / 2, size.height / 2-50));
+        menuItem4.setPosition(new cc.Point(size.width / 2, size.height / 2-100));
+
+        var menu = cc.Menu.create(menuItem1, menuItem2, menuItem3, menuItem4);
+        menu.setPosition(new cc.Point(0, 0));
+
+        this.addChild(menu);
+
+        return this;
+    },
+    playSound:function(){
+        cc.log("Playing sound");
+        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+    },
+    playSong:function(){
+        cc.log("Playing song");
+        cc.AudioEngine.getInstance().playMusic(s_background_music, false);
+    },
+    stopPlayingSound:function(){
+        cc.log("Done playing song");
+        if(cc.AudioEngine.getInstance().isMusicPlaying())
+        {
+            cc.AudioEngine.getInstance().stopMusic();
+        }
+    },
+    exit:function(){
+      cc.log("Exit");
+        document.location.href = "http://www.gamefromscratch.com";
     }
 });
 
-// Escena para mostrar menú de opciones
-var MenuScene = cc.Scene.extend({
-    onEnter:function () {
+MenuScene = cc.Scene.extend({
+    onEnter:function(){
         this._super();
-        var layer = new MyLayer();
-        this.addChild(layer);
+        var layer = new MenuLayer();
         layer.init();
+        this.addChild(layer);
     }
 });
