@@ -35,18 +35,18 @@
         frameRate:60,
         renderMode:0,       //Choose of RenderMode: 0(default), 1(Canvas only), 2(WebGL only)
         tag:'gameCanvas', //the dom element to run cocos2d on
-        engineDir:'../libs/cocos2d/',
+        engineDir:'/libs/cocos2d/',
         //SingleEngineFile:'',
         appFiles:[
             // Menú principal
-            'src/menu/resources.js',
-            'src/menu/menu.js',
+            '/src/menu/resources.js',
+            '/src/menu/menu.js',
             // Historia 1
-            'src/history_1/resources.js',
-            'src/history_1/level_1.js',
+            '/src/history_1/resources.js',
+            '/src/history_1/level_1.js',
             // Historia 2
-            'src/history_2/resources.js',
-            'src/history_2/level_1.js'
+            '/src/history_2/resources.js',
+            '/src/history_2/level_1.js'
             //add your own files in order here
         ]
     };
