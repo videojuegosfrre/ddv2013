@@ -38,16 +38,14 @@
         engineDir:'/libs/cocos2d/',
         //SingleEngineFile:'',
         appFiles:[
+            // Recursos
+            '/src/resources.js',
             // Menú principal
-            '/src/menu/resources.js',
             '/src/menu/menu.js',
             // Historia 1
-            '/src/history_1/resources.js',
             '/src/history_1/level_1.js',
             // Historia 2
-            '/src/history_2/resources.js',
             '/src/history_2/level_1.js'
-            //add your own files in order here
         ]
     };
 
