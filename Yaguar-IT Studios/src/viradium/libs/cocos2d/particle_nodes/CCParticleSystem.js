@@ -727,7 +727,8 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      */
     getGravity:function () {
         cc.Assert(this._emitterMode == cc.PARTICLE_MODE_GRAVITY, "Particle Mode should be Gravity");
-        return this.modeA.gravity;
+        var locGravity = this.modeA.gravity;
+        return cc.p(locGravity.x, locGravity.y);
     },
 
     /**
@@ -1458,7 +1459,10 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
      */
     initWithFile:function (plistFile) {
         this._plistFile = plistFile;
-        var dict = cc.FileUtils.getInstance().dictionaryWithContentsOfFileThreadSafe(this._plistFile);
+        var fileUtils = cc.FileUtils.getInstance();
+        var fullPath = fileUtils.fullPathForFilename(plistFile);
+
+        var dict = fileUtils.dictionaryWithContentsOfFileThreadSafe(fullPath);
 
         cc.Assert(dict != null, "Particles: file not found");
 
@@ -1603,9 +1607,9 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
                 // texture
                 // Try to get the texture from the cache
                 var textureName = locValueForKey("textureFileName", dictionary);
-                var fullpath = cc.FileUtils.getInstance().fullPathFromRelativeFile(textureName, this._plistFile);
-
-                var tex = cc.TextureCache.getInstance().textureForKey(fullpath);
+                var fileUtils = cc.FileUtils.getInstance();
+                var imgPath = fileUtils.fullPathFromRelativeFile(textureName, this._plistFile);
+                var tex = cc.TextureCache.getInstance().textureForKey(imgPath);
 
                 if (tex) {
                     this.setTexture(tex);
@@ -1614,7 +1618,7 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
 
                     if (textureData && textureData.length == 0) {
                         cc.Assert(textureData, "cc.ParticleSystem.initWithDictory:textureImageData is null");
-                        tex = cc.TextureCache.getInstance().addImage(fullpath);
+                        tex = cc.TextureCache.getInstance().addImage(imgPath);
                         if (!tex)
                             return false;
                         this.setTexture(tex);
@@ -1642,9 +1646,10 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
                             myTIFFObj.parseTIFF(buffer,canvasObj);
                         }
 
-                        cc.TextureCache.getInstance().cacheImage(fullpath, canvasObj);
+                        var imgFullPath = fileUtils.fullPathForFilename(imgPath);
+                        cc.TextureCache.getInstance().cacheImage(imgFullPath, canvasObj);
 
-                        var addTexture = cc.TextureCache.getInstance().textureForKey(fullpath);
+                        var addTexture = cc.TextureCache.getInstance().textureForKey(imgPath);
 
                         cc.Assert(addTexture != null, "cc.ParticleSystem: error loading the texture");
 
@@ -1830,8 +1835,10 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
         // position
         if (this._positionType == cc.PARTICLE_TYPE_FREE)
             particle.startPos = this.convertToWorldSpace(this._pointZeroForParticle);
-        else if (this._positionType == cc.PARTICLE_TYPE_RELATIVE)
-            particle.startPos = this._position;
+        else if (this._positionType == cc.PARTICLE_TYPE_RELATIVE){
+            particle.startPos.x = this._position.x;
+            particle.startPos.y = this._position.y;
+        }
 
         // direction
         var a = cc.DEGREES_TO_RADIANS(this._angle + this._angleVar * locRandomMinus11());
@@ -2056,7 +2063,6 @@ cc.ParticleSystem = cc.Node.extend(/** @lends cc.ParticleSystem# */{
         var currentPosition = cc.Particle.TemporaryPoints[0];
         if (this._positionType == cc.PARTICLE_TYPE_FREE) {
             cc.pIn(currentPosition, this.convertToWorldSpace(this._pointZeroForParticle));
-
         } else if (this._positionType == cc.PARTICLE_TYPE_RELATIVE) {
             currentPosition.x = this._position.x;
             currentPosition.y = this._position.y;
