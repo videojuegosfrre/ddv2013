@@ -50,9 +50,10 @@ var MenuLayer = cc.LayerColor.extend({
 
         var size = cc.Director.getInstance().getWinSize();
 
+        audio_engine = cc.AudioEngine.getInstance();
 
-        cc.AudioEngine.getInstance().setEffectsVolume(0.5);
-        cc.AudioEngine.getInstance().setMusicVolume(0.5);
+        audio_engine.setEffectsVolume(0.5);
+        audio_engine.setMusicVolume(0.5);
 
         var menuItem1 = new cc.MenuItemFont.create("Play Sound", this.playSound, this);
         var menuItem2 = new cc.MenuItemFont.create("Play Song", this.playSong, this);
@@ -73,22 +74,25 @@ var MenuLayer = cc.LayerColor.extend({
     },
     playSound:function(){
         cc.log("Playing sound");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        audio_engine.playEffect(s_effect);
     },
     playSong:function(){
         cc.log("Playing song");
-        cc.AudioEngine.getInstance().playMusic(s_background_music, false);
+        audio_engine.playMusic(s_background_music);
     },
     stopPlayingSound:function(){
         cc.log("Done playing song");
-        if(cc.AudioEngine.getInstance().isMusicPlaying())
+        if(audio_engine.isMusicPlaying())
         {
-            cc.AudioEngine.getInstance().stopMusic();
+            cc.log("Stoping song");
+            audio_engine.stopMusic();
+        }
+        else {
+            cc.log("Music is not playing");
         }
     },
     exit:function(){
       cc.log("Exit");
-        document.location.href = "http://www.gamefromscratch.com";
     }
 });
 
