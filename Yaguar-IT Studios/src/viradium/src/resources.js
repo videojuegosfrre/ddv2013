@@ -39,12 +39,12 @@ var g_resources = [
     //tmx
 
     //bgm
-    {src:s_background_music_ogg},
-    {src:s_background_music_mp3},
-    {src:s_background_music_wav},
+    {type:"image", src:s_background_music_ogg},
+    {type:"image", src:s_background_music_mp3},
+    {type:"image", src:s_background_music_wav},
 
     //effect
-    {src:s_effect_ogg},
-    {src:s_effect_mp3},
-    {src:s_effect_wav}
+    {type:"sound", src:s_effect_ogg},
+    {type:"sound", src:s_effect_mp3},
+    {type:"sound", src:s_effect_wav}
 ];
