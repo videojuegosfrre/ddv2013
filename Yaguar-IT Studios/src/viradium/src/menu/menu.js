@@ -1,57 +1,7 @@
 var lastEvent;
 var heldKeys = {};
 
-var JetSprite = cc.Sprite.extend({
-  _currentRotation:0,
-
-  ctor:function(){
-    this._super();
-    this.initWithFile(s_jet);
-  },
-
-  update:function(dt){
-    this.setRotation(this._currentRotation);
-  },
-
-  handleKey:function(e)
-  {
-    if(e === cc.KEY.left)
-    {
-      this._currentRotation--;
-    }
-    else if(e === cc.KEY.right) {
-      this._currentRotation++;
-    }
-
-    if(this._currentRotation < 0) {
-        this._currentRotation = 360;
-    }
-
-    if(this._currentRotation > 360) {
-        this._currentRotation = 0;
-    }
-  },
-
-  handleTouch:function(touchLocation)
-  {
-    if(touchLocation.x < 300)
-      this._currentRotation = 0;
-    else
-      this._currentRotation = 180;
-  },
-
-  handleTouchMove:function(touchLocation){
-    // Gross use of hardcoded width,height params.
-    var angle = Math.atan2(touchLocation.x - 300,
-                           touchLocation.y - 300);
-
-    angle = angle * (180/Math.PI);
-    this._currentRotation = angle;
-
-  }
-});
-
-var MenuLayer = cc.LayerColor.extend({
+var MainMenuLayer = cc.LayerColor.extend({
     _debug:cc.COCOS2D_DEBUG,
 
     init:function()
@@ -61,18 +11,26 @@ var MenuLayer = cc.LayerColor.extend({
         var size = cc.Director.getInstance().getWinSize();
         var audio_engine = cc.AudioEngine.getInstance();
 
-        audio_engine.setEffectsVolume(0.5);
-        audio_engine.setMusicVolume(0.5);
+        audio_engine.setEffectsVolume(0.6);
+        audio_engine.setMusicVolume(0.4);
 
-        var menuItem1 = new cc.MenuItemFont.create("Play Sound", this.playSound, this);
-        var menuItem2 = new cc.MenuItemFont.create("Play Song", this.playSong, this);
-        var menuItem3 = new cc.MenuItemFont.create("Stop Playing Song", this.stopPlayingSound, this);
-        var menuItem4 = new cc.MenuItemFont.create("Exit", this.exit, this);
+        var menuItem1 = new cc.MenuItemFont.create("Nuevo Juego",
+                                                   this.playNewGame,
+                                                   this);
+        var menuItem2 = new cc.MenuItemFont.create("Continuar Juego",
+                                                   this.resumeGame,
+                                                   this);
+        var menuItem3 = new cc.MenuItemFont.create("Opciones",
+                                                   this.setPreferences,
+                                                   this);
+        var menuItem4 = new cc.MenuItemFont.create("Salir",
+                                                   this.exitGame,
+                                                   this);
 
-        menuItem1.setPosition(new cc.Point(size.width / 2, size.height / 2+50));
+        menuItem1.setPosition(new cc.Point(size.width / 2, size.height / 2 + 50));
         menuItem2.setPosition(new cc.Point(size.width / 2, size.height / 2));
-        menuItem3.setPosition(new cc.Point(size.width / 2, size.height / 2-50));
-        menuItem4.setPosition(new cc.Point(size.width / 2, size.height / 2-100));
+        menuItem3.setPosition(new cc.Point(size.width / 2, size.height / 2 - 50));
+        menuItem4.setPosition(new cc.Point(size.width / 2, size.height / 2 - 100));
 
         var menu = cc.Menu.create(menuItem1, menuItem2, menuItem3, menuItem4);
         menu.setPosition(new cc.Point(0, 0));
@@ -113,32 +71,47 @@ var MenuLayer = cc.LayerColor.extend({
         return this;
     },
 
-    playSound:function(){
-        cc.log("Playing sound");
+    onEnter:function () {
+        this._super();
+        cc.log("Reproducir música de fondo.");
+        cc.AudioEngine.getInstance().playMusic(s_background_music, true);
+    },
+
+    playNewGame:function () {
+        cc.log("Comenzar nuevo juego.");
         cc.AudioEngine.getInstance().playEffect(s_effect);
+        this.stopBGMusic();
     },
 
-    playSong:function(){
-        cc.log("Playing song");
-        cc.AudioEngine.getInstance().playMusic(s_background_music);
+    resumeGame:function () {
+        cc.log("Continuar juego.");
+        cc.AudioEngine.getInstance().playEffect(s_effect);
+        this.stopBGMusic();
     },
 
-    stopPlayingSound:function(){
-        cc.log("Done playing song");
+    setPreferences:function () {
+        cc.log("Ver/Establecer opciones.");
+        cc.AudioEngine.getInstance().playEffect(s_effect);
+        this.stopBGMusic();
+    },
+
+    stopBGMusic: function () {
         var audio_engine = cc.AudioEngine.getInstance();
 
         if(audio_engine.isMusicPlaying())
         {
-            cc.log("Stoping song");
+            cc.log("Detener música de fondo.");
             audio_engine.stopMusic();
         }
         else {
-            cc.log("Music is not playing");
+            cc.log("No hay música de fondo en reproducción.");
         }
     },
 
-    exit:function () {
-      cc.log("Exit");
+    exitGame:function () {
+        cc.log("Salir del juego.");
+        cc.AudioEngine.getInstance().playEffect(s_effect);
+        this.stopBGMusic();
     },
 
     onMouseDown:function (event) {
@@ -190,7 +163,7 @@ var MenuLayer = cc.LayerColor.extend({
     },
 
     update: function (dt) {
-        cc.log(heldKeys);
+        // cc.log(heldKeys);
     },
 
     _showMouseButtonInfo:function (event, trigger) {
@@ -218,10 +191,10 @@ var MenuLayer = cc.LayerColor.extend({
     }
 });
 
-MenuScene = cc.Scene.extend({
-    onEnter:function(){
+MainMenu = cc.Scene.extend({
+    onEnter:function () {
         this._super();
-        var layer = new MenuLayer();
+        var layer = new MainMenuLayer();
         layer.init();
         this.addChild(layer);
     }
