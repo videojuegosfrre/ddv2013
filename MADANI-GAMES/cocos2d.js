@@ -39,6 +39,7 @@
         //SingleEngineFile:'',
         appFiles:[
             'src/resource.js',
+			'src/beaver',
             'src/myApp.js'//add your own files in order here
         ]
     };

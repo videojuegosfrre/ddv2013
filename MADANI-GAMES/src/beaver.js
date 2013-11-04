@@ -21,7 +21,7 @@
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
+THE SOFTWARE.
  ****************************************************************************/
 var LG = {
     KEYS: [],
@@ -29,19 +29,27 @@ var LG = {
 };
 
 var MyLayer = cc.Layer.extend({
-    isMouseDown:false,
-    helloImg:null,
-    helloLabel:null,
-    circle:null,
-    sprite:null,
-	castorcete:null,
+    x:null,
+    y:null,
+    beaverImg:null,
+    desplazamiento:null,
+    size:null,
+    lives:0,
+	strench:null,
+    speed:null,
+    armor:null,
+
+    ctor:function(){
+        this._super();
+        this.init();
+    }
 	
     init:function () {
 
         //////////////////////////////
         // 1. super init first
         this._super();
-		positionX = 0;
+		x = 0;
 		desplazamiento = 20;
 		
         /////////////////////////////
