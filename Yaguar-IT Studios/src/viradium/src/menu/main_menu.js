@@ -1,13 +1,5 @@
-var lastEvent;
+var lastEvent = -1;
 var heldKeys = {};
-var TAGS = {
-    ESCENAS: {
-        MAIN_MENU: 0
-    },
-    CAPAS: {
-        MAIN_MENU: 0
-    }
-};
 
 
 var MainMenuLayer = cc.LayerColor.extend({
@@ -17,37 +9,58 @@ var MainMenuLayer = cc.LayerColor.extend({
     {
         this._super(new cc.Color4B(0, 0, 0, 255), 200, 200);
 
-        var size = cc.Director.getInstance().getWinSize();
-        var audio_engine = cc.AudioEngine.getInstance();
+        var director = cc.Director.getInstance();
+        var wSizeWidth = director.getWinSize().width;
+        var wSizeHeight = director.getWinSize().height;
+        var audioEngine = cc.AudioEngine.getInstance();
+        var systemCapabilities = sys.capabilities;
+        var cc_Point = cc.Point;
+        var cc_MenuItemFont = cc.MenuItemFont;
+        var menuItemX, menuItemY = 0;
 
-        audio_engine.setEffectsVolume(0.6);
-        audio_engine.setMusicVolume(0.4);
+        audioEngine.setEffectsVolume(0.5);
+        audioEngine.setMusicVolume(0.5);
 
-        var menuItem1 = new cc.MenuItemFont.create("Nuevo Juego",
+        cc_MenuItemFont.setFontName("Arial");
+        cc_MenuItemFont.setFontSize(30);
+
+        var menuItem0 = new cc_MenuItemFont.create("Debug menú",
+                                                   this.showDebugMenu,
+                                                   this);
+        var menuItem1 = new cc_MenuItemFont.create("Nuevo juego",
                                                    this.playNewGame,
                                                    this);
-        var menuItem2 = new cc.MenuItemFont.create("Continuar Juego",
+        var menuItem2 = new cc_MenuItemFont.create("Continuar juego",
                                                    this.resumeGame,
                                                    this);
-        var menuItem3 = new cc.MenuItemFont.create("Opciones",
+        var menuItem3 = new cc_MenuItemFont.create("Opciones",
                                                    this.setPreferences,
                                                    this);
-        var menuItem4 = new cc.MenuItemFont.create("Salir",
-                                                   this.exitGame,
+        var menuItem4 = new cc_MenuItemFont.create("Salir",
+                                                   this.exitApp,
                                                    this);
 
-        menuItem1.setPosition(new cc.Point(size.width / 2, size.height / 2 + 50));
-        menuItem2.setPosition(new cc.Point(size.width / 2, size.height / 2));
-        menuItem3.setPosition(new cc.Point(size.width / 2, size.height / 2 - 50));
-        menuItem4.setPosition(new cc.Point(size.width / 2, size.height / 2 - 100));
+        menuItemX = wSizeWidth / 2;
+        menuItemY = wSizeHeight / 2;
 
-        var main_menu = cc.Menu.create(menuItem1, menuItem2, menuItem3, menuItem4);
-        main_menu.setPosition(new cc.Point(0.5, 0.5));
+        menuItem0.setPosition(new cc_Point(menuItemX, menuItemY + 100));
+        menuItem1.setPosition(new cc_Point(menuItemX, menuItemY + 50));
+        menuItem2.setPosition(new cc_Point(menuItemX, menuItemY));
+        menuItem3.setPosition(new cc_Point(menuItemX, menuItemY - 50));
+        menuItem4.setPosition(new cc_Point(menuItemX, menuItemY - 100));
 
-        this.addChild(main_menu, 0);
+        var main_menu = cc.Menu.create(menuItem0,
+                                       menuItem1,
+                                       menuItem2,
+                                       menuItem3,
+                                       menuItem4);
+
+        main_menu.setPosition(new cc_Point(0, 0));
+
+        this.addChild(main_menu);
 
         // Check for mouse support
-        if ('mouse' in sys.capabilities) {
+        if ('mouse' in systemCapabilities) {
             cc.log("Mouse Supported. Enabling...");
             this.setMouseEnabled(true);
         }
@@ -56,7 +69,7 @@ var MainMenuLayer = cc.LayerColor.extend({
         }
 
         // Check for keyboard support
-        if ('keyboard' in sys.capabilities) {
+        if ('keyboard' in systemCapabilities) {
             cc.log("Keyboard Supported. Enabling...");
             this.setKeyboardEnabled(true);
         }
@@ -65,7 +78,7 @@ var MainMenuLayer = cc.LayerColor.extend({
         }
 
         //Check for touch support
-        if ('touches' in sys.capabilities) {
+        if ('touches' in systemCapabilities) {
             cc.log("Touch Supported. Enabling...");
             this.setTouchEnabled(true);
         }
@@ -89,19 +102,19 @@ var MainMenuLayer = cc.LayerColor.extend({
 
     playNewGame:function () {
         cc.log("Comenzar nuevo juego.");
-        cc.AudioEngine.getInstance().playEffect(s_effect);
+        cc.AudioEngine.getInstance().playEffect(s_effect, false);
         this.stopBGMusic();
     },
 
     resumeGame:function () {
         cc.log("Continuar juego.");
-        cc.AudioEngine.getInstance().playEffect(s_effect);
+        cc.AudioEngine.getInstance().playEffect(s_effect, false);
         this.stopBGMusic();
     },
 
     setPreferences:function () {
         cc.log("Ver/Establecer opciones.");
-        cc.AudioEngine.getInstance().playEffect(s_effect);
+        cc.AudioEngine.getInstance().playEffect(s_effect, false);
         this.stopBGMusic();
     },
 
@@ -118,40 +131,52 @@ var MainMenuLayer = cc.LayerColor.extend({
         }
     },
 
-    exitGame:function () {
+    exitApp:function () {
         cc.log("Salir del juego.");
-        cc.AudioEngine.getInstance().playEffect(s_effect);
+        cc.AudioEngine.getInstance().playEffect(s_effect, false);
         this.stopBGMusic();
     },
 
+    showDebugMenu:function () {
+        cc.log("Show debug menu.");
+        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        this.stopBGMusic();
+
+        var debugScene = cc.TransitionFade.create(1,
+                                                  new DebugMenuScene(),
+                                                  new cc.Color3B(0, 0, 0));
+
+        cc.Director.getInstance().replaceScene(debugScene);
+    },
+
     onMouseDown:function (event) {
-        this._showMouseButtonInfo(event, "Down");
+        this.showMouseButtonInfo(event, "Down");
     },
 
     onMouseUp:function (event) {
-        this._showMouseButtonInfo(event, "Up");
+        this.showMouseButtonInfo(event, "Up");
     },
 
     onMouseMoved:function (event) {
     },
 
     onMouseDragged:function (event) {
-        this._showMouseButtonInfo(event, "Dragged");
+        this.showMouseButtonInfo(event, "Dragged");
     },
 
     onRightMouseDown:function (event) {
-        this._showMouseButtonInfo(event, "Down");
+        this.showMouseButtonInfo(event, "Down");
     },
 
     onRightMouseUp:function (event) {
-        this._showMouseButtonInfo(event, "Up");
+        this.showMouseButtonInfo(event, "Up");
     },
 
     onRightMouseMoved:function (event) {
     },
 
     onRightMouseDragged:function (event) {
-        this._showMouseButtonInfo(event, "Dragged");
+        this.showMouseButtonInfo(event, "Dragged");
     },
 
     onScrollWheel:function (event) {
@@ -165,6 +190,15 @@ var MainMenuLayer = cc.LayerColor.extend({
 
         lastEvent = e;
         heldKeys[e] = true;
+
+        // Se presionó la tecla ESC.
+        // "Salir" de la aplicación.
+        if (lastEvent == 27) {
+            this.exitApp();
+        }
+
+        // Mostrar teclas presionadas
+        cc.log(heldKeys);
     },
 
     onKeyUp:function (e) {
@@ -176,28 +210,26 @@ var MainMenuLayer = cc.LayerColor.extend({
         // cc.log(heldKeys);
     },
 
-    _showMouseButtonInfo:function (event, trigger) {
-        if (this._debug !== 0) {
-            var button = null;
+    showMouseButtonInfo:function (event, trigger) {
+        var button = null;
 
-            switch (event._button) {
-                case 0:
-                    button = 'Izquierdo';
-                    break;
-                case 1:
-                    button = 'Central';
-                    break;
-                case 2:
-                    button = 'Derecho';
-                    break;
-                default:
-                    button = 'Desconocido';
-            }
-
-            cc.log("Mouse " + trigger + " - Button: " + button + " - Pos: (" +
-                   event.getLocation().x + ", " +
-                   event.getLocation().y + ")");
+        switch (event._button) {
+            case 0:
+                button = 'Izquierdo';
+                break;
+            case 1:
+                button = 'Central';
+                break;
+            case 2:
+                button = 'Derecho';
+                break;
+            default:
+                button = 'Desconocido';
         }
+
+        cc.log("Mouse " + trigger + " - Button: " + button + " - Pos: (" +
+               event.getLocation().x + ", " +
+               event.getLocation().y + ")");
     }
 });
 

@@ -48,3 +48,28 @@ var g_resources = [
     {type:"sound", src:s_effect_mp3},
     {type:"sound", src:s_effect_wav}
 ];
+
+var TAGS = {
+    ESCENAS: {
+        MAIN_MENU: 0,
+        DEBUG_MENU: 1,
+        OPTIONS_MENU: 2,
+        HISTORY_1: {
+            LEVEL_1: 10,
+            LEVEL_2: 12,
+            LEVEL_3: 13
+        },
+        HISTORY_2: {
+            LEVEL_1: 30,
+            LEVEL_2: 31,
+            LEVEL_3: 32
+        }
+    },
+    CAPAS: {
+        MAIN_MENU: 100,
+        DEBUG_MENU: 101,
+        FONDO_TRASERO: 102,
+        FONDO_INTERMEDIO: 103,
+        FONDO_FRONTAL: 104
+    }
+};
