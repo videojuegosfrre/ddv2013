@@ -1,12 +1,21 @@
 var lastEvent;
 var heldKeys = {};
+var TAGS = {
+    ESCENAS: {
+        MAIN_MENU: 0
+    },
+    CAPAS: {
+        MAIN_MENU: 0
+    }
+};
+
 
 var MainMenuLayer = cc.LayerColor.extend({
     _debug:cc.COCOS2D_DEBUG,
 
     init:function()
     {
-        this._super(new cc.Color4B(0, 0, 0, 255));
+        this._super(new cc.Color4B(0, 0, 0, 255), 200, 200);
 
         var size = cc.Director.getInstance().getWinSize();
         var audio_engine = cc.AudioEngine.getInstance();
@@ -32,10 +41,10 @@ var MainMenuLayer = cc.LayerColor.extend({
         menuItem3.setPosition(new cc.Point(size.width / 2, size.height / 2 - 50));
         menuItem4.setPosition(new cc.Point(size.width / 2, size.height / 2 - 100));
 
-        var menu = cc.Menu.create(menuItem1, menuItem2, menuItem3, menuItem4);
-        menu.setPosition(new cc.Point(0, 0));
+        var main_menu = cc.Menu.create(menuItem1, menuItem2, menuItem3, menuItem4);
+        main_menu.setPosition(new cc.Point(0.5, 0.5));
 
-        this.addChild(menu);
+        this.addChild(main_menu, 0);
 
         // Check for mouse support
         if ('mouse' in sys.capabilities) {
@@ -75,6 +84,7 @@ var MainMenuLayer = cc.LayerColor.extend({
         this._super();
         cc.log("Reproducir música de fondo.");
         cc.AudioEngine.getInstance().playMusic(s_background_music, true);
+        cc.log("ZOrder MainMenuLayer: " + this.getZOrder());
     },
 
     playNewGame:function () {
@@ -191,11 +201,17 @@ var MainMenuLayer = cc.LayerColor.extend({
     }
 });
 
-MainMenu = cc.Scene.extend({
+
+var MainMenuScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
-        var layer = new MainMenuLayer();
-        layer.init();
-        this.addChild(layer);
+
+        this.setTag(TAGS.ESCENAS.MAIN_MENU);
+
+        var mainMenuL = new MainMenuLayer();
+        mainMenuL.init();
+        this.addChild(mainMenuL, 0, TAGS.CAPAS.MAIN_MENU);
+
+        cc.log("Children Count: " + this.getChildrenCount());
     }
 });
