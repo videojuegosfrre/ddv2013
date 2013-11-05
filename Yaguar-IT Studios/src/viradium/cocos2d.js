@@ -44,7 +44,8 @@
             '/src/menu/main_menu.js',
             '/src/menu/ingame_menu.js',
             '/src/menu/debug_menu.js',
-            // Historia 1
+            // Historia
+            '/src/history_1/intro.js',
             '/src/history_1/level_1.js',
             // Historia 2
             '/src/history_2/level_1.js'

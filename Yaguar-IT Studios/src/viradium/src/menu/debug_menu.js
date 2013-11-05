@@ -140,6 +140,12 @@ var DebugMenuLayer = cc.LayerColor.extend({
         cc.log("Mostrar introducción a Historia 1.");
         cc.AudioEngine.getInstance().playEffect(s_effect, false);
         this.stopBGMusic();
+
+        var history1Intro = cc.TransitionFade.create(1,
+                                                     new IntroHist1Scene(),
+                                                     new cc.Color3B(0, 0, 0));
+
+        cc.Director.getInstance().replaceScene(history1Intro);
     },
 
     showIntroHist2:function () {
