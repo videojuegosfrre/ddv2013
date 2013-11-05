@@ -199,6 +199,7 @@ var CossinoSprite = cc.Sprite.extend({
 var IntroHist1Layer = cc.LayerColor.extend({
     _debug: cc.COCOS2D_DEBUG,
     cossino_pj: null,
+    world: null,
 
     init:function()
     {
@@ -242,7 +243,21 @@ var IntroHist1Layer = cc.LayerColor.extend({
         cc.log("Agregar sprite Cossino a escena.");
         this.addChild(this.cossino_pj);
 
+        // Configure Box2D ---------------------------------------------------
+        // -------------------------------------------------------------------
+        var b2Vec2 = Box2D.Common.Math.b2Vec2;
+        var b2BodyDef = Box2D.Dynamics.b2BodyDef;
+        var b2Body = Box2D.Dynamics.b2Body;
+        var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
+        var b2World = Box2D.Dynamics.b2World;
+        var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
+
+        // Construct a world object, which will hold and simulate the rigid bodies.
+        this.world = new b2World(new b2Vec2(0, -10), true);
+        this.world.SetContinuousPhysics(true);
+
         // Check for input support -------------------------------------------
+        // -------------------------------------------------------------------
         // Check for mouse support
         if ('mouse' in systemCapabilities) {
             cc.log("Mouse Supported. Enabling...");
