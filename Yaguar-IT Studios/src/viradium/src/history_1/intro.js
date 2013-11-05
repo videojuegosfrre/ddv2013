@@ -24,7 +24,8 @@ var CossinoSprite = cc.Sprite.extend({
     _FNStandDir: 1,
     _FNRunPrefix: "run",
     _FNRunIdx: 1,
-    _status: CHR_STATUS.STAND,
+    _FNJumpPrefix: "jump",
+    _FNJumpIdx: 1,
     _currentPos: null,
 
     ctor:function () {
@@ -37,26 +38,17 @@ var CossinoSprite = cc.Sprite.extend({
         // this.initWithSpriteFrameName(this._FNStandPrefix + "1.png");
         this.init();
 
-        cc.log("Scheduling Cossino Stand Update...");
+        // Schedule updates
+        cc.log("Scheduling Cossino Global Update...");
+        this.scheduleUpdate();
+
+        // Inicialmente mostrar personaje apuntando hacia la derecha
+        // y parado
+        this._currentStatus = CHR_STATUS.STAND;
         this.schedule(this.updateStand, 0.4);
     },
 
     update:function (dt) {
-        switch (this._currentStatus) {
-            case CHR_STATUS.STAND:
-                this.updateStand();
-                break;
-            case CHR_STATUS.WALK:
-                this.updateWalk();
-                break;
-            case CHR_STATUS.RUN:
-                this.updateRun();
-                break;
-            case CHR_STATUS.JUMP:
-                this.updateJump();
-                break;
-        }
-
         switch (this._currentDirection) {
             case CHR_DIRECTION.RIGHT:
                 this.setFlippedX(false);
@@ -71,6 +63,7 @@ var CossinoSprite = cc.Sprite.extend({
         var director = cc.Director.getInstance();
         var wSizeWidth = director.getWinSize().width;
         var wSizeHeight = director.getWinSize().height;
+        var frameCache = cc.SpriteFrameCache.getInstance();
         var menuItemX, menuItemY = 0;
 
         menuItemX = wSizeWidth / 2;
@@ -91,73 +84,126 @@ var CossinoSprite = cc.Sprite.extend({
 
         this.removeAllChildren(true);
 
-        next_frame = cc.Sprite.createWithSpriteFrameName(
-            this._FNStandPrefix + indexAsString + ".png"
-        );
-
-        this.addChild(next_frame);
+        var next_frame = frameCache.getSpriteFrame(this._FNStandPrefix +
+                                                   indexAsString + ".png");
+        this.setDisplayFrame(next_frame);
     },
 
     updateWalk:function () {
-
     },
 
     updateRun:function () {
         var director = cc.Director.getInstance();
         var wSizeWidth = director.getWinSize().width;
         var wSizeHeight = director.getWinSize().height;
+        var frameCache = cc.SpriteFrameCache.getInstance();
         var menuItemX, menuItemY = 0;
 
         menuItemX = wSizeWidth / 2;
         menuItemY = wSizeHeight / 2;
 
-        if (this._FNStandIdx > 3) {
-            this._FNStandDir = -1;
+        if (this._FNRunIdx > 17) {
+            this._FNRunIdx = 1;
         }
-        else if (this._FNStandIdx < 2) {
-            this._FNStandDir = 1;
+
+        // cc.log(this._FNRunIdx);
+
+        var indexAsString = '';
+        indexAsString = this._FNRunIdx.toString();
+        this._FNRunIdx += 1;
+
+        this.removeAllChildren(true);
+
+        var next_frame = frameCache.getSpriteFrame(this._FNRunPrefix +
+                                                   indexAsString + ".png");
+        this.setDisplayFrame(next_frame);
+    },
+
+    updateJump:function () {
+        var director = cc.Director.getInstance();
+        var wSizeWidth = director.getWinSize().width;
+        var wSizeHeight = director.getWinSize().height;
+        var frameCache = cc.SpriteFrameCache.getInstance();
+        var menuItemX, menuItemY = 0;
+
+        menuItemX = wSizeWidth / 2;
+        menuItemY = wSizeHeight / 2;
+
+        if (this._FNJumpIdx > 22) {
+            this._FNJumpIdx = 1;
         }
 
         // cc.log(cossino_pj.FNStandIdx);
 
         var indexAsString = '';
-        indexAsString = this._FNStandIdx.toString();
-        this._FNStandIdx += this._FNStandDir;
+        indexAsString = this._FNJumpIdx.toString();
+        this._FNJumpIdx += 1;
 
         this.removeAllChildren(true);
 
-        next_frame = cc.Sprite.createWithSpriteFrameName(
-            this._FNStandPrefix + indexAsString + ".png"
-        );
-
-        this.addChild(next_frame);
-    },
-
-    updateJump:function () {
-
+        var next_frame = frameCache.getSpriteFrame(this._FNJumpPrefix +
+                                                   indexAsString + ".png");
+        this.setDisplayFrame(next_frame);
     },
 
     handleKey:function (e) {
+        cc.log("Handle Key Cossino.");
 
+        switch (e) {
+            case cc.KEY.left:
+                this._currentDirection = CHR_DIRECTION.LEFT;
+                break;
+            case cc.KEY.right:
+                this._currentDirection = CHR_DIRECTION.RIGHT;
+                break;
+            case cc.KEY.a:
+                this._currentStatus = CHR_STATUS.RUN;
+                // Quick & Dirty, Hacky, Nasty...
+                // Must be refactored, improved...
+                this.unschedule(this.updateJump);
+                this.unschedule(this.updateWalk);
+                this.unschedule(this.updateStand);
+                this.schedule(this.updateRun, 0.05);
+
+                break;
+            case cc.KEY.s:
+                this._currentStatus = CHR_STATUS.JUMP;
+                // Quick & Dirty, Hacky, Nasty...
+                // Must be refactored, improved...
+                this.unschedule(this.updateRun);
+                this.unschedule(this.updateWalk);
+                this.unschedule(this.updateStand);
+                this.schedule(this.updateJump, 0.1);
+
+                break;
+            default:
+                this._currentStatus = CHR_STATUS.STAND;
+                // Quick & Dirty, Hacky, Nasty...
+                // Must be refactored, improved...
+                this.unschedule(this.updateRun);
+                this.unschedule(this.updateWalk);
+                this.unschedule(this.updateJump);
+
+                this.schedule(this.updateStand, 0.4);
+        }
     },
 
     handleTouch:function (touchLocation) {
-
     },
 
     handleTouchMove:function (touchLocation) {
-
     }
 });
 
 
 var IntroHist1Layer = cc.LayerColor.extend({
-    _debug:cc.COCOS2D_DEBUG,
+    _debug: cc.COCOS2D_DEBUG,
+    cossino_pj: null,
 
     init:function()
     {
         cc.log("Init Function: IntroHist1Layer.");
-        this._super(new cc.Color4B(0, 0, 0, 255), 200, 200);
+        this._super(new cc.Color4B(128, 128, 128, 255));
 
         var director = cc.Director.getInstance();
         var wSizeWidth = director.getWinSize().width;
@@ -188,15 +234,13 @@ var IntroHist1Layer = cc.LayerColor.extend({
         // -------------------------------------------------------------------
         // Create Cossino sprite
         cc.log("Crear sprite de Cossino...");
-        cossino_pj = new CossinoSprite();
-        cossino_pj.setPosition(new cc_Point(menuItemX, menuItemY));
-        cossino_pj.setScale(1);
-        cc.log(cossino_pj);
+        this.cossino_pj = new CossinoSprite();
+        this.cossino_pj.setPosition(new cc_Point(menuItemX, menuItemY));
+        this.cossino_pj.setScale(1);
+        cc.log(this.cossino_pj);
 
         cc.log("Agregar sprite Cossino a escena.");
-        this.addChild(cossino_pj);
-
-        cc.log("Posición inicial: " + cossino_pj.getPosition().x + " " + cossino_pj.getPosition().y);
+        this.addChild(this.cossino_pj);
 
         // Check for input support -------------------------------------------
         // Check for mouse support
@@ -340,9 +384,10 @@ var IntroHist1Layer = cc.LayerColor.extend({
             case cc.KEY.escape:
                 this.exitApp();
                 break;
-            default:
-                return;
         }
+
+        // Propagate key down to children
+        this.cossino_pj.handleKey(lastEvent);
     },
 
     onKeyUp:function (e) {
@@ -351,7 +396,6 @@ var IntroHist1Layer = cc.LayerColor.extend({
     },
 
     update:function (dt) {
-
     },
 
     showMouseButtonInfo:function (event, trigger) {
