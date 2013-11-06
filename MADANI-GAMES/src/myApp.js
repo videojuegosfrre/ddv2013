@@ -21,12 +21,13 @@
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
+THE SOFTWARE.
  ****************************************************************************/
-var LG = {
-    KEYS: [],
-    JUSTPRESSED: []
-};
+
+MAX_CONTAINT_WIDTH = 40;
+MAX_CONTAINT_HEIGHT = 40;
+
+var g_sharedGameLayer;
 
 var MyLayer = cc.Layer.extend({
     isMouseDown:false,
@@ -34,16 +35,18 @@ var MyLayer = cc.Layer.extend({
     helloLabel:null,
     circle:null,
     sprite:null,
-	castorcete:null,
-	
+    castorcete:null,
+    
     init:function () {
 
         //////////////////////////////
         // 1. super init first
         this._super();
-		positionX = 0;
-		desplazamiento = 20;
-		
+
+        cc.SpriteFrameCache.getInstance().addSpriteFrames(s_sprites_plist);
+
+        g_sharedGameLayer = this;
+
         /////////////////////////////
         // 2. add a menu item with "X" image, which is clicked to quit the program
         //    you may modify it.
@@ -80,58 +83,81 @@ var MyLayer = cc.Layer.extend({
         this.sprite.setPosition(cc.p(size.width / 2, size.height / 2));
         this.sprite.setScale(size.height/this.sprite.getContentSize().height);
         this.addChild(this.sprite);
-		
-		 // add "Helloworld" splash screen"
-        castorcete = cc.Sprite.create(s_Castorcete);
-        castorcete.setPosition(cc.p(size.width / 2, 0));
-        castorcete.setAnchorPoint(cc.p(0.5, 0));
-		castorcete.setScale(0.1);
+         
+           // add "Helloworld" splash screen"
+        this.sprite11 = cc.Sprite.create("silla1.png");
+        this.sprite11.setAnchorPoint(cc.p(0.5, 0.5));
+        this.sprite11.setPosition(cc.p(size.width / 2, size.height / 2));
+        this.sprite11.setScale(0.5);
+        this.addChild(this.sprite11);
+
+
+         // add "Helloworld" splash screen"
+        castorcete = Beaver.create(BeaverType[0]);
         this.addChild(castorcete);
-		
-		// var jump = cc.JumpTo.create(0.5, cc.p(size.width / 2, 0), 10, 1);
-		// castorcete.runAction(jump);
+    
    
-		 if ('keyboard' in sys.capabilities) {
+         if ('keyboard' in sys.capabilities) {
             this.setKeyboardEnabled(true);
         }
-		this.scheduleUpdate();
+        this.scheduleUpdate();
     },
-	
-	onKeyDown: function (e) {
-        LG.KEYS[e] = true;
-        LG.JUSTPRESSED[e] = true;
+    
+    onKeyDown: function (e) {
+        BB.KEYS[e] = true;
     },
 
     onKeyUp: function (e) {
-        LG.KEYS[e] = false;
-        LG.JUSTPRESSED[e] = false;
+        BB.KEYS[e] = false;
     },
-	
-	update: function() {
-        for (var i in LG.KEYS) {
-            if (LG.JUSTPRESSED[i]) {
+    
+    update: function() {
+              
+        
+        /*for (var i in BB.KEYS) {
+            if (BB.KEYS[i]) {
                 cc.log("Presionado el botón"+i);
-				
-				var movimiento = positionX;
-													
-				if (i == 32){
-					var jump = cc.JumpTo.create(0.3, cc.p(size.width / 2, movimiento), 40, 1);
-					castorcete.runAction(jump);
-				} else {
-					if (i == 38) {
-						movimiento += desplazamiento;
-					} else if (i == 40){
-						movimiento -= desplazamiento;
-					}
-					var move = cc.MoveTo.create(0.5, cc.p(size.width / 2, movimiento), 40, 1);
-					castorcete.runAction(move);					
-				}
-				positionX = movimiento;	
+                                                                    
+                if (i == 32){
+                    castorcete.jump();
+                } else {
+                    if (i == 38) {
+                        castorcete.move(1);
+                    } else if (i == 40){
+                        castorcete.move(-1);
+                    }               
+                } 
+                BB.KEYS[i] = false;
             }
-            if (LG.KEYS[i] && LG.JUSTPRESSED[i]) {
-                LG.JUSTPRESSED[i] = false;
-            }
-        }
+        }*/
+    },
+
+    checkIsCollide:function () {
+        var selChild, beaverChild;
+        // check collide
+        var i = 0;
+        for (i = 0; i < BB.CONTAINER.OBJECTS.length; i++) {
+            selChild = BB.CONTAINER.OBJECTS[i];
+            if (!selChild.active)
+                continue;
+
+                beaverChild = castorcete;
+                if (beaverChild.active && this.collide(selChild, beaverChild)) {
+                    beaverChild.hurt();
+                    selChild.hurt();
+                }
+           }
+    },
+
+    collide:function (a, b) {
+        var pos1 = a.getPosition();
+        var pos2 = b.getPosition();
+        if (Math.abs(pos1.x - pos2.x) > MAX_CONTAINT_WIDTH || Math.abs(pos1.y - pos2.y) > MAX_CONTAINT_HEIGHT)
+            return false;
+
+        var aRect = a.collideRect(pos1);
+        var bRect = b.collideRect(pos2);
+        return cc.rectIntersectsRect(aRect, bRect);
     },
 });
 

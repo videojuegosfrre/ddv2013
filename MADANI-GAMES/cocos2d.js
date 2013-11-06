@@ -39,7 +39,9 @@
         //SingleEngineFile:'',
         appFiles:[
             'src/resource.js',
-			'src/beaver',
+            'src/config/GameConfig.js',
+            'src/config/BeaverType.js',
+			'src/Beaver.js',
             'src/myApp.js'//add your own files in order here
         ]
     };
