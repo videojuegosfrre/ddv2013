@@ -4,6 +4,9 @@ var s_CloseSelected = "CloseSelected.png";
 var s_Fondo = "fondo.png";
 var s_Castorcete = "castorcete.png";
 var s_sprites = "sprites.png";
+var s_izquierda = "izquierda.png";
+var s_derecha = "derecha.png";
+var s_arriba = "arriba.png";
 var s_sprites_plist = "sprites.plist";
 
 var g_resources = [
@@ -14,6 +17,9 @@ var g_resources = [
     {src:s_Fondo},
     {src:s_Castorcete},
     {src:s_sprites},
+    {src:s_derecha},
+    {src:s_arriba},
+    {src:s_izquierda},
 
     //plist
 	{src:s_sprites_plist},

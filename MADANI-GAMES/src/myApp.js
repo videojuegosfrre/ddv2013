@@ -52,6 +52,8 @@ var MyLayer = cc.Layer.extend({
         //    you may modify it.
         // ask director the window size
         size = cc.Director.getInstance().getVisibleSize();
+        var visibleHeigth = size.height;
+        var visibleWidth = size.width;
 
         // add a "close" icon to exit the progress. it's an autorelease object
         var closeItem = cc.MenuItemImage.create(
@@ -71,11 +73,11 @@ var MyLayer = cc.Layer.extend({
         // 3. add your codes below...
         // add a label shows "Hello World"
         // create and initialize a label
-        this.helloLabel = cc.LabelTTF.create("Hello World", "Impact", 38);
+     //   this.helloLabel = cc.LabelTTF.create("Hello World", "Impact", 38);
         // position the label on the center of the screen
-        this.helloLabel.setPosition(cc.p(size.width / 2, size.height - 40));
+    //    this.helloLabel.setPosition(cc.p(size.width / 2, size.height - 40));
         // add the label as a child to this layer
-        this.addChild(this.helloLabel, 5);
+     //   this.addChild(this.helloLabel, 5);
 
         // add "Helloworld" splash screen"
         this.sprite = cc.Sprite.create(s_Fondo);
@@ -84,13 +86,26 @@ var MyLayer = cc.Layer.extend({
         this.sprite.setScale(size.height/this.sprite.getContentSize().height);
         this.addChild(this.sprite);
          
-           // add "Helloworld" splash screen"
-        this.sprite11 = cc.Sprite.create("silla1.png");
-        this.sprite11.setAnchorPoint(cc.p(0.5, 0.5));
-        this.sprite11.setPosition(cc.p(size.width / 2, size.height / 2));
-        this.sprite11.setScale(0.5);
-        this.addChild(this.sprite11);
+        // add "pasto de arriba
+        this.spriteArriba = cc.Sprite.create(s_arriba);
+        this.spriteArriba.setAnchorPoint(AnchorPointTop);
+        this.spriteArriba.setPosition(cc.p(visibleWidth / 2, visibleHeigth));
+        this.spriteArriba.setScale(this.sprite.getContentSize().height / this.sprite.getContentSize().height);
+        this.addChild(this.spriteArriba);
 
+        // add "pasto de abajo izquierda
+        this.spriteIzquierda = cc.Sprite.create(s_izquierda);
+        this.spriteIzquierda.setAnchorPoint(AnchorPointBottomLeft);
+        this.spriteIzquierda.setPosition(VisibleRect.bottomLeft());
+       // this.spriteIzquierda.setScale(this.sprite.getContentSize().height / this.spriteIzquierda.getContentSize().height);
+        this.addChild(this.spriteIzquierda);
+
+     // add "pasto de abajo derecha
+        this.spriteRight = cc.Sprite.create(s_derecha);
+        this.spriteRight.setAnchorPoint(AnchorPointBottomRight);
+        this.spriteRight.setPosition(VisibleRect.bottomRight());
+       // this.spriteRight.setScale(this.sprite.getContentSize().height / this.spriteRight.getContentSize().height);
+        this.addChild(this.spriteRight);
 
          // add "Helloworld" splash screen"
         castorcete = Beaver.create(BeaverType[0]);

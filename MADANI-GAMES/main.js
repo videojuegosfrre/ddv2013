@@ -109,7 +109,7 @@ var s_ptTopLeft = cc.PointZero();
 var VisibleRect = {
     rect:function () {
         if (s_rcVisible.width == 0) {
-            var s = cc.Director.getInstance().getWinSize();
+            var s = cc.Director.getInstance().getVisibleSize();
             s_rcVisible = cc.rect(0, 0, s.width, s.height);
         }
         return s_rcVisible;

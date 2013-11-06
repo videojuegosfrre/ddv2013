@@ -42,13 +42,23 @@ var Beaver = cc.Sprite.extend({
                 this.move(UP);
                 BB.KEYS[cc.KEY.w] = false;
                 BB.KEYS[cc.KEY.up] = false;
-                this.animate();
+
+                if (pos.y <= screenHeight - 100 && pos.y >= 100){
+                    this.animate("slice66_66.png", "slice67_67.png");
+                }else{
+                    this.animate("slice27_27.png", "slice28_28.png");
+                }
+
             }
             if ((BB.KEYS[cc.KEY.s] || BB.KEYS[cc.KEY.down]) && pos.y >= 0) {
                 this.move(DOWN);
                 BB.KEYS[cc.KEY.s] = false;
                 BB.KEYS[cc.KEY.down]= false;
-                this.animate();
+                if (pos.y <= screenHeight - 100 && pos.y >= 100){
+                    this.animate("slice60_60.png", "slice60_60.png");
+                }else{
+                    this.animate("slice27_27.png", "slice28_28.png");
+                }
             }
             if ((BB.KEYS[cc.KEY.a] || BB.KEYS[cc.KEY.left]) && pos.x >= 0) {
                 //pos.x -= dt * this.speed;
@@ -64,10 +74,10 @@ var Beaver = cc.Sprite.extend({
       //  };
     },
 
-    animate:function(){
+    animate:function(image1,image2){
         // set frame
-        var frame0 = cc.SpriteFrameCache.getInstance().getSpriteFrame("slice27_27.png");
-        var frame1 = cc.SpriteFrameCache.getInstance().getSpriteFrame("slice28_28.png");
+        var frame0 = cc.SpriteFrameCache.getInstance().getSpriteFrame(image1);
+        var frame1 = cc.SpriteFrameCache.getInstance().getSpriteFrame(image2);
 
         var animFrames = [];
         animFrames.push(frame0);
