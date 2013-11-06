@@ -23,14 +23,20 @@ var s_effect_ogg = s_effect + ".ogg";
 var s_cossino_img = h_1_img_dir + "cossino.png";
 var s_cossino_plist = h_1_img_dir + "cossino.plist";
 
+var s_font_bitmap_img = menu_img_dir + "font_bitmap.png";
+var s_font_bitmap_fnt = menu_img_dir + "font_bitmap.fnt";
+
+
 var g_resources = [
     //image
     {type:"image", src:s_cossino_img},
+    {type:"image", src:s_font_bitmap_img},
 
     //plist
     {type:"plist", src:s_cossino_plist},
 
     //fnt
+    {type:"fnt", src:s_font_bitmap_fnt},
 
     //tmx
 
@@ -51,21 +57,24 @@ var TAGS = {
         DEBUG_MENU: 1,
         OPTIONS_MENU: 2,
         HISTORY_1: {
-            LEVEL_1: 10,
+            INTRO: 10,
+            LEVEL_1: 11,
             LEVEL_2: 12,
             LEVEL_3: 13
         },
         HISTORY_2: {
-            LEVEL_1: 30,
-            LEVEL_2: 31,
-            LEVEL_3: 32
+            INTRO: 30,
+            LEVEL_1: 31,
+            LEVEL_2: 32,
+            LEVEL_3: 33
         }
     },
     CAPAS: {
-        MAIN_MENU: 100,
-        DEBUG_MENU: 101,
-        FONDO_TRASERO: 102,
-        FONDO_INTERMEDIO: 103,
-        FONDO_FRONTAL: 104
+        DEFAULT: 100,
+        MAIN_MENU: 101,
+        DEBUG_MENU: 102,
+        FONDO_TRASERO: 103,
+        FONDO_INTERMEDIO: 104,
+        FONDO_FRONTAL: 105,
     }
 };

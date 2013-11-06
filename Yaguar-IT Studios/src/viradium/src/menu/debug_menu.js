@@ -158,6 +158,12 @@ var DebugMenuLayer = cc.LayerColor.extend({
         cc.log("Mostrar Historia 1: Nivel 1");
         cc.AudioEngine.getInstance().playEffect(s_effect, false);
         this.stopBGMusic();
+
+        var history1Level1 = cc.TransitionFade.create(1,
+                                                      new Hist1Level1Scene(),
+                                                      new cc.Color3B(0, 0, 0));
+
+        cc.Director.getInstance().replaceScene(history1Level1);
     },
 
     showHist1Lvl2:function () {

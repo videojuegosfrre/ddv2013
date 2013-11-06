@@ -24,9 +24,9 @@ var MainMenuLayer = cc.LayerColor.extend({
         cc_MenuItemFont.setFontName("Arial");
         cc_MenuItemFont.setFontSize(30);
 
-        var menuItem0 = new cc_MenuItemFont.create("Debug menú",
-                                                   this.showDebugMenu,
-                                                   this);
+        var menuItem0 = new cc_MenuItemFont.create("Debug menu",
+                                                        this.showDebugMenu,
+                                                        this);
         var menuItem1 = new cc_MenuItemFont.create("Nuevo juego",
                                                    this.playNewGame,
                                                    this);
@@ -104,6 +104,12 @@ var MainMenuLayer = cc.LayerColor.extend({
         cc.log("Comenzar nuevo juego.");
         cc.AudioEngine.getInstance().playEffect(s_effect, false);
         this.stopBGMusic();
+
+        var hist1Intro = cc.TransitionFade.create(1,
+                                                  new IntroHist1Scene(),
+                                                  new cc.Color3B(0, 0, 0));
+
+        cc.Director.getInstance().replaceScene(hist1Intro);
     },
 
     resumeGame:function () {
