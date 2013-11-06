@@ -1,0 +1,20 @@
+var BeaverType = [
+    {
+    	type:0,
+    	desplazamiento:20,
+    	strench:10,
+    	speed:10,
+    	armor:10,
+    	lives:3,
+    	textureName:s_Castorcete,
+    },
+    {
+    	type:1,
+    	desplazamiento:20,
+    	strench:50,
+    	speed:10,
+    	armor:10,
+    	lives:3,
+    	textureName:s_Castorcete,
+    }
+];
