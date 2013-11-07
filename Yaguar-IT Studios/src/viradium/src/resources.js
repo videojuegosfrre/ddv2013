@@ -6,6 +6,9 @@ var menu_music_dir = "resources/menu/music/";
 var h_1_img_dir = "resources/history_1/img/";
 var h_1_music_dir = "resources/history_1/music/";
 
+var s_cossino_img = h_1_img_dir + "cossino.png";
+var s_cossino_plist = h_1_img_dir + "cossino.plist";
+
 // History 2 Resources
 var h_2_img_dir = "resources/history_2/img/";
 var h_2_music_dir = "resources/history_2/music/";
@@ -19,9 +22,6 @@ var s_effect = menu_music_dir + "effect2";
 var s_effect_mp3 = s_effect + ".mp3";
 var s_effect_wav = s_effect + ".wav";
 var s_effect_ogg = s_effect + ".ogg";
-
-var s_cossino_img = h_1_img_dir + "cossino.png";
-var s_cossino_plist = h_1_img_dir + "cossino.plist";
 
 var s_font_bitmap_img = menu_img_dir + "font_bitmap.png";
 var s_font_bitmap_fnt = menu_img_dir + "font_bitmap.fnt";
