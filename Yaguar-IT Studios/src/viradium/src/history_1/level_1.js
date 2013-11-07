@@ -34,6 +34,7 @@ var CossinoSprite = cc.Sprite.extend({
     _executingAnimation: false,
     _nextStatus: CHR_STATUS.STAND,
     _nextDirection: CHR_DIRECTION.NOTSET,
+    _antiKeyBounceCounter: 0,
 
     ctor:function () {
         cc.log("Constructor: CossinoSprite");
@@ -51,7 +52,7 @@ var CossinoSprite = cc.Sprite.extend({
 
         // Inicialmente mostrar personaje apuntando hacia la derecha
         // y parado
-        this.stand();
+        this.beginStand();
     },
 
     update:function (dt) {
@@ -174,20 +175,20 @@ var CossinoSprite = cc.Sprite.extend({
         switch (e) {
             case cc.KEY.left:
                 this.turnLeft();
-                this.walk();
+                this.beginWalk();
                 break;
             case cc.KEY.right:
                 this.turnRight();
-                this.walk();
+                this.beginWalk();
                 break;
             case cc.KEY.a:
-                this.run();
+                this.beginRun();
                 break;
             case cc.KEY.s:
-                this.jump();
+                this.beginJump();
                 break;
             default:
-                this.stand();
+                this.beginStand();
                 break;
         }
     },
@@ -198,19 +199,19 @@ var CossinoSprite = cc.Sprite.extend({
         switch (e) {
             case cc.KEY.left:
                 if (this._currentStatus === CHR_STATUS.WALK) {
-                    this.stand();
+                    this.beginStand();
                 }
-
                 break;
             case cc.KEY.right:
                 if (this._currentStatus === CHR_STATUS.WALK) {
-                    this.stand();
+                    this.beginStand();
                 }
-
                 break;
-            case cc.KEYS.a:
+            case cc.KEY.a:
+                this.stopRun();
                 break;
-            case cc.KEYS.s:
+            case cc.KEY.s:
+                this.stopJump();
                 break;
             default:
                 break;
@@ -223,7 +224,11 @@ var CossinoSprite = cc.Sprite.extend({
     handleTouchMove:function (touchLocation) {
     },
 
-    stand:function () {
+    _stand:function () {
+        this.beginStand();
+    },
+
+    beginStand:function () {
         cc.log("Stand Cossino.");
         this._currentStatus = CHR_STATUS.STAND;
         // Quick & Dirty, Hacky, Nasty...
@@ -234,7 +239,15 @@ var CossinoSprite = cc.Sprite.extend({
         this.schedule(this.updateStand, 0.4);
     },
 
-    walk:function () {
+    stopStand:function () {
+        this.unschedule(this.updateStand);
+    },
+
+    _walk:function () {
+        this.beginWalk();
+    },
+
+    beginWalk:function () {
         cc.log("Walk Cossino.");
         this._currentStatus = CHR_STATUS.WALK;
         // Quick & Dirty, Hacky, Nasty...
@@ -246,7 +259,15 @@ var CossinoSprite = cc.Sprite.extend({
         this._executingAnimation = true;
     },
 
-    jump:function () {
+    stopWalk:function () {
+        this.unschedule(this.updateWalk);
+    },
+
+    _jump:function () {
+        this.beginJump();
+    },
+
+    beginJump:function () {
         cc.log("Jump Cossino.");
         this._currentStatus = CHR_STATUS.JUMP;
         // Quick & Dirty, Hacky, Nasty...
@@ -258,7 +279,15 @@ var CossinoSprite = cc.Sprite.extend({
         this._executingAnimation = true;
     },
 
-    run:function () {
+    stopJump:function () {
+        this.unschedule(this.updateJump);
+    },
+
+    _run:function () {
+        this.beginRun();
+    },
+
+    beginRun:function () {
         cc.log("Run Cossino.");
         this._currentStatus = CHR_STATUS.RUN;
         // Quick & Dirty, Hacky, Nasty...
@@ -268,6 +297,10 @@ var CossinoSprite = cc.Sprite.extend({
         this.unschedule(this.updateStand);
         this.schedule(this.updateRun, 0.05);
         this._executingAnimation = true;
+    },
+
+    stopRun:function () {
+        this.unschedule(this.updateRun);
     },
 
     onAnimFinish:function () {
