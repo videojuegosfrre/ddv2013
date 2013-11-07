@@ -35,6 +35,10 @@ var CossinoSprite = cc.Sprite.extend({
     _nextStatus: CHR_STATUS.STAND,
     _nextDirection: CHR_DIRECTION.NOTSET,
     _antiKeyBounceCounter: 0,
+    _onFinishStandStop: false,
+    _onFinishRunStop: false,
+    _onFinishWalkStop: false,
+    _onFinishJumpStop: false,
 
     ctor:function () {
         cc.log("Constructor: CossinoSprite");
@@ -73,6 +77,11 @@ var CossinoSprite = cc.Sprite.extend({
         }
         else if (this._FNStandIdx < 2) {
             this._FNStandDir = 1;
+
+            // FIXME:
+            if (this._onFinishStandStop) {
+                this.stopStand();
+            }
         }
 
         // cc.log(cossino_pj.FNStandIdx);
@@ -100,6 +109,11 @@ var CossinoSprite = cc.Sprite.extend({
 
         if (this._FNWalkIdx > 17) {
             this._FNWalkIdx = 1;
+
+            // FIXME:
+            if (this._onFinishWalkStop) {
+                this.stopWalk();
+            }
         }
 
         // cc.log(this._FNWalkIdx);
@@ -127,6 +141,11 @@ var CossinoSprite = cc.Sprite.extend({
 
         if (this._FNRunIdx > 17) {
             this._FNRunIdx = 1;
+
+            // FIXME:
+            if (this._onFinishRunStop) {
+                this.stopRun();
+            }
         }
 
         // cc.log(this._FNRunIdx);
@@ -154,6 +173,12 @@ var CossinoSprite = cc.Sprite.extend({
 
         if (this._FNJumpIdx > 22) {
             this._FNJumpIdx = 1;
+
+            // FIXME:
+            if (this._onFinishJumpStop) {
+                this.stopJump();
+                this.beginStand();
+            }
         }
 
         // cc.log(cossino_pj.FNStandIdx);
@@ -174,12 +199,16 @@ var CossinoSprite = cc.Sprite.extend({
 
         switch (e) {
             case cc.KEY.left:
-                this.turnLeft();
-                this.beginWalk();
+                if (this._currentStatus !== CHR_STATUS.JUMP) {
+                    this.turnLeft();
+                    this.beginWalk();
+                }
                 break;
             case cc.KEY.right:
-                this.turnRight();
-                this.beginWalk();
+                if (this._currentStatus !== CHR_STATUS.JUMP) {
+                    this.turnRight();
+                    this.beginWalk();
+                }
                 break;
             case cc.KEY.a:
                 this.beginRun();
@@ -208,12 +237,19 @@ var CossinoSprite = cc.Sprite.extend({
                 }
                 break;
             case cc.KEY.a:
-                this.stopRun();
+                if (this._currentStatus === CHR_STATUS.RUN) {
+                    // this.stopRun();
+                    this.beginStand();
+                 }
                 break;
             case cc.KEY.s:
-                this.stopJump();
+                if (this._currentStatus === CHR_STATUS.JUMP) {
+                    this.reqOnFinishJumpStop(this.beginStand);
+                    //this.beginStand();
+                }
                 break;
             default:
+                this.beginStand();
                 break;
         }
     },
@@ -241,6 +277,19 @@ var CossinoSprite = cc.Sprite.extend({
 
     stopStand:function () {
         this.unschedule(this.updateStand);
+        this._FNStandIdx = 1;
+        this._FNStandDir = 1;
+        this._onFinishStandStop = false;
+    },
+
+    reqOnFinishStandStop:function (next_status) {
+        cc.log("Detener Stand Cossino al finalizar sprites.");
+        this._onFinishStandStop = true;
+
+        if (typeof next_status === 'function') {
+            cc.log("Establecido próximo estado de Stand");
+            this.next_status();
+        }
     },
 
     _walk:function () {
@@ -261,6 +310,18 @@ var CossinoSprite = cc.Sprite.extend({
 
     stopWalk:function () {
         this.unschedule(this.updateWalk);
+        this._FNWalkIdx = 1;
+        this._onFinishWalkStop = false;
+    },
+
+    reqOnFinishWalkStop:function (next_status) {
+        cc.log("Detener Walk Cossino al finalizar sprites.");
+        this._onFinishWalkStop = true;
+
+        if (typeof next_status === 'function') {
+            cc.log("Establecido próximo estado de Walk");
+            next_status();
+        }
     },
 
     _jump:function () {
@@ -281,6 +342,18 @@ var CossinoSprite = cc.Sprite.extend({
 
     stopJump:function () {
         this.unschedule(this.updateJump);
+        this._FNJumpIdx = 1;
+        this._onFinishJumpStop = false;
+    },
+
+    reqOnFinishJumpStop:function (next_status) {
+        cc.log("Detener Jump Cossino al finalizar sprites.");
+        this._onFinishJumpStop = true;
+
+        if (typeof next_status === 'function') {
+            cc.log("Establecido próximo estado de Jump");
+                next_status.apply(this);
+        }
     },
 
     _run:function () {
@@ -301,6 +374,18 @@ var CossinoSprite = cc.Sprite.extend({
 
     stopRun:function () {
         this.unschedule(this.updateRun);
+        this._FNRunIdx = 1;
+        this._onFinishRunStop = false;
+    },
+
+    reqOnFinishRunStop:function (next_status) {
+        cc.log("Detener Run Cossino al finalizar sprites.");
+        this._onFinishRunStop = true;
+
+        if (typeof next_status === 'function') {
+            cc.log("Establecido próximo estado de Run");
+            next_status();
+        }
     },
 
     onAnimFinish:function () {
@@ -335,7 +420,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
     init:function()
     {
         cc.log("Init Function: Hist1Lvl1Layer.");
-        this._super(new cc.Color4B(128, 128, 128, 255));
+        this._super(new cc.Color4B(180, 180, 180, 255));
 
         var director = cc.Director.getInstance();
         var wSizeWidth = director.getWinSize().width;
