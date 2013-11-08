@@ -26,11 +26,14 @@ var s_effect_ogg = s_effect + ".ogg";
 var s_font_bitmap_img = menu_img_dir + "font_bitmap.png";
 var s_font_bitmap_fnt = menu_img_dir + "font_bitmap.fnt";
 
+var s_pathBlock = h_1_img_dir + "blocks.png";
+
 
 var g_resources = [
     //image
     {type:"image", src:s_cossino_img},
     {type:"image", src:s_font_bitmap_img},
+    {type:"image", src:s_pathBlock},
 
     //plist
     {type:"plist", src:s_cossino_plist},
