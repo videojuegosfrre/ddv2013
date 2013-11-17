@@ -87,7 +87,7 @@ var IntroHist1Layer = cc.LayerColor.extend({
     onEnter:function () {
         this._super();
         cc.log("Reproducir música de fondo.");
-        cc.AudioEngine.getInstance().playMusic(s_background_music, true);
+        cc.AudioEngine.getInstance().playMusic(s_intro_music_2, true);
         cc.log("ZOrder MainMenuLayer: " + this.getZOrder());
     },
 

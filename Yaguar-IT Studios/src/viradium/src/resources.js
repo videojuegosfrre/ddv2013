@@ -3,13 +3,63 @@ var menu_img_dir = "resources/menu/img/";
 var menu_music_dir = "resources/menu/music/";
 
 // History 1 Resources
+// ---------------------------------------------------------------------
 var h_1_img_dir = "resources/history_1/img/";
 var h_1_music_dir = "resources/history_1/music/";
 
 var s_cossino_img = h_1_img_dir + "cossino.png";
 var s_cossino_plist = h_1_img_dir + "cossino.plist";
 
+var s_intro_music_1 = h_1_music_dir + "background/music_intro_1";
+var s_intro_music_1_mp3 = s_intro_music_1 + ".mp3";
+var s_intro_music_1_ogg = s_intro_music_1 + ".ogg";
+
+var s_intro_music_2 = h_1_music_dir + "background/music_intro_2";
+var s_intro_music_2_mp3 = s_intro_music_2 + ".mp3";
+var s_intro_music_2_ogg = s_intro_music_2 + ".ogg";
+
+var s_ambient_music_1 = h_1_music_dir + "background/music_ambiente";
+var s_ambient_music_1_mp3 = s_ambient_music_1 + ".mp3";
+var s_ambient_music_1_ogg = s_ambient_music_1 + ".ogg";
+
+var s_bg_h1_layer0_part0 = h_1_img_dir + "background_0_0.png";
+var s_bg_h1_layer0_part1 = h_1_img_dir + "background_0_1.png";
+var s_bg_h1_layer0_part2 = h_1_img_dir + "background_0_2.png";
+var s_bg_h1_layer0_part3 = h_1_img_dir + "background_0_3.png";
+var s_bg_h1_layer0_part4 = h_1_img_dir + "background_0_4.png";
+var s_bg_h1_layer0_part5 = h_1_img_dir + "background_0_5.png";
+var s_bg_h1_layer0_part6 = h_1_img_dir + "background_0_6.png";
+var s_bg_h1_layer0_part7 = h_1_img_dir + "background_0_7.png";
+var s_bg_h1_layer0_part8 = h_1_img_dir + "background_0_8.png";
+var s_bg_h1_layer0_part9 = h_1_img_dir + "background_0_9.png";
+var s_bg_h1_layer0_part10 = h_1_img_dir + "background_0_10.png";
+var s_bg_h1_layer0_part11 = h_1_img_dir + "background_0_11.png";
+var s_bg_h1_layer0_part12 = h_1_img_dir + "background_0_12.png";
+var s_bg_h1_layer0_part13 = h_1_img_dir + "background_0_13.png";
+
+var s_bg_h1_layer1_part0 = h_1_img_dir + "background_1_0.png";
+var s_bg_h1_layer1_part1 = h_1_img_dir + "background_1_1.png";
+var s_bg_h1_layer1_part2 = h_1_img_dir + "background_1_2.png";
+var s_bg_h1_layer1_part3 = h_1_img_dir + "background_1_3.png";
+var s_bg_h1_layer1_part4 = h_1_img_dir + "background_1_4.png";
+var s_bg_h1_layer1_part5 = h_1_img_dir + "background_1_5.png";
+var s_bg_h1_layer1_part6 = h_1_img_dir + "background_1_6.png";
+var s_bg_h1_layer1_part7 = h_1_img_dir + "background_1_7.png";
+var s_bg_h1_layer1_part8 = h_1_img_dir + "background_1_8.png";
+var s_bg_h1_layer1_part9 = h_1_img_dir + "background_1_9.png";
+
+var s_bg_h1_layer2_part0 = h_1_img_dir + "background_2_0.png";
+var s_bg_h1_layer2_part1 = h_1_img_dir + "background_2_1.png";
+var s_bg_h1_layer2_part2 = h_1_img_dir + "background_2_2.png";
+var s_bg_h1_layer2_part3 = h_1_img_dir + "background_2_3.png";
+var s_bg_h1_layer2_part4 = h_1_img_dir + "background_2_4.png";
+var s_bg_h1_layer2_part5 = h_1_img_dir + "background_2_5.png";
+var s_bg_h1_layer2_part6 = h_1_img_dir + "background_2_6.png";
+var s_bg_h1_layer2_part7 = h_1_img_dir + "background_2_7.png";
+
+
 // History 2 Resources
+// ---------------------------------------------------------------------
 var h_2_img_dir = "resources/history_2/img/";
 var h_2_music_dir = "resources/history_2/music/";
 
@@ -34,6 +84,39 @@ var g_resources = [
     {type:"image", src:s_cossino_img},
     {type:"image", src:s_font_bitmap_img},
     {type:"image", src:s_pathBlock},
+    {type:"image", src:s_pathBlock},
+    {type:"image", src:s_bg_h1_layer0_part0},
+    {type:"image", src:s_bg_h1_layer0_part1},
+    {type:"image", src:s_bg_h1_layer0_part2},
+    {type:"image", src:s_bg_h1_layer0_part3},
+    {type:"image", src:s_bg_h1_layer0_part4},
+    {type:"image", src:s_bg_h1_layer0_part5},
+    {type:"image", src:s_bg_h1_layer0_part6},
+    {type:"image", src:s_bg_h1_layer0_part7},
+    {type:"image", src:s_bg_h1_layer0_part8},
+    {type:"image", src:s_bg_h1_layer0_part9},
+    {type:"image", src:s_bg_h1_layer0_part10},
+    {type:"image", src:s_bg_h1_layer0_part11},
+    {type:"image", src:s_bg_h1_layer0_part12},
+    {type:"image", src:s_bg_h1_layer0_part13},
+    {type:"image", src:s_bg_h1_layer1_part0},
+    {type:"image", src:s_bg_h1_layer1_part1},
+    {type:"image", src:s_bg_h1_layer1_part2},
+    {type:"image", src:s_bg_h1_layer1_part3},
+    {type:"image", src:s_bg_h1_layer1_part4},
+    {type:"image", src:s_bg_h1_layer1_part5},
+    {type:"image", src:s_bg_h1_layer1_part6},
+    {type:"image", src:s_bg_h1_layer1_part7},
+    {type:"image", src:s_bg_h1_layer1_part8},
+    {type:"image", src:s_bg_h1_layer1_part9},
+    {type:"image", src:s_bg_h1_layer2_part0},
+    {type:"image", src:s_bg_h1_layer2_part1},
+    {type:"image", src:s_bg_h1_layer2_part2},
+    {type:"image", src:s_bg_h1_layer2_part3},
+    {type:"image", src:s_bg_h1_layer2_part4},
+    {type:"image", src:s_bg_h1_layer2_part5},
+    {type:"image", src:s_bg_h1_layer2_part6},
+    {type:"image", src:s_bg_h1_layer2_part7},
 
     //plist
     {type:"plist", src:s_cossino_plist},
@@ -46,12 +129,16 @@ var g_resources = [
     //bgm
     {type:"sound", src:s_background_music_ogg},
     {type:"sound", src:s_background_music_mp3},
-    {type:"sound", src:s_background_music_wav},
+    {type:"sound", src:s_intro_music_1_ogg},
+    {type:"sound", src:s_intro_music_1_mp3},
+    {type:"sound", src:s_intro_music_2_ogg},
+    {type:"sound", src:s_intro_music_2_mp3},
+    {type:"sound", src:s_ambient_music_1_ogg},
+    {type:"sound", src:s_ambient_music_1_mp3},
 
     //effect
     {type:"sound", src:s_effect_ogg},
     {type:"sound", src:s_effect_mp3},
-    {type:"sound", src:s_effect_wav}
 ];
 
 var TAGS = {

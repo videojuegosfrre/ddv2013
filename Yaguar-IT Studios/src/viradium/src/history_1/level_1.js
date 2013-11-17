@@ -1,3 +1,6 @@
+var cc_Point = cc.p;
+var cc_sprite_create = cc.Sprite.create;
+
 var lastEvent = -1;
 var heldKeys = {};
 
@@ -42,6 +45,10 @@ var CossinoSprite = cc.Sprite.extend({
     _onFinishRunStop: false,
     _onFinishWalkStop: false,
     _onFinishJumpStop: false,
+    director: null,
+    frameCache: null,
+    wSizeWidth: 0,
+    wSizeHeight: 0,
 
     ctor:function () {
         cc.log("Constructor: CossinoSprite");
@@ -49,6 +56,11 @@ var CossinoSprite = cc.Sprite.extend({
 
         var cache = cc.SpriteFrameCache.getInstance();
         cache.addSpriteFrames(s_cossino_plist, s_cossino_img);
+
+        this.director = cc.Director.getInstance();
+        this.wSizeWidth = this.director.getWinSize().width;
+        this.wSizeHeight = this.director.getWinSize().height;
+        this.frameCache = cc.SpriteFrameCache.getInstance();
 
         // this.initWithSpriteFrameName(this._FNStandPrefix + "1.png");
         this.init();
@@ -66,14 +78,10 @@ var CossinoSprite = cc.Sprite.extend({
     },
 
     updateStand:function () {
-        var director = cc.Director.getInstance();
-        var wSizeWidth = director.getWinSize().width;
-        var wSizeHeight = director.getWinSize().height;
-        var frameCache = cc.SpriteFrameCache.getInstance();
         var menuItemX, menuItemY = 0;
 
-        menuItemX = wSizeWidth / 2;
-        menuItemY = wSizeHeight / 2;
+        menuItemX = this.wSizeWidth / 2;
+        menuItemY = this.wSizeHeight / 2;
 
         if (this._FNStandIdx > 3) {
             this._FNStandDir = -1;
@@ -89,28 +97,23 @@ var CossinoSprite = cc.Sprite.extend({
 
         // cc.log(cossino_pj.FNStandIdx);
 
-        var indexAsString = '';
-        indexAsString = this._FNStandIdx.toString();
+        var indexAsString = this._FNStandIdx.toString();
         this._FNStandIdx += this._FNStandDir;
 
-        var next_frame = frameCache.getSpriteFrame(this._FNStandPrefix +
-                                                   indexAsString + ".png");
+        var next_frame = this.frameCache.getSpriteFrame(this._FNStandPrefix +
+                                                        indexAsString + ".png");
 
-        this.removeAllChildren(true);
+        this.removeAllChildren();
         this.setTextureRect(next_frame.getRect());
         this.setContentSize(next_frame.getRect().width, next_frame.getRect().height);
         this.setDisplayFrame(next_frame);
     },
 
     updateWalk:function () {
-        var director = cc.Director.getInstance();
-        var wSizeWidth = director.getWinSize().width;
-        var wSizeHeight = director.getWinSize().height;
-        var frameCache = cc.SpriteFrameCache.getInstance();
         var menuItemX, menuItemY = 0;
 
-        menuItemX = wSizeWidth / 2;
-        menuItemY = wSizeHeight / 2;
+        menuItemX = this.wSizeWidth / 2;
+        menuItemY = this.wSizeHeight / 2;
 
         if (this._FNWalkIdx > 17) {
             this._FNWalkIdx = 1;
@@ -123,27 +126,22 @@ var CossinoSprite = cc.Sprite.extend({
 
         // cc.log(this._FNWalkIdx);
 
-        var indexAsString = '';
-        indexAsString = this._FNWalkIdx.toString();
+        var indexAsString = this._FNWalkIdx.toString();
         this._FNWalkIdx += 1;
 
-        var next_frame = frameCache.getSpriteFrame(this._FNWalkPrefix +
-                                                   indexAsString + ".png");
+        var next_frame = this.frameCache.getSpriteFrame(this._FNWalkPrefix +
+                                                        indexAsString + ".png");
 
-        this.removeAllChildren(true);
+        this.removeAllChildren();
         this.setTextureRect(next_frame.getRect());
         this.setDisplayFrame(next_frame);
     },
 
     updateRun:function () {
-        var director = cc.Director.getInstance();
-        var wSizeWidth = director.getWinSize().width;
-        var wSizeHeight = director.getWinSize().height;
-        var frameCache = cc.SpriteFrameCache.getInstance();
         var menuItemX, menuItemY = 0;
 
-        menuItemX = wSizeWidth / 2;
-        menuItemY = wSizeHeight / 2;
+        menuItemX = this.wSizeWidth / 2;
+        menuItemY = this.wSizeHeight / 2;
 
         if (this._FNRunIdx > 17) {
             this._FNRunIdx = 1;
@@ -156,27 +154,22 @@ var CossinoSprite = cc.Sprite.extend({
 
         // cc.log(this._FNRunIdx);
 
-        var indexAsString = '';
-        indexAsString = this._FNRunIdx.toString();
+        var indexAsString = this._FNRunIdx.toString();
         this._FNRunIdx += 1;
 
-        var next_frame = frameCache.getSpriteFrame(this._FNRunPrefix +
-                                                   indexAsString + ".png");
+        var next_frame = this.frameCache.getSpriteFrame(this._FNRunPrefix +
+                                                        indexAsString + ".png");
 
-        this.removeAllChildren(true);
+        this.removeAllChildren();
         this.setTextureRect(next_frame.getRect());
         this.setDisplayFrame(next_frame);
     },
 
     updateJump:function () {
-        var director = cc.Director.getInstance();
-        var wSizeWidth = director.getWinSize().width;
-        var wSizeHeight = director.getWinSize().height;
-        var frameCache = cc.SpriteFrameCache.getInstance();
         var menuItemX, menuItemY = 0;
 
-        menuItemX = wSizeWidth / 2;
-        menuItemY = wSizeHeight / 2;
+        menuItemX = this.wSizeWidth / 2;
+        menuItemY = this.wSizeHeight / 2;
 
         if (this._FNJumpIdx > 22) {
             this._FNJumpIdx = 1;
@@ -190,14 +183,13 @@ var CossinoSprite = cc.Sprite.extend({
 
         // cc.log(cossino_pj.FNStandIdx);
 
-        var indexAsString = '';
-        indexAsString = this._FNJumpIdx.toString();
+        var indexAsString = this._FNJumpIdx.toString();
         this._FNJumpIdx += 1;
 
-        var next_frame = frameCache.getSpriteFrame(this._FNJumpPrefix +
+        var next_frame = this.frameCache.getSpriteFrame(this._FNJumpPrefix +
                                                    indexAsString + ".png");
 
-        this.removeAllChildren(true);
+        this.removeAllChildren();
         this.setTextureRect(next_frame.getRect());
         this.setDisplayFrame(next_frame);
     },
@@ -430,26 +422,33 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
     _canvas: null,
     FPS: 60,
     PTM_RATIO: 30,
+    director: null,
+    audioEngine: null,
+    parallaxChild: null,
 
     init:function()
     {
         cc.log("Init Function: Hist1Lvl1Layer.");
-        this._super(new cc.Color4B(128, 128, 128, 255), 800, 600);
+        this._super(new cc.Color4B(128, 128, 128, 0), 800, 600);
 
-        var director = cc.Director.getInstance();
-        var wSizeWidth = director.getWinSize().width;
-        var wSizeHeight = director.getWinSize().height;
-        var audioEngine = cc.AudioEngine.getInstance();
+        // Caching
+        cc_MenuItemFont = cc.MenuItemFont;
+        this.audioEngine = cc.AudioEngine.getInstance();
+        this.director = cc.Director.getInstance();
+        var wSizeWidth = this.director.getWinSize().width;
+        var wSizeHeight = this.director.getWinSize().height;
         var systemCapabilities = sys.capabilities;
-        var cc_Point = cc.Point;
-        var cc_MenuItemFont = cc.MenuItemFont;
+
         var menuItemX, menuItemY = 0;
 
-        audioEngine.setEffectsVolume(0.5);
-        audioEngine.setMusicVolume(0.5);
+        this.audioEngine.setEffectsVolume(0.8);
+        this.audioEngine.setMusicVolume(0.8);
 
         menuItemX = wSizeWidth / 2;
         menuItemY = wSizeHeight / 2;
+
+        // Inicializar fondos parallax
+        this.initParallax();
 
         // Create new label
         var menuTitulo = cc.LabelTTF.create("Introducción Historia 1",
@@ -458,7 +457,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
 
         cc.log("Crear título de escena...");
         // Position the label on the center of the screen
-        menuTitulo.setPosition(new cc_Point(menuItemX, wSizeHeight - 35));
+        menuTitulo.setPosition(cc_Point(menuItemX, wSizeHeight - 35));
         // Add the label as a child to this layer
         this.addChild(menuTitulo);
 
@@ -466,8 +465,8 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         // Create Cossino sprite
         cc.log("Crear sprite de Cossino...");
         this.cossino_pj = new CossinoSprite();
-        this.cossino_pj.setPosition(new cc_Point(menuItemX, menuItemY));
-        this.cossino_pj.setScale(0.8);
+        this.cossino_pj.setPosition(cc_Point(menuItemX, 128));
+        this.cossino_pj.setScale(0.6);
         cc.log(this.cossino_pj);
 
         cc.log("Agregar sprite Cossino a escena.");
@@ -476,6 +475,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         // -------------------------------------------------------------------
         // Configure Box2D ---------------------------------------------------
         // -------------------------------------------------------------------
+        // Box2D
         var b2Vec2 = Box2D.Common.Math.b2Vec2;
         var b2BodyDef = Box2D.Dynamics.b2BodyDef;
         var b2Body = Box2D.Dynamics.b2Body;
@@ -601,35 +601,33 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
     onEnter:function () {
         this._super();
         cc.log("Reproducir música de fondo.");
-        cc.AudioEngine.getInstance().playMusic(s_background_music, true);
+        this.audioEngine.playMusic(s_ambient_music_1, true);
         cc.log("ZOrder Hist1Lvl1Layer: " + this.getZOrder());
     },
 
     playNewGame:function () {
         cc.log("Comenzar nuevo juego.");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        this.audioEngine.playEffect(s_effect, false);
         this.stopBGMusic();
     },
 
     resumeGame:function () {
         cc.log("Continuar juego.");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        this.audioEngine.playEffect(s_effect, false);
         this.stopBGMusic();
     },
 
     setPreferences:function () {
         cc.log("Ver/Establecer opciones.");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        this.audioEngine.playEffect(s_effect, false);
         this.stopBGMusic();
     },
 
     stopBGMusic: function () {
-        var audio_engine = cc.AudioEngine.getInstance();
-
-        if(audio_engine.isMusicPlaying())
+        if(this.audioEngine.isMusicPlaying())
         {
             cc.log("Detener música de fondo.");
-            audio_engine.stopMusic();
+            this.audioEngine.stopMusic();
         }
         else {
             cc.log("No hay música de fondo en reproducción.");
@@ -638,13 +636,13 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
 
     exitApp:function () {
         cc.log("Salir del juego.");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        this.audioEngine.playEffect(s_effect, false);
         this.stopBGMusic();
     },
 
     showDebugMenu:function () {
         cc.log("Show debug menu.");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        this.audioEngine.playEffect(s_effect, false);
         this.stopBGMusic();
 
         var debugScene = cc.TransitionFade.create(1,
@@ -705,6 +703,14 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
             case cc.KEY.escape:
                 this.exitApp();
                 break;
+            case cc.KEY.right:
+                this.scrollParallaxLeft();
+                break;
+            case cc.KEY.left:
+                this.scrollParallaxRight();
+                break;
+            default:
+                break;
         }
 
         // Propagate key down to children
@@ -726,16 +732,18 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         this.physics.step(dt);
 
         //Iterate over the bodies in the physics world
-        for (var b = this.physics.world.GetBodyList(); b; b = b.GetNext()) {
-            if (b.GetUserData() !== null) {
+        bodies = this.physics.world.GetBodyList();
+        for (var b = 0; b < bodies.length; b++) {
+            if (bodies.GetUserData() !== null) {
                 //Synchronize the AtlasSprites position and rotation with the corresponding body
-                var myActor = b.GetUserData();
-                myActor.setPosition(new cc.Point(b.GetPosition().x * this.PTM_RATIO, b.GetPosition().y * this.PTM_RATIO));
-                myActor.setRotation(-1 * cc.RADIANS_TO_DEGREES(b.GetAngle()));
+                var myActor = bodies.GetUserData();
+                myActor.setPosition(cc.Point(bodies.GetPosition().x * this.PTM_RATIO, bodies.GetPosition().y * this.PTM_RATIO));
+                myActor.setRotation(-1 * cc.RADIANS_TO_DEGREES(bodies.GetAngle()));
                 // cc.log(b.GetPosition().x + " " + b.GetPosition().y);
                 // cc.log(myActor.getPosition().x + " " + myActor.getPosition().y);
                 // cc.log(b.GetAngle());
             }
+            bodies.getNext();
         }
 
         //this.physics.world.DrawDebugData();
@@ -800,6 +808,107 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         fixtureDef.density = 1.0;
         fixtureDef.friction = 0.3;
         this.physics.world.CreateBody(bodyDef).CreateFixture(fixtureDef);
+    },
+
+    initParallax:function () {
+        cc.log("Inicializar parallax...");
+        // Fondo Parallax
+        var parallaxNode = cc.ParallaxNode.create();
+
+        // Background más profundo
+        var BG_2_SCALE = 1.0;
+        var BG_2_RATIO = cc_Point(0.2, 0);
+        var BG_2_AP = cc_Point(0, 0);
+
+        var bg_2_images = [s_bg_h1_layer2_part0,
+                           s_bg_h1_layer2_part1,
+                           s_bg_h1_layer2_part2,
+                           s_bg_h1_layer2_part3,
+                           s_bg_h1_layer2_part4,
+                           s_bg_h1_layer2_part5,
+                           s_bg_h1_layer2_part6,
+                           s_bg_h1_layer2_part7
+                          ];
+
+        var offset_x_2 = 0;
+        for (var i = 0; i < 7; i++) {
+            var sprite_2 = cc_sprite_create(bg_2_images[i]);
+            sprite_2.setAnchorPoint(BG_2_AP);
+            sprite_2.setScale(BG_2_SCALE);
+            parallaxNode.addChild(sprite_2, -1, BG_2_RATIO, cc_Point(offset_x_2, 0));
+            offset_x_2 += sprite_2.getBoundingBox().size.width;
+        }
+
+        // Background del medio
+        var BG_1_SCALE = 0.8;
+        var BG_1_RATIO = cc_Point(0.6, 0);
+        var BG_1_AP = cc_Point(0, 0);
+
+        var bg_1_images = [s_bg_h1_layer1_part0,
+                           s_bg_h1_layer1_part1,
+                           s_bg_h1_layer1_part2,
+                           s_bg_h1_layer1_part3,
+                           s_bg_h1_layer1_part4,
+                           s_bg_h1_layer1_part5,
+                           s_bg_h1_layer1_part6,
+                           s_bg_h1_layer1_part7,
+                           s_bg_h1_layer1_part8,
+                           s_bg_h1_layer1_part9
+                          ];
+
+        var offset_x_1 = 0;
+        for (var j = 0; j < 9; j++) {
+            var sprite_1 = cc_sprite_create(bg_1_images[j]);
+            sprite_1.setAnchorPoint(BG_1_AP);
+            sprite_1.setScale(BG_1_SCALE);
+            parallaxNode.addChild(sprite_1, 1, BG_1_RATIO, cc_Point(offset_x_1, 0));
+            offset_x_1 += sprite_1.getBoundingBox().size.width;
+        }
+
+        // Background superior
+        var BG_0_SCALE = 0.3;
+        var BG_0_RATIO = cc_Point(2.0, 0);
+        var BG_0_AP = cc_Point(0, 0);
+
+        var bg_0_images = [s_bg_h1_layer0_part0,
+                           s_bg_h1_layer0_part1,
+                           s_bg_h1_layer0_part2,
+                           s_bg_h1_layer0_part3,
+                           s_bg_h1_layer0_part4,
+                           s_bg_h1_layer0_part5,
+                           s_bg_h1_layer0_part6,
+                           s_bg_h1_layer0_part7,
+                           s_bg_h1_layer0_part8,
+                           s_bg_h1_layer0_part9,
+                           s_bg_h1_layer0_part10,
+                           s_bg_h1_layer0_part11,
+                           s_bg_h1_layer0_part12,
+                           s_bg_h1_layer0_part13,
+                          ];
+
+        var offset_x_0 = 0;
+        for (var k = 0; k < 13; k++) {
+            var sprite_0 = cc_sprite_create(bg_0_images[k]);
+            sprite_0.setAnchorPoint(BG_0_AP);
+            sprite_0.setScale(BG_0_SCALE);
+            parallaxNode.addChild(sprite_0, 2, BG_0_RATIO, cc_Point(offset_x_0, 0));
+            offset_x_0 += sprite_0.getBoundingBox().size.width;
+        }
+
+        this.addChild(parallaxNode, -1, 5555);
+        this.parallaxChild = this.getChildByTag(5555);
+    },
+
+    scrollParallaxLeft:function () {
+        var node = this.parallaxChild;
+        var currentPos = node.getPosition();
+        node.setPosition(cc_Point(currentPos.x - 1, 0));
+    },
+
+    scrollParallaxRight:function () {
+        var node = this.parallaxChild;
+        var currentPos = node.getPosition();
+        node.setPosition(cc_Point(currentPos.x + 1, 0));
     }
 });
 
@@ -812,7 +921,8 @@ var Hist1Level1Scene = cc.Scene.extend({
 
         var mainMenuL = new Hist1Lvl1Layer();
         mainMenuL.init();
-        this.addChild(mainMenuL, 0, TAGS.CAPAS.MAIN_MENU);
+
+        this.addChild(mainMenuL, 1, TAGS.CAPAS.MAIN_MENU);
 
         cc.log("Children Count: " + this.getChildrenCount());
     }
