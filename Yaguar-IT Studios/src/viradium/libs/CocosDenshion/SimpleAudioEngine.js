@@ -702,7 +702,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
          * browser has proved to support Web Audio API in miniFramework.js
          * only in that case will cc.WebAudioEngine be chosen to run, thus the following is guaranteed to work
          */
-        window.AudioContext =  window.AudioContext || window.webkitAudioContext || window.mozAudioContext;
+        window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext;
         this._ctx = new AudioContext();
 
         // gather capabilities information, enable sound if any of the audio format is supported
@@ -793,7 +793,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
         sfxCache.sourceNode = this._ctx.createBufferSource();
         sfxCache.sourceNode.buffer = this._audioData[key];
         sfxCache.sourceNode.loop = loop;
-        sfxCache.volumeNode = this._ctx.createGain();
+        sfxCache.volumeNode = this._ctx.createGain ? this._ctx.createGain() : this._ctx.createGainNode();
         sfxCache.volumeNode.gain.value = volume;
 
         sfxCache.sourceNode.connect(sfxCache.volumeNode);
