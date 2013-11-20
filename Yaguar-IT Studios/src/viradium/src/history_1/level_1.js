@@ -49,6 +49,13 @@ var CossinoSprite = cc.Sprite.extend({
     frameCache: null,
     wSizeWidth: 0,
     wSizeHeight: 0,
+    _walkDeltaPos: 1.25,
+    _walkDeltaPostCount: 0,
+    _jumpDeltaPos: 1,
+    _jumpDeltaPosCount: 0,
+    _runDeltaPos: 4,
+    _runDeltaPosCount: 0,
+    _deltaPosTotal: 0,
 
     ctor:function () {
         cc.log("Constructor: CossinoSprite");
@@ -121,6 +128,7 @@ var CossinoSprite = cc.Sprite.extend({
             // FIXME:
             if (this._onFinishWalkStop) {
                 this.stopWalk();
+                this._nextStatus();
             }
         }
 
@@ -149,6 +157,7 @@ var CossinoSprite = cc.Sprite.extend({
             // FIXME:
             if (this._onFinishRunStop) {
                 this.stopRun();
+                this._nextStatus();
             }
         }
 
@@ -177,7 +186,7 @@ var CossinoSprite = cc.Sprite.extend({
             // FIXME:
             if (this._onFinishJumpStop) {
                 this.stopJump();
-                this.beginStand();
+                this._nextStatus();
             }
         }
 
@@ -267,6 +276,7 @@ var CossinoSprite = cc.Sprite.extend({
 
     beginStand:function () {
         cc.log("Stand Cossino.");
+        this.clearDeltaPos();
         this._currentStatus = CHR_STATUS.STAND;
         // Quick & Dirty, Hacky, Nasty...
         // Must be refactored, improved...
@@ -277,6 +287,7 @@ var CossinoSprite = cc.Sprite.extend({
     },
 
     stopStand:function () {
+        this.clearDeltaPos();
         this.unschedule(this.updateStand);
         this._FNStandIdx = 1;
         this._FNStandDir = 1;
@@ -289,7 +300,9 @@ var CossinoSprite = cc.Sprite.extend({
 
         if (typeof next_status === 'function') {
             cc.log("Establecido próximo estado de Stand");
-            this.next_status();
+            this._nextStatus = next_status;
+        } else {
+            this._nextStatus = this.beginStand;
         }
     },
 
@@ -299,6 +312,7 @@ var CossinoSprite = cc.Sprite.extend({
 
     beginWalk:function () {
         cc.log("Walk Cossino.");
+        this.setDeltaPos(this._walkDeltaPos);
         this._currentStatus = CHR_STATUS.WALK;
         // Quick & Dirty, Hacky, Nasty...
         // Must be refactored, improved...
@@ -310,6 +324,7 @@ var CossinoSprite = cc.Sprite.extend({
     },
 
     stopWalk:function () {
+        this.clearDeltaPos();
         this.unschedule(this.updateWalk);
         this._FNWalkIdx = 1;
         this._onFinishWalkStop = false;
@@ -320,8 +335,10 @@ var CossinoSprite = cc.Sprite.extend({
         this._onFinishWalkStop = true;
 
         if (typeof next_status === 'function') {
-            cc.log("Establecido próximo estado de Walk");
-            next_status();
+            cc.log("Establecido próximo estado de Stand");
+            this._nextStatus = next_status;
+        } else {
+            this._nextStatus = this.beginStand;
         }
     },
 
@@ -331,6 +348,7 @@ var CossinoSprite = cc.Sprite.extend({
 
     beginJump:function () {
         cc.log("Jump Cossino.");
+        this.setDeltaPos(this._jumpDeltaPos);
         this._currentStatus = CHR_STATUS.JUMP;
         // Quick & Dirty, Hacky, Nasty...
         // Must be refactored, improved...
@@ -342,6 +360,7 @@ var CossinoSprite = cc.Sprite.extend({
     },
 
     stopJump:function () {
+        this.clearDeltaPos();
         this.unschedule(this.updateJump);
         this._FNJumpIdx = 1;
         this._onFinishJumpStop = false;
@@ -352,8 +371,10 @@ var CossinoSprite = cc.Sprite.extend({
         this._onFinishJumpStop = true;
 
         if (typeof next_status === 'function') {
-            cc.log("Establecido próximo estado de Jump");
-                next_status.apply(this);
+            cc.log("Establecido próximo estado de Stand");
+            this._nextStatus = next_status;
+        } else {
+            this._nextStatus = this.beginStand;
         }
     },
 
@@ -363,6 +384,7 @@ var CossinoSprite = cc.Sprite.extend({
 
     beginRun:function () {
         cc.log("Run Cossino.");
+        this.setDeltaPos(this._runDeltaPos);
         this._currentStatus = CHR_STATUS.RUN;
         // Quick & Dirty, Hacky, Nasty...
         // Must be refactored, improved...
@@ -374,6 +396,7 @@ var CossinoSprite = cc.Sprite.extend({
     },
 
     stopRun:function () {
+        this.clearDeltaPos();
         this.unschedule(this.updateRun);
         this._FNRunIdx = 1;
         this._onFinishRunStop = false;
@@ -384,8 +407,10 @@ var CossinoSprite = cc.Sprite.extend({
         this._onFinishRunStop = true;
 
         if (typeof next_status === 'function') {
-            cc.log("Establecido próximo estado de Run");
-            next_status();
+            cc.log("Establecido próximo estado de Stand");
+            this._nextStatus = next_status;
+        } else {
+            this._nextStatus = this.beginStand;
         }
     },
 
@@ -416,6 +441,38 @@ var CossinoSprite = cc.Sprite.extend({
 
     delay:function (ms) {
         cc.log("Delay: " + ms);
+    },
+
+    getWalkDeltaPos:function() {
+        return this._walkDeltaPos;
+    },
+
+    getRunDeltaPos:function () {
+        return this._runDeltaPos;
+    },
+
+    getJumpDeltaPos: function () {
+        return this._jumpDeltaPos;
+    },
+
+    getCurrentStatus:function () {
+        return this._currentStatus;
+    },
+
+    getCurrentDirection:function () {
+        return this._currentDirection;
+    },
+
+    getDeltaPos:function () {
+        return this._deltaPosTotal;
+    },
+
+    clearDeltaPos:function () {
+        this._deltaPosTotal = 0;
+    },
+
+    setDeltaPos:function (delta) {
+        this._deltaPosTotal = delta;
     }
 });
 
@@ -470,7 +527,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         // Create Cossino sprite
         cc.log("Crear sprite de Cossino...");
         this.cossino_pj = new CossinoSprite();
-        this.cossino_pj.setPosition(cc_Point(menuItemX, 128));
+        this.cossino_pj.setPosition(cc_Point(menuItemX, 110));
         this.cossino_pj.setScale(0.6);
         cc.log(this.cossino_pj);
 
@@ -751,6 +808,13 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
 
         //this.physics.world.DrawDebugData();
         this.physics.world.ClearForces();
+
+        cossinoDirection = this.cossino_pj.getCurrentDirection();
+        if (cossinoDirection == CHR_DIRECTION.LEFT) {
+            this.scrollParallaxRight(this.cossino_pj.getDeltaPos());
+        } else if (cossinoDirection == CHR_DIRECTION.RIGHT){
+            this.scrollParallaxLeft(this.cossino_pj.getDeltaPos());
+        }
     },
 
     showMouseButtonInfo:function (event, trigger) {
@@ -820,7 +884,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
 
         // Background más profundo
         var BG_2_SCALE = 1.0;
-        var BG_2_RATIO = cc_Point(0.2, 0);
+        var BG_2_RATIO = cc_Point(1.0, 0);
         var BG_2_AP = cc_Point(0, 0);
 
         var bg_2_images = [s_bg_h1_layer2_part0,
@@ -843,8 +907,8 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         }
 
         // Background del medio
-        var BG_1_SCALE = 0.8;
-        var BG_1_RATIO = cc_Point(0.6, 0);
+        var BG_1_SCALE = 1.0;
+        var BG_1_RATIO = cc_Point(1.4, 0);
         var BG_1_AP = cc_Point(0, 0);
 
         var bg_1_images = [s_bg_h1_layer1_part0,
@@ -869,9 +933,9 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         }
 
         // Background superior
-        var BG_0_SCALE = 0.3;
-        var BG_0_RATIO = cc_Point(2.0, 0);
-        var BG_0_AP = cc_Point(0, 0);
+        var BG_0_SCALE = 0.9;
+        var BG_0_RATIO = cc_Point(2.1, 0);
+        var BG_0_AP = cc_Point(0, 0.2);
 
         var bg_0_images = [s_bg_h1_layer0_part0,
                            s_bg_h1_layer0_part1,
@@ -894,7 +958,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
             var sprite_0 = cc_sprite_create(bg_0_images[k]);
             sprite_0.setAnchorPoint(BG_0_AP);
             sprite_0.setScale(BG_0_SCALE);
-            parallaxNode.addChild(sprite_0, 2, BG_0_RATIO, cc_Point(offset_x_0, 0));
+            parallaxNode.addChild(sprite_0, 2, BG_0_RATIO, cc_Point(offset_x_0, 0.2));
             offset_x_0 += sprite_0.getBoundingBox().size.width;
         }
 
@@ -902,16 +966,16 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         this.parallaxChild = this.getChildByTag(5555);
     },
 
-    scrollParallaxLeft:function () {
+    scrollParallaxLeft:function (delta) {
         var node = this.parallaxChild;
         var currentPos = node.getPosition();
-        node.setPosition(cc_Point(currentPos.x - 1, 0));
+        node.setPosition(cc_Point(currentPos.x - delta, 0));
     },
 
-    scrollParallaxRight:function () {
+    scrollParallaxRight:function (delta) {
         var node = this.parallaxChild;
         var currentPos = node.getPosition();
-        node.setPosition(cc_Point(currentPos.x + 1, 0));
+        node.setPosition(cc_Point(currentPos.x + delta, 0));
     }
 });
 
