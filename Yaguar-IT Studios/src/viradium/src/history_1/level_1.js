@@ -210,14 +210,18 @@ var CossinoSprite = cc.Sprite.extend({
 
         switch (e) {
             case cc.KEY.left:
-                if (this._currentStatus !== CHR_STATUS.JUMP) {
+                if (this._currentStatus == CHR_STATUS.JUMP) {
+                    this.reqOnFinishJumpStop(this.beginWalk);
+                } else {
                     this.turnLeft();
                     this.beginWalk();
                 }
 
                 break;
             case cc.KEY.right:
-                if (this._currentStatus !== CHR_STATUS.JUMP) {
+                if (this._currentStatus == CHR_STATUS.JUMP) {
+                    this.reqOnFinishJumpStop(this.beginWalk);
+                } else {
                     this.turnRight();
                     this.beginWalk();
                 }
