@@ -203,6 +203,7 @@ var CossinoSprite = cc.Sprite.extend({
                     this.turnLeft();
                     this.beginWalk();
                 }
+
                 break;
             case cc.KEY.right:
                 if (this._currentStatus !== CHR_STATUS.JUMP) {
@@ -227,29 +228,29 @@ var CossinoSprite = cc.Sprite.extend({
 
         switch (e) {
             case cc.KEY.left:
-                if (this._currentStatus === CHR_STATUS.WALK) {
+                if (this._currentStatus == CHR_STATUS.WALK) {
                     this.beginStand();
                 }
                 break;
             case cc.KEY.right:
-                if (this._currentStatus === CHR_STATUS.WALK) {
+                if (this._currentStatus == CHR_STATUS.WALK) {
                     this.beginStand();
                 }
                 break;
             case cc.KEY.a:
-                if (this._currentStatus === CHR_STATUS.RUN) {
+                if (this._currentStatus == CHR_STATUS.RUN) {
                     // this.stopRun();
                     this.beginStand();
                  }
                 break;
             case cc.KEY.s:
-                if (this._currentStatus === CHR_STATUS.JUMP) {
-                    this.reqOnFinishJumpStop(this.beginStand);
+                if (this._currentStatus == CHR_STATUS.JUMP) {
+                    this.reqOnFinishJumpStop();
                     //this.beginStand();
                 }
                 break;
             default:
-                this.beginStand();
+                // this.beginStand();
                 break;
         }
     },
@@ -368,7 +369,7 @@ var CossinoSprite = cc.Sprite.extend({
         this.unschedule(this.updateJump);
         this.unschedule(this.updateWalk);
         this.unschedule(this.updateStand);
-        this.schedule(this.updateRun, 0.05);
+        this.schedule(this.updateRun, 0.04);
         this._executingAnimation = true;
     },
 
@@ -411,6 +412,10 @@ var CossinoSprite = cc.Sprite.extend({
 
     getSpriteRect:function () {
         return this.displayFrame().getRect();
+    },
+
+    delay:function (ms) {
+        cc.log("Delay: " + ms);
     }
 });
 
@@ -704,10 +709,8 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
                 this.exitApp();
                 break;
             case cc.KEY.right:
-                this.scrollParallaxLeft();
                 break;
             case cc.KEY.left:
-                this.scrollParallaxRight();
                 break;
             default:
                 break;
