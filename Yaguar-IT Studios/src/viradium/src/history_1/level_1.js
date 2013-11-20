@@ -38,7 +38,7 @@ var CossinoSprite = cc.Sprite.extend({
     _FNWalkPrefix: "run",
     _currentPos: null,
     _executingAnimation: false,
-    _nextStatus: CHR_STATUS.STAND,
+    _nextStatus: null,
     _nextDirection: CHR_DIRECTION.NOTSET,
     _antiKeyBounceCounter: 0,
     _onFinishStandStop: false,
@@ -79,6 +79,7 @@ var CossinoSprite = cc.Sprite.extend({
         // Inicialmente mostrar personaje apuntando hacia la derecha
         // y parado
         this.beginStand();
+        this._nextStatus = this.beginStand;
     },
 
     update:function (dt) {
@@ -99,6 +100,7 @@ var CossinoSprite = cc.Sprite.extend({
             // FIXME:
             if (this._onFinishStandStop) {
                 this.stopStand();
+                this._nextStatus();
             }
         }
 
@@ -221,7 +223,11 @@ var CossinoSprite = cc.Sprite.extend({
                 }
                 break;
             case cc.KEY.a:
-                this.beginRun();
+                if (this._currentStatus == CHR_STATUS.JUMP) {
+                    this.reqOnFinishJumpStop(this.beginRun);
+                } else {
+                   this.beginRun();
+                }
                 break;
             case cc.KEY.s:
                 this.beginJump();
@@ -312,7 +318,7 @@ var CossinoSprite = cc.Sprite.extend({
 
     beginWalk:function () {
         cc.log("Walk Cossino.");
-        this.setDeltaPos(this._walkDeltaPos);
+        this._setDeltaPos(this._walkDeltaPos);
         this._currentStatus = CHR_STATUS.WALK;
         // Quick & Dirty, Hacky, Nasty...
         // Must be refactored, improved...
@@ -348,7 +354,7 @@ var CossinoSprite = cc.Sprite.extend({
 
     beginJump:function () {
         cc.log("Jump Cossino.");
-        this.setDeltaPos(this._jumpDeltaPos);
+        this._setDeltaPos(this._jumpDeltaPos);
         this._currentStatus = CHR_STATUS.JUMP;
         // Quick & Dirty, Hacky, Nasty...
         // Must be refactored, improved...
@@ -384,7 +390,7 @@ var CossinoSprite = cc.Sprite.extend({
 
     beginRun:function () {
         cc.log("Run Cossino.");
-        this.setDeltaPos(this._runDeltaPos);
+        this._setDeltaPos(this._runDeltaPos);
         this._currentStatus = CHR_STATUS.RUN;
         // Quick & Dirty, Hacky, Nasty...
         // Must be refactored, improved...
@@ -471,8 +477,12 @@ var CossinoSprite = cc.Sprite.extend({
         this._deltaPosTotal = 0;
     },
 
-    setDeltaPos:function (delta) {
+    _setDeltaPos:function (delta) {
         this._deltaPosTotal = delta;
+    },
+
+    _setNextStatus:function (nextStatus) {
+        this.nextStatus = nextStatus;
     }
 });
 
@@ -487,6 +497,15 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
     director: null,
     audioEngine: null,
     parallaxChild: null,
+    _layer2MaxOffset: 0,
+    _layer2MinOffset: 0,
+    _layer1MaxOffset: 0,
+    _layer1MinOffset: 0,
+    _layer0MaxOffset: 0,
+    _layer0MinOffset: 0,
+    _centerScreenX: 0,
+    _centerScreenY: 0,
+
 
     init:function()
     {
@@ -506,8 +525,8 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         this.audioEngine.setEffectsVolume(0.8);
         this.audioEngine.setMusicVolume(0.8);
 
-        menuItemX = wSizeWidth / 2;
-        menuItemY = wSizeHeight / 2;
+        menuItemX = this._centerScreenX = wSizeWidth / 2;
+        menuItemY = this._centerScreenY = wSizeHeight / 2;
 
         // Inicializar fondos parallax
         this.initParallax();
@@ -786,18 +805,20 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
     },
 
     update:function (dt) {
+        var this_obj = this;
+
         // Instruct the world to perform a single step of simulation. It is
         // generally best to keep the time step and iterations fixed.
         // this.world.Step(dt, velocityIterations, positionIterations);
-        this.physics.step(dt);
+        this_obj.physics.step(dt);
 
         //Iterate over the bodies in the physics world
-        bodies = this.physics.world.GetBodyList();
+        bodies = this_obj.physics.world.GetBodyList();
         for (var b = 0; b < bodies.length; b++) {
             if (bodies.GetUserData() !== null) {
                 //Synchronize the AtlasSprites position and rotation with the corresponding body
                 var myActor = bodies.GetUserData();
-                myActor.setPosition(cc.Point(bodies.GetPosition().x * this.PTM_RATIO, bodies.GetPosition().y * this.PTM_RATIO));
+                myActor.setPosition(cc.Point(bodies.GetPosition().x * this_obj.PTM_RATIO, bodies.GetPosition().y * this_obj.PTM_RATIO));
                 myActor.setRotation(-1 * cc.RADIANS_TO_DEGREES(bodies.GetAngle()));
                 // cc.log(b.GetPosition().x + " " + b.GetPosition().y);
                 // cc.log(myActor.getPosition().x + " " + myActor.getPosition().y);
@@ -806,14 +827,18 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
             bodies.getNext();
         }
 
-        //this.physics.world.DrawDebugData();
-        this.physics.world.ClearForces();
+        //this_obj.physics.world.DrawDebugData();
+        this_obj.physics.world.ClearForces();
 
-        cossinoDirection = this.cossino_pj.getCurrentDirection();
-        if (cossinoDirection == CHR_DIRECTION.LEFT) {
-            this.scrollParallaxRight(this.cossino_pj.getDeltaPos());
-        } else if (cossinoDirection == CHR_DIRECTION.RIGHT){
-            this.scrollParallaxLeft(this.cossino_pj.getDeltaPos());
+        // Actualizar parallax
+        var cossinoDirection = this_obj.cossino_pj.getCurrentDirection();
+        var cossinoDeltaPos = this_obj.cossino_pj.getDeltaPos();
+        var currentParallaxPos = this_obj.parallaxChild.getPosition();
+
+        if ((cossinoDirection == CHR_DIRECTION.LEFT) && (currentParallaxPos.x < -5)) {
+                this_obj.scrollParallaxRight(cossinoDeltaPos, 0);
+        } else if ((cossinoDirection == CHR_DIRECTION.RIGHT) && (currentParallaxPos.x > -5000)) {    // TODO: Límite derecho automático
+            this_obj.scrollParallaxLeft(cossinoDeltaPos, 0);
         }
     },
 
@@ -845,9 +870,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         var spriteHeight = (spriteContSize.height * sprite.getScaleY()) / this.physics.scale;
         var spriteWidth = (spriteContSize.width * sprite.getScaleX()) / this.physics.scale;
 
-
         cc.log(sprite.getPosition().x + " " + sprite.getPosition().y);
-
         cc.log(spriteWidth + "x" + spriteHeight);
 
         // Define the dynamic body.
@@ -883,9 +906,11 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         var parallaxNode = cc.ParallaxNode.create();
 
         // Background más profundo
+        var offset_x_2 = 0;
+        var offset_y_2 = 0;
         var BG_2_SCALE = 1.0;
         var BG_2_RATIO = cc_Point(1.0, 0);
-        var BG_2_AP = cc_Point(0, 0);
+        var BG_2_AP = cc_Point(0, offset_y_2);
 
         var bg_2_images = [s_bg_h1_layer2_part0,
                            s_bg_h1_layer2_part1,
@@ -897,19 +922,21 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
                            s_bg_h1_layer2_part7
                           ];
 
-        var offset_x_2 = 0;
         for (var i = 0; i < 7; i++) {
             var sprite_2 = cc_sprite_create(bg_2_images[i]);
             sprite_2.setAnchorPoint(BG_2_AP);
             sprite_2.setScale(BG_2_SCALE);
-            parallaxNode.addChild(sprite_2, -1, BG_2_RATIO, cc_Point(offset_x_2, 0));
+            parallaxNode.addChild(sprite_2, -1, BG_2_RATIO, cc_Point(offset_x_2, offset_y_2));
             offset_x_2 += sprite_2.getBoundingBox().size.width;
         }
+        this._layer2MaxOffset = offset_x_2;
 
         // Background del medio
+        var offset_x_1 = 0;
+        var offset_y_1 = 0;
         var BG_1_SCALE = 1.0;
-        var BG_1_RATIO = cc_Point(1.4, 0);
-        var BG_1_AP = cc_Point(0, 0);
+        var BG_1_RATIO = cc_Point(1.5, 0);
+        var BG_1_AP = cc_Point(0, offset_y_1);
 
         var bg_1_images = [s_bg_h1_layer1_part0,
                            s_bg_h1_layer1_part1,
@@ -923,19 +950,21 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
                            s_bg_h1_layer1_part9
                           ];
 
-        var offset_x_1 = 0;
         for (var j = 0; j < 9; j++) {
             var sprite_1 = cc_sprite_create(bg_1_images[j]);
             sprite_1.setAnchorPoint(BG_1_AP);
             sprite_1.setScale(BG_1_SCALE);
-            parallaxNode.addChild(sprite_1, 1, BG_1_RATIO, cc_Point(offset_x_1, 0));
+            parallaxNode.addChild(sprite_1, 1, BG_1_RATIO, cc_Point(offset_x_1, offset_y_1));
             offset_x_1 += sprite_1.getBoundingBox().size.width;
         }
+        this._layer1MaxOffset = offset_x_1;
 
         // Background superior
-        var BG_0_SCALE = 0.9;
+        var offset_x_0 = 0;
+        var offset_y_0 = 0.25;
+        var BG_0_SCALE = 0.95;
         var BG_0_RATIO = cc_Point(2.1, 0);
-        var BG_0_AP = cc_Point(0, 0.2);
+        var BG_0_AP = cc_Point(0, offset_y_0);
 
         var bg_0_images = [s_bg_h1_layer0_part0,
                            s_bg_h1_layer0_part1,
@@ -953,29 +982,29 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
                            s_bg_h1_layer0_part13,
                           ];
 
-        var offset_x_0 = 0;
         for (var k = 0; k < 13; k++) {
             var sprite_0 = cc_sprite_create(bg_0_images[k]);
             sprite_0.setAnchorPoint(BG_0_AP);
             sprite_0.setScale(BG_0_SCALE);
-            parallaxNode.addChild(sprite_0, 2, BG_0_RATIO, cc_Point(offset_x_0, 0.2));
+            parallaxNode.addChild(sprite_0, 2, BG_0_RATIO, cc_Point(offset_x_0, offset_y_0));
             offset_x_0 += sprite_0.getBoundingBox().size.width;
         }
+        this._layer0MaxOffset = offset_x_0;
 
         this.addChild(parallaxNode, -1, 5555);
         this.parallaxChild = this.getChildByTag(5555);
     },
 
-    scrollParallaxLeft:function (delta) {
+    scrollParallaxLeft:function (deltaX, deltaY) {
         var node = this.parallaxChild;
         var currentPos = node.getPosition();
-        node.setPosition(cc_Point(currentPos.x - delta, 0));
+        node.setPosition(cc_Point(currentPos.x - deltaX, currentPos.y - deltaY));
     },
 
-    scrollParallaxRight:function (delta) {
+    scrollParallaxRight:function (deltaX, deltaY) {
         var node = this.parallaxChild;
         var currentPos = node.getPosition();
-        node.setPosition(cc_Point(currentPos.x + delta, 0));
+        node.setPosition(cc_Point(currentPos.x + deltaX, currentPos.y + deltaY));
     }
 });
 
