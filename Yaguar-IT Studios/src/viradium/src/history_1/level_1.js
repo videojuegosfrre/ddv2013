@@ -4,22 +4,6 @@ var cc_sprite_create = cc.Sprite.create;
 var lastEvent = -1;
 var heldKeys = {};
 
-var CHR_STATUS = {
-    STAND: 0,
-    WALK: 1,
-    RUN: 2,
-    JUMP: 3,
-    NOTSET: 4
-};
-
-var CHR_DIRECTION = {
-    UP: 0,
-    DOWN: 1,
-    LEFT: 2,
-    RIGHT: 3,
-    NOTSET: 4
-};
-
 var TAG_SPRITE_MANAGER = 8888;
 var PTM_RATIO = 30;
 
@@ -49,13 +33,15 @@ var CossinoSprite = cc.Sprite.extend({
     frameCache: null,
     wSizeWidth: 0,
     wSizeHeight: 0,
-    _walkDeltaPos: 1.25,
+    _walkDeltaPos: 1.1,
     _walkDeltaPostCount: 0,
     _jumpDeltaPos: 1,
     _jumpDeltaPosCount: 0,
-    _runDeltaPos: 4,
+    _runDeltaPos: 3,
     _runDeltaPosCount: 0,
     _deltaPosTotal: 0,
+    _onTerrainType: null,
+    audioEngine: null,
 
     ctor:function () {
         cc.log("Constructor: CossinoSprite");
@@ -68,6 +54,7 @@ var CossinoSprite = cc.Sprite.extend({
         this.wSizeWidth = this.director.getWinSize().width;
         this.wSizeHeight = this.director.getWinSize().height;
         this.frameCache = cc.SpriteFrameCache.getInstance();
+        this.audioEngine = cc.AudioEngine.getInstance();
 
         // this.initWithSpriteFrameName(this._FNStandPrefix + "1.png");
         this.init();
@@ -274,10 +261,36 @@ var CossinoSprite = cc.Sprite.extend({
         }
     },
 
-    handleTouch:function (touchLocation) {
+    handleTouchesEnded:function (touch, event) {
+        switch(touch.length) {
+            case 0:
+                this.beginStand();
+                break;
+            case 1:
+                this.beginWalk();
+                break;
+            case 2:
+                this.beginRun();
+                break;
+            default:
+                this.beginStand();
+        }
     },
 
-    handleTouchMove:function (touchLocation) {
+    handleTouchesBegan:function (touch, event) {
+        switch (touch.length) {
+            case 1:
+                this.beginWalk();
+                break;
+            case 2:
+                this.beginRun();
+                break;
+            default:
+                this.beginStand();
+        }
+    },
+
+    handleTouchesMoved:function (touch, event) {
     },
 
     _stand:function () {
@@ -291,14 +304,20 @@ var CossinoSprite = cc.Sprite.extend({
         // Quick & Dirty, Hacky, Nasty...
         // Must be refactored, improved...
         this.unschedule(this.updateRun);
+        this.stopRunEffect();
         this.unschedule(this.updateWalk);
+        this.stopWalkEffect();
         this.unschedule(this.updateJump);
+        this.stopJumpEffect();
+
         this.schedule(this.updateStand, 0.4);
+        this.schedule(this.playStandEffect);
     },
 
     stopStand:function () {
         this.clearDeltaPos();
         this.unschedule(this.updateStand);
+        this.stopStandEffect();
         this._FNStandIdx = 1;
         this._FNStandDir = 1;
         this._onFinishStandStop = false;
@@ -327,8 +346,15 @@ var CossinoSprite = cc.Sprite.extend({
         // Quick & Dirty, Hacky, Nasty...
         // Must be refactored, improved...
         this.unschedule(this.updateRun);
+        this.stopRunEffect();
         this.unschedule(this.updateStand);
+        this.stopStandEffect();
         this.unschedule(this.updateJump);
+        this.stopJumpEffect();
+
+        // Importante: la luz es más rápida que el sonido.
+        // Reproducir sonido antes de animar.
+        this.schedule(this.playWalkEffect, 0.65);
         this.schedule(this.updateWalk, 0);
         this._executingAnimation = true;
     },
@@ -336,6 +362,7 @@ var CossinoSprite = cc.Sprite.extend({
     stopWalk:function () {
         this.clearDeltaPos();
         this.unschedule(this.updateWalk);
+        this.stopWalkEffect();
         this._FNWalkIdx = 1;
         this._onFinishWalkStop = false;
     },
@@ -363,8 +390,13 @@ var CossinoSprite = cc.Sprite.extend({
         // Quick & Dirty, Hacky, Nasty...
         // Must be refactored, improved...
         this.unschedule(this.updateRun);
+        this.stopRunEffect();
         this.unschedule(this.updateWalk);
+        this.stopWalkEffect();
         this.unschedule(this.updateStand);
+        this.stopStandEffect();
+
+        this.scheduleOnce(this.playJumpEffect);
         this.schedule(this.updateJump, 0.1);
         this._executingAnimation = true;
     },
@@ -372,6 +404,7 @@ var CossinoSprite = cc.Sprite.extend({
     stopJump:function () {
         this.clearDeltaPos();
         this.unschedule(this.updateJump);
+        this.stopJumpEffect();
         this._FNJumpIdx = 1;
         this._onFinishJumpStop = false;
     },
@@ -399,8 +432,15 @@ var CossinoSprite = cc.Sprite.extend({
         // Quick & Dirty, Hacky, Nasty...
         // Must be refactored, improved...
         this.unschedule(this.updateJump);
+        this.stopJumpEffect();
         this.unschedule(this.updateWalk);
+        this.stopWalkEffect();
         this.unschedule(this.updateStand);
+        this.stopStandEffect();
+
+        // Importante: la luz es más rápida que el sonido.
+        // Reproducir sonido antes de animar.
+        this.schedule(this.playRunEffect, 0.45);
         this.schedule(this.updateRun, 0.04);
         this._executingAnimation = true;
     },
@@ -408,6 +448,7 @@ var CossinoSprite = cc.Sprite.extend({
     stopRun:function () {
         this.clearDeltaPos();
         this.unschedule(this.updateRun);
+        this.stopRunEffect();
         this._FNRunIdx = 1;
         this._onFinishRunStop = false;
     },
@@ -487,6 +528,46 @@ var CossinoSprite = cc.Sprite.extend({
 
     _setNextStatus:function (nextStatus) {
         this.nextStatus = nextStatus;
+    },
+
+    setTerrainType:function (type) {
+        this._onTerrainType = type;
+    },
+
+    playStandEffect:function () {
+    },
+
+    stopStandEffect:function () {
+        this.unschedule(this.playStandEffect);
+    },
+
+    playWalkEffect:function () {
+        cc.log("Efecto de caminar.");
+        this.audioEngine.playEffect(s_footstep_dirt_1, false);
+    },
+
+    stopWalkEffect:function () {
+        this.unschedule(this.playWalkEffect);
+        this.audioEngine.stopEffect(s_footstep_dirt_1);
+    },
+
+    playRunEffect:function () {
+        cc.log("Efecto de correr.");
+        this.audioEngine.playEffect(s_footstep_dirt_1, false);
+    },
+
+    stopRunEffect:function () {
+        this.unschedule(this.playRunEffect);
+        this.audioEngine.stopEffect(s_footstep_dirt_1);
+    },
+
+    playJumpEffect:function () {
+        this.audioEngine.playEffect(s_footstep_dirt_1, false);
+    },
+
+    stopJumpEffect:function () {
+        this.audioEngine.playEffect(s_footstep_dirt_1, false);
+        this.unschedule(this.playJumpEffect);
     }
 });
 
@@ -552,6 +633,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         this.cossino_pj = new CossinoSprite();
         this.cossino_pj.setPosition(cc_Point(menuItemX, 110));
         this.cossino_pj.setScale(0.6);
+        this.cossino_pj.setTerrainType(TERRAIN_TYPE.DIRT);
         cc.log(this.cossino_pj);
 
         cc.log("Agregar sprite Cossino a escena.");
@@ -668,6 +750,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         if ('touches' in systemCapabilities) {
             cc.log("Touch Supported. Enabling...");
             this.setTouchEnabled(true);
+            this.setTouchPriority(0);
         }
         else {
             cc.log("Touch Not Supported");
@@ -1009,6 +1092,27 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         var node = this.parallaxChild;
         var currentPos = node.getPosition();
         node.setPosition(cc_Point(currentPos.x + deltaX, currentPos.y + deltaY));
+    },
+
+    onTouchesBegan:function (touch, event) {
+        this.cossino_pj.handleTouchesBegan(touch, event);
+    },
+
+    onTouchesEnded:function (touch, event) {
+        this.cossino_pj.handleTouchesEnded(touch, event);
+    },
+
+    onTouchesMoved:function (touch, event) {
+        this.cossino_pj.handleTouchesMoved(touch, event);
+    }
+});
+
+
+var gameHUDLayer = cc.LayerColor.extend({
+    init:function () {
+        this._super(new cc.Color4B(128, 128, 128, 0), 800, 600);
+
+        return this;
     }
 });
 
@@ -1019,10 +1123,13 @@ var Hist1Level1Scene = cc.Scene.extend({
 
         this.setTag(TAGS.ESCENAS.MAIN_MENU);
 
-        var mainMenuL = new Hist1Lvl1Layer();
-        mainMenuL.init();
+        var mainMenu = new Hist1Lvl1Layer();
+        mainMenu.init();
+        this.addChild(mainMenu, 1, TAGS.CAPAS.MAIN_MENU);
 
-        this.addChild(mainMenuL, 1, TAGS.CAPAS.MAIN_MENU);
+        var gameHUD = new gameHUDLayer();
+        gameHUD.init();
+        this.addChild(gameHUD, 2, TAGS.CAPAS.HUD);
 
         cc.log("Children Count: " + this.getChildrenCount());
     }

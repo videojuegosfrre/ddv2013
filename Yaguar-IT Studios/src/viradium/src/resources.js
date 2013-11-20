@@ -22,6 +22,10 @@ var s_ambient_music_1 = h_1_music_dir + "background/music_ambiente";
 var s_ambient_music_1_mp3 = s_ambient_music_1 + ".mp3";
 var s_ambient_music_1_ogg = s_ambient_music_1 + ".ogg";
 
+var s_footstep_dirt_1 = h_1_music_dir + "footsteps/footstep_dirt1";
+var s_footstep_dirt_1_mp3 = s_footstep_dirt_1 + ".mp3";
+var s_footstep_dirt_1_ogg = s_footstep_dirt_1 + ".ogg";
+
 var s_bg_h1_layer0_part0 = h_1_img_dir + "background_0_0.png";
 var s_bg_h1_layer0_part1 = h_1_img_dir + "background_0_1.png";
 var s_bg_h1_layer0_part2 = h_1_img_dir + "background_0_2.png";
@@ -139,6 +143,8 @@ var g_resources = [
     //effect
     {type:"sound", src:s_effect_ogg},
     {type:"sound", src:s_effect_mp3},
+    {type:"sound", src:s_footstep_dirt_1_ogg},
+    {type:"sound", src:s_footstep_dirt_1_mp3},
 ];
 
 var TAGS = {
@@ -166,5 +172,29 @@ var TAGS = {
         FONDO_TRASERO: 103,
         FONDO_INTERMEDIO: 104,
         FONDO_FRONTAL: 105,
+        HUD: 106
     }
+};
+
+var CHR_STATUS = {
+    STAND: 0,
+    WALK: 1,
+    RUN: 2,
+    JUMP: 3,
+    NOTSET: 4
+};
+
+var CHR_DIRECTION = {
+    UP: 0,
+    DOWN: 1,
+    LEFT: 2,
+    RIGHT: 3,
+    NOTSET: 4
+};
+
+var TERRAIN_TYPE = {
+    DIRT: 0,
+    METAL: 1,
+    REGULAR: 2,
+    WOOD: 3
 };
