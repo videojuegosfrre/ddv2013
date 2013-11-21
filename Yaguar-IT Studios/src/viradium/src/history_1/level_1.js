@@ -396,7 +396,7 @@ var CossinoSprite = cc.Sprite.extend({
         this.unschedule(this.updateStand);
         this.stopStandEffect();
 
-        this.playEffect(s_footstep_dirt_1, false);
+        this.audioEngine.playEffect(s_footstep_dirt_1, false);
         // this.scheduleOnce(this.playJumpEffect);
         this.schedule(this.updateJump, 0.1);
         this._executingAnimation = true;
@@ -406,7 +406,7 @@ var CossinoSprite = cc.Sprite.extend({
         this.clearDeltaPos();
         this.unschedule(this.updateJump);
 
-        this.playEffect(s_footstep_dirt_1, false);
+        this.audioEngine.playEffect(s_footstep_dirt_1, false);
         // this.stopJumpEffect();
 
         this._FNJumpIdx = 1;
@@ -594,19 +594,22 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
     _layer0MinOffset: 0,
     _centerScreenX: 0,
     _centerScreenY: 0,
-
+    _wsizeheight: 0,
+    _wsizewidth: 0,
+    _previousDirection: null,
+    _currentDirection: null,
 
     init:function()
     {
         cc.log("Init Function: Hist1Lvl1Layer.");
-        this._super(new cc.Color4B(128, 128, 128, 0), 800, 600);
+        this._super(new cc.Color4B(128, 128, 128, 0));
 
         // Caching
         cc_MenuItemFont = cc.MenuItemFont;
         this.audioEngine = cc.AudioEngine.getInstance();
         this.director = cc.Director.getInstance();
-        var wSizeWidth = this.director.getWinSize().width;
-        var wSizeHeight = this.director.getWinSize().height;
+        var wSizeWidth = this._wsizewidth = this.director.getWinSize().width;
+        var wSizeHeight = this._wsizeheight = this.director.getWinSize().height;
         var systemCapabilities = sys.capabilities;
 
         var menuItemX, menuItemY = 0;
@@ -616,6 +619,8 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
 
         menuItemX = this._centerScreenX = wSizeWidth / 2;
         menuItemY = this._centerScreenY = wSizeHeight / 2;
+
+        this._currentDirection = this._previousDirection = CHR_DIRECTION.RIGHT;
 
         // Inicializar fondos parallax
         this.initParallax();
@@ -635,13 +640,13 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         // Create Cossino sprite
         cc.log("Crear sprite de Cossino...");
         this.cossino_pj = new CossinoSprite();
-        this.cossino_pj.setPosition(cc_Point(menuItemX, 110));
-        this.cossino_pj.setScale(0.6);
+        this.cossino_pj.setScale(0.55);
+        this.cossino_pj.setPosition(cc_Point(this._wsizewidth / 2, 100));
         this.cossino_pj.setTerrainType(TERRAIN_TYPE.DIRT);
         cc.log(this.cossino_pj);
 
         cc.log("Agregar sprite Cossino a escena.");
-        this.addChild(this.cossino_pj);
+        this.addChild(this.cossino_pj, 0, 1111);
 
         // -------------------------------------------------------------------
         // Configure Box2D ---------------------------------------------------
@@ -660,7 +665,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
 
         // Construct a world object, which will hold and simulate the rigid bodies.
         var Physics = function (element, scale) {
-            var gravity = new b2Vec2(0, -9.8);
+            var gravity = new b2Vec2(0, -10.0);
             this.world = new b2World(gravity, true);
             this.world.SetContinuousPhysics(true);
             this.element = element;
@@ -711,7 +716,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         this.physics.world.CreateBody(bodyDef).CreateFixture(fixDef);
 
         // Límite inferior (piso)
-        bodyDef.position.Set((wSizeWidth / 2) / 30, 50 / 30);
+        bodyDef.position.Set((wSizeWidth / 2) / 30, 0 / 30);
         fixDef.shape.SetAsBox((wSizeWidth / 2) / 30, 0.5 / 30);
         this.physics.world.CreateBody(bodyDef).CreateFixture(fixDef);
 
@@ -725,8 +730,12 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         fixDef.shape.SetAsBox(0.5 / 30, wSizeHeight / 30);
         this.physics.world.CreateBody(bodyDef).CreateFixture(fixDef);
 
-        //Set up sprite
-        //this.addNewSpriteWithPhysics(this.cossino_pj);
+        // Set up sprite
+        // this.addPhysicsToSprite(this.cossino_pj);
+
+        // For testing physics
+        // var mgr = cc.SpriteBatchNode.create(s_pathBlock, 150);
+        // this.addChild(mgr, 0, 8855);
 
         // -------------------------------------------------------------------
 
@@ -830,6 +839,19 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
 
     onMouseUp:function (event) {
         this.showMouseButtonInfo(event, "Up");
+
+        //Add a new body/atlas sprite at the touched location
+        // var batch = this.getChildByTag(8855);
+
+        // var idx = (Math.random() > 0.5 ? 0 : 1);
+        // var idy = (Math.random() > 0.5 ? 0 : 1);
+        // var sprite = cc.Sprite.createWithTexture(batch.getTexture(), cc.rect(32 * idx, 32 * idy, 32, 32));
+        // batch.addChild(sprite);
+
+        // var location = event.getLocation();
+        // cc.log(location);
+        // sprite.setPosition(cc.p(location.x, location.y));
+        // this.addNewSpriteWithCoords(location);
     },
 
     onMouseMoved:function (event) {
@@ -876,8 +898,12 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
                 this.exitApp();
                 break;
             case cc.KEY.right:
+                this._previousDirection = this._currentDirection;
+                this._currentDirection = CHR_DIRECTION.RIGHT;
                 break;
             case cc.KEY.left:
+                this._previousDirection = this._currentDirection;
+                this._currentDirection = CHR_DIRECTION.LEFT;
                 break;
             default:
                 break;
@@ -897,34 +923,45 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
 
     update:function (dt) {
         var this_obj = this;
+        var physics = this_obj.physics;
 
         // Instruct the world to perform a single step of simulation. It is
         // generally best to keep the time step and iterations fixed.
         // this.world.Step(dt, velocityIterations, positionIterations);
-        this_obj.physics.step(dt);
+        physics.step(dt);
 
         //Iterate over the bodies in the physics world
-        bodies = this_obj.physics.world.GetBodyList();
-        for (var b = 0; b < bodies.length; b++) {
-            if (bodies.GetUserData() !== null) {
+        for (var b = physics.world.GetBodyList(); b; b = b.GetNext()) {
+            if (b.GetUserData() !== null) {
                 //Synchronize the AtlasSprites position and rotation with the corresponding body
-                var myActor = bodies.GetUserData();
-                myActor.setPosition(cc.Point(bodies.GetPosition().x * this_obj.PTM_RATIO, bodies.GetPosition().y * this_obj.PTM_RATIO));
-                myActor.setRotation(-1 * cc.RADIANS_TO_DEGREES(bodies.GetAngle()));
-                // cc.log(b.GetPosition().x + " " + b.GetPosition().y);
+                var myActor = b.GetUserData();
+
+                myActor.setPosition(cc.p(b.GetPosition().x * physics.scale,
+                                         b.GetPosition().y * physics.scale));
+
+                myActor.setRotation(-1 * cc.RADIANS_TO_DEGREES(b.GetAngle()));
+
                 // cc.log(myActor.getPosition().x + " " + myActor.getPosition().y);
-                // cc.log(b.GetAngle());
             }
-            bodies.getNext();
         }
 
-        //this_obj.physics.world.DrawDebugData();
-        this_obj.physics.world.ClearForces();
+        physics.world.DrawDebugData();
+        physics.world.ClearForces();
 
         // Actualizar parallax
         var cossinoDirection = this_obj.cossino_pj.getCurrentDirection();
         var cossinoDeltaPos = this_obj.cossino_pj.getDeltaPos();
         var currentParallaxPos = this_obj.parallaxChild.getPosition();
+
+        // Actualizar posición de cámara
+        // if (this_obj._previousDirection != this_obj._currentDirection) {
+        //     if (this_obj._currentDirection == CHR_DIRECTION.RIGHT) {
+        //         this_obj.updateCameraRight();
+        //     } else {
+        //         this_obj.updateCameraLeft();
+        //     }
+        //     this_obj._previousDirection = this_obj._currentDirection;
+        // }
 
         if ((cossinoDirection == CHR_DIRECTION.LEFT) && (currentParallaxPos.x < -5)) {
                 this_obj.scrollParallaxRight(cossinoDeltaPos, 0);
@@ -955,7 +992,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
                event.getLocation().y + ")");
     },
 
-    addNewSpriteWithPhysics:function (sprite) {
+    addPhysicsToSprite:function (sprite) {
         var spritePosition = sprite.getPosition();
         var spriteContSize = sprite.getContentSize();
         var spriteHeight = (spriteContSize.height * sprite.getScaleY()) / this.physics.scale;
@@ -965,7 +1002,6 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         cc.log(spriteWidth + "x" + spriteHeight);
 
         // Define the dynamic body.
-        //Set up a 1m squared box in the physics world
         var b2BodyDef = Box2D.Dynamics.b2BodyDef;
         var b2Body = Box2D.Dynamics.b2Body;
         var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
@@ -981,7 +1017,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         // Define another box shape for our dynamic body.
         var dynamicBox = new b2PolygonShape();
 
-        dynamicBox.SetAsBox(spriteWidth / 2, spriteHeight / 2);
+        dynamicBox.SetAsBox(spriteWidth, spriteHeight);
 
         // Define the dynamic body fixture.
         var fixtureDef = new b2FixtureDef();
@@ -989,6 +1025,44 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         fixtureDef.density = 1.0;
         fixtureDef.friction = 0.3;
         this.physics.world.CreateBody(bodyDef).CreateFixture(fixtureDef);
+    },
+
+    addNewSpriteWithCoords:function (p) {
+        //UXLog(L"Add sprite %0.2f x %02.f",p.x,p.y);
+        var batch = this.getChildByTag(8855);
+
+        //We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
+        //just randomly picking one of the images
+        var idx = (Math.random() > 0.5 ? 0 : 1);
+        var idy = (Math.random() > 0.5 ? 0 : 1);
+        var sprite = cc.Sprite.createWithTexture(batch.getTexture(), cc.rect(32 * idx, 32 * idy, 32, 32));
+        batch.addChild(sprite);
+
+        sprite.setPosition(cc.p(p.x, p.y));
+
+        // Define the dynamic body.
+        //Set up a 1m squared box in the physics world
+        var b2BodyDef = Box2D.Dynamics.b2BodyDef;
+        var b2Body = Box2D.Dynamics.b2Body;
+        var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
+        var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
+
+        var bodyDef = new b2BodyDef();
+        bodyDef.type = b2Body.b2_dynamicBody;
+        bodyDef.position.Set(p.x / this.physics.scale, p.y / this.physics.scale);
+        bodyDef.userData = sprite;
+        var body = this.physics.world.CreateBody(bodyDef);
+
+        // Define another box shape for our dynamic body.
+        var dynamicBox = new b2PolygonShape();
+        dynamicBox.SetAsBox(0.5, 0.5);//These are mid points for our 1m box
+
+        // Define the dynamic body fixture.
+        var fixtureDef = new b2FixtureDef();
+        fixtureDef.shape = dynamicBox;
+        fixtureDef.density = 1.0;
+        fixtureDef.friction = 0.3;
+        body.CreateFixture(fixtureDef);
     },
 
     initParallax:function () {
@@ -1108,13 +1182,37 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
 
     onTouchesMoved:function (touch, event) {
         this.cossino_pj.handleTouchesMoved(touch, event);
+    },
+
+    updateCameraLeft:function () {
+        cc.log("Update Camera Left...");
+        //this.cossino_pj.setPosition(cc_Point(this._wsizewidth * 0.66, 110));
+
+        var goLeft = cc.MoveBy.create(0.3, cc.p(this._wsizewidth / 3, 0));
+        this.parallaxChild.runAction(goLeft);
+
+        //var goCossinoLeft = cc.MoveTo.create(0.1, cc.p(this._wsizewidth * 0.66, 110));
+        var goCossinoLeft = cc.MoveTo.create(0.1, cc.p(this._wsizewidth / 2, 110));
+        this.cossino_pj.runAction(goCossinoLeft);
+    },
+
+    updateCameraRight:function () {
+        cc.log("Update Camera Right...");
+        //this.cossino_pj.setPosition(cc_Point(this._wsizewidth / 3, 110));
+
+        var goRight = cc.MoveBy.create(0.3, cc.p(this._wsizewidth / -3, 0));
+        this.parallaxChild.runAction(goRight);
+
+        //var goCossinoRight = cc.MoveTo.create(0.1, cc.p(this._wsizewidth / 3, 110));
+        var goCossinoRight = cc.MoveTo.create(0.1, cc.p(this._wsizewidth / 2, 110));
+        this.cossino_pj.runAction(goCossinoRight);
     }
 });
 
 
 var gameHUDLayer = cc.LayerColor.extend({
     init:function () {
-        this._super(new cc.Color4B(128, 128, 128, 0), 800, 600);
+        this._super(new cc.Color4B(128, 128, 128, 0));
 
         return this;
     }

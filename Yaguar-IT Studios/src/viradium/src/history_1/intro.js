@@ -7,7 +7,7 @@ var IntroHist1Layer = cc.LayerColor.extend({
 
     init:function()
     {
-        this._super(new cc.Color4B(0, 0, 0, 255), 200, 200);
+        this._super(new cc.Color4B(0, 0, 0, 255));
 
         var director = cc.Director.getInstance();
         var wSizeWidth = director.getWinSize().width;

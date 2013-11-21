@@ -61,6 +61,10 @@ var s_bg_h1_layer2_part5 = h_1_img_dir + "background_2_5.png";
 var s_bg_h1_layer2_part6 = h_1_img_dir + "background_2_6.png";
 var s_bg_h1_layer2_part7 = h_1_img_dir + "background_2_7.png";
 
+var s_rock_1 = h_1_img_dir + "roca_1.png";
+var s_espina_1 = h_1_img_dir + "espina_1.png";
+var s_espina_2 = h_1_img_dir + "espina_2.png";
+var s_espina_3 = h_1_img_dir + "espina_3.png";
 
 // History 2 Resources
 // ---------------------------------------------------------------------
@@ -89,6 +93,7 @@ var g_resources = [
     {type:"image", src:s_font_bitmap_img},
     {type:"image", src:s_pathBlock},
     {type:"image", src:s_pathBlock},
+
     {type:"image", src:s_bg_h1_layer0_part0},
     {type:"image", src:s_bg_h1_layer0_part1},
     {type:"image", src:s_bg_h1_layer0_part2},
@@ -121,6 +126,11 @@ var g_resources = [
     {type:"image", src:s_bg_h1_layer2_part5},
     {type:"image", src:s_bg_h1_layer2_part6},
     {type:"image", src:s_bg_h1_layer2_part7},
+
+    {type:"image", src:s_rock_1},
+    {type:"image", src:s_espina_1},
+    {type:"image", src:s_espina_2},
+    {type:"image", src:s_espina_3},
 
     //plist
     {type:"plist", src:s_cossino_plist},
