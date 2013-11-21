@@ -396,7 +396,8 @@ var CossinoSprite = cc.Sprite.extend({
         this.unschedule(this.updateStand);
         this.stopStandEffect();
 
-        this.scheduleOnce(this.playJumpEffect);
+        this.playEffect(s_footstep_dirt_1, false);
+        // this.scheduleOnce(this.playJumpEffect);
         this.schedule(this.updateJump, 0.1);
         this._executingAnimation = true;
     },
@@ -404,7 +405,10 @@ var CossinoSprite = cc.Sprite.extend({
     stopJump:function () {
         this.clearDeltaPos();
         this.unschedule(this.updateJump);
-        this.stopJumpEffect();
+
+        this.playEffect(s_footstep_dirt_1, false);
+        // this.stopJumpEffect();
+
         this._FNJumpIdx = 1;
         this._onFinishJumpStop = false;
     },
@@ -566,7 +570,7 @@ var CossinoSprite = cc.Sprite.extend({
     },
 
     stopJumpEffect:function () {
-        this.audioEngine.playEffect(s_footstep_dirt_1, false);
+        // this.audioEngine.playEffect(s_footstep_dirt_1, false);
         this.unschedule(this.playJumpEffect);
     }
 });
