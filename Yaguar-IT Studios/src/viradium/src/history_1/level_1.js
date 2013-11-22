@@ -42,6 +42,7 @@ var CossinoSprite = cc.Sprite.extend({
     _deltaPosTotal: 0,
     _onTerrainType: null,
     audioEngine: null,
+    spriteDescription: null,
 
     ctor:function () {
         cc.log("Constructor: CossinoSprite");
@@ -55,6 +56,8 @@ var CossinoSprite = cc.Sprite.extend({
         this.wSizeHeight = this.director.getWinSize().height;
         this.frameCache = cc.SpriteFrameCache.getInstance();
         this.audioEngine = cc.AudioEngine.getInstance();
+
+        this.spriteDescription = "Cossino";
 
         // this.initWithSpriteFrameName(this._FNStandPrefix + "1.png");
         this.init();
@@ -572,6 +575,10 @@ var CossinoSprite = cc.Sprite.extend({
     stopJumpEffect:function () {
         // this.audioEngine.playEffect(s_footstep_dirt_1, false);
         this.unschedule(this.playJumpEffect);
+    },
+
+    getSpriteDescription:function () {
+        return this.spriteDescription;
     }
 });
 
@@ -641,7 +648,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         cc.log("Crear sprite de Cossino...");
         this.cossino_pj = new CossinoSprite();
         this.cossino_pj.setScale(0.55);
-        this.cossino_pj.setPosition(cc_Point(this._wsizewidth / 2, 100));
+        this.cossino_pj.setPosition(cc_Point(this._wsizewidth / 2, 200));
         this.cossino_pj.setTerrainType(TERRAIN_TYPE.DIRT);
         cc.log(this.cossino_pj);
 
@@ -662,11 +669,13 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
         var b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
         var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
+        var b2ContactListener = Box2D.Dynamics.b2ContactListener;
 
         // Construct a world object, which will hold and simulate the rigid bodies.
         var Physics = function (element, scale) {
-            var gravity = new b2Vec2(0, -10.0);
-            this.world = new b2World(gravity, true);
+            var gravity = new b2Vec2(0, -9.8);
+            var doSleep = true;
+            this.world = new b2World(gravity, doSleep);
             this.world.SetContinuousPhysics(true);
             this.element = element;
 
@@ -696,7 +705,6 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         };
 
         this._canvas = document.getElementById(myApp.config.tag);
-
         this.physics = new Physics(this._canvas, 30);
 
         var fixDef = new b2FixtureDef();
@@ -710,28 +718,42 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         bodyDef.type = b2Body.b2_staticBody;
         fixDef.shape = new b2PolygonShape();
 
-        // Límite superior
-        bodyDef.position.Set((wSizeWidth / 2) / 30, (wSizeHeight / 30));
-        fixDef.shape.SetAsBox((wSizeWidth / 2) / 30, 0.5 / 30);
-        this.physics.world.CreateBody(bodyDef).CreateFixture(fixDef);
+        // // Límite superior
+        // bodyDef.position.Set((wSizeWidth / 2) / 30, (wSizeHeight / 30));
+        // fixDef.shape.SetAsBox((wSizeWidth / 2) / 30, 0.5 / 30);
+        // this.physics.world.CreateBody(bodyDef).CreateFixture(fixDef);
 
         // Límite inferior (piso)
         bodyDef.position.Set((wSizeWidth / 2) / 30, 0 / 30);
-        fixDef.shape.SetAsBox((wSizeWidth / 2) / 30, 0.5 / 30);
+        fixDef.shape.SetAsBox((wSizeWidth / 2) / 30, 0.2 / 30);
         this.physics.world.CreateBody(bodyDef).CreateFixture(fixDef);
 
-        // Límite izquierdo
-        bodyDef.position.Set(0 / 30, (wSizeHeight / 2) / 30);
-        fixDef.shape.SetAsBox(0.5 / 30, wSizeHeight / 30);
-        this.physics.world.CreateBody(bodyDef).CreateFixture(fixDef);
+        // // Límite izquierdo
+        // bodyDef.position.Set(0 / 30, (wSizeHeight / 2) / 30);
+        // fixDef.shape.SetAsBox(0.5 / 30, wSizeHeight / 30);
+        // this.physics.world.CreateBody(bodyDef).CreateFixture(fixDef);
 
-        // Límite derecho
-        bodyDef.position.Set(wSizeWidth / 30, (wSizeHeight / 2) / 30);
-        fixDef.shape.SetAsBox(0.5 / 30, wSizeHeight / 30);
-        this.physics.world.CreateBody(bodyDef).CreateFixture(fixDef);
+        // // Límite derecho
+        // bodyDef.position.Set(wSizeWidth / 30, (wSizeHeight / 2) / 30);
+        // fixDef.shape.SetAsBox(0.5 / 30, wSizeHeight / 30);
+        // this.physics.world.CreateBody(bodyDef).CreateFixture(fixDef);
 
-        // Set up sprite
-        // this.addPhysicsToSprite(this.cossino_pj);
+        // Enable debug draw
+        // var canvasDebug = document.getElementById(myApp.config.tag);
+        // var debugDraw = new b2DebugDraw();  // Objeto de visualización de depuración
+        // debugDraw.SetSprite(canvasDebug.getContext("2d") || canvasDebug.getContext("webgl"));  // Establecemos el canvas para visualizarlo
+        // debugDraw.SetDrawScale(this.physics.scale);     // Escala de la visualización
+        // debugDraw.SetFillAlpha(0.5);    // Transparencia de los elementos (debug)
+        // debugDraw.SetLineThickness(1.0);
+        // debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
+        // this.physics.world.SetDebugDraw(debugDraw);  // Le proporcionamos al "mundo" la salida del debug
+
+        // Set up sprite physics for Cossino
+        // FIXME:
+        this.addBoxBodyForSprite(this.cossino_pj);
+
+        // Agregar algunas rocas
+        this.addRocks();
 
         // For testing physics
         // var mgr = cc.SpriteBatchNode.create(s_pathBlock, 150);
@@ -924,6 +946,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
     update:function (dt) {
         var this_obj = this;
         var physics = this_obj.physics;
+        var b2Vec2 = Box2D.Common.Math.b2Vec2;
 
         // Instruct the world to perform a single step of simulation. It is
         // generally best to keep the time step and iterations fixed.
@@ -931,17 +954,33 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         physics.step(dt);
 
         //Iterate over the bodies in the physics world
-        for (var b = physics.world.GetBodyList(); b; b = b.GetNext()) {
-            if (b.GetUserData() !== null) {
-                //Synchronize the AtlasSprites position and rotation with the corresponding body
-                var myActor = b.GetUserData();
+        // for (var b = physics.world.GetBodyList(); b; b = b.GetNext()) {
+        //     if (b.GetUserData() !== null) {
+        //         //Synchronize the AtlasSprites position and rotation with the corresponding body
+        //         var myActor = b.GetUserData();
 
-                myActor.setPosition(cc.p(b.GetPosition().x * physics.scale,
-                                         b.GetPosition().y * physics.scale));
+        //         myActor.setPosition(cc.p(b.GetPosition().x * physics.scale,
+        //                                  b.GetPosition().y * physics.scale));
 
-                myActor.setRotation(-1 * cc.RADIANS_TO_DEGREES(b.GetAngle()));
+        //         myActor.setRotation(-1 * cc.RADIANS_TO_DEGREES(b.GetAngle()));
 
-                // cc.log(myActor.getPosition().x + " " + myActor.getPosition().y);
+        //         // cc.log(myActor.getPosition().x + " " + myActor.getPosition().y);
+        //     }
+        // }
+
+        for (var body = physics.world.GetBodyList(); body; body = body.GetNext()) {
+            if (body.GetUserData() !== null) {
+                //Synchronize the Sprites position and rotation with the corresponding body
+                var sprite = body.GetUserData();
+
+                var spritePosition = new b2Vec2(sprite.getPosition().x / physics.scale,
+                                                sprite.getPosition().y / physics.scale);
+
+                var spriteAngle = -1 * cc.DEGREES_TO_RADIANS(sprite.getRotation());
+
+                body.SetPosition(spritePosition);
+                // cc.log("Position: " + body.GetPosition().x + " " + body.GetPosition().y);
+                body.SetAngle(spriteAngle);
             }
         }
 
@@ -1065,6 +1104,64 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         body.CreateFixture(fixtureDef);
     },
 
+    addBoxBodyForSprite:function (sprite) {
+        cc.log("Add box body for sprite...");
+
+        var b2BodyDef = Box2D.Dynamics.b2BodyDef;
+        var b2Body = Box2D.Dynamics.b2Body;
+        var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
+        var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
+        var b2Fixture = Box2D.Dynamics.b2Fixture;
+
+        var spriteBodyDef = new b2BodyDef();
+        spriteBodyDef.type = b2Body.b2_dynamicBody;
+
+        spriteBodyDef.position.Set(sprite.getPosition().x / this.physics.scale,
+                                   sprite.getPosition().y /this.physics.scale);
+
+        spriteBodyDef.userData = sprite;
+        var spriteBody = this.physics.world.CreateBody(spriteBodyDef);
+
+        var spriteShape = new b2PolygonShape();
+        spriteShape.SetAsBox(sprite.getBoundingBox().size.width / this.physics.scale/ 2,
+                            sprite.getBoundingBox().size.height / this.physics.scale/ 2);
+
+        // spriteShape.SetAsBox(sprite.getContentSize().width / this.physics.scale/ 2,
+        //                      sprite.getContentSize().height / this.physics.scale/ 2);
+
+        // Define the dynamic body fixture.
+        var spriteShapeDef = new b2FixtureDef();
+        spriteShapeDef.shape = spriteShape;
+        spriteShapeDef.density = 5.0;
+        spriteShapeDef.friction = 0.2;
+        spriteShapeDef.isSensor = true;
+        spriteBody.CreateFixture(spriteShapeDef);
+    },
+
+    spriteDone:function (sender) {
+        cc.log("Destroy body from world...");
+
+        var physics = this.physics;
+        var spriteBody = null;
+
+        //Iterate over the bodies in the physics world
+        for (var b = physics.world.GetBodyList(); b; b = b.GetNext()) {
+            if (b.GetUserData() !== null) {
+                //Synchronize the AtlasSprites position and rotation with the corresponding body
+                var myActor = b.GetUserData();
+
+                if (myActor === sender) {
+                    spriteBody = myActor;
+                    break;
+                }
+            }
+        }
+
+        if (spriteBody !== null) {
+            physics.world.DestroyBody(spriteBody);
+        }
+    },
+
     initParallax:function () {
         cc.log("Inicializar parallax...");
         // Fondo Parallax
@@ -1087,11 +1184,11 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
                            s_bg_h1_layer2_part7
                           ];
 
-        for (var i = 0; i < 7; i++) {
+        for (var i = 0; i < bg_2_images.length; i++) {
             var sprite_2 = cc_sprite_create(bg_2_images[i]);
             sprite_2.setAnchorPoint(BG_2_AP);
             sprite_2.setScale(BG_2_SCALE);
-            parallaxNode.addChild(sprite_2, -1, BG_2_RATIO, cc_Point(offset_x_2, offset_y_2));
+            parallaxNode.addChild(sprite_2, -1, BG_2_RATIO, cc_Point(offset_x_2 - 2, offset_y_2));
             offset_x_2 += sprite_2.getBoundingBox().size.width;
         }
         this._layer2MaxOffset = offset_x_2;
@@ -1115,11 +1212,11 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
                            s_bg_h1_layer1_part9
                           ];
 
-        for (var j = 0; j < 9; j++) {
+        for (var j = 0; j < bg_1_images.length; j++) {
             var sprite_1 = cc_sprite_create(bg_1_images[j]);
             sprite_1.setAnchorPoint(BG_1_AP);
             sprite_1.setScale(BG_1_SCALE);
-            parallaxNode.addChild(sprite_1, 1, BG_1_RATIO, cc_Point(offset_x_1, offset_y_1));
+            parallaxNode.addChild(sprite_1, 1, BG_1_RATIO, cc_Point(offset_x_1 - 2, offset_y_1));
             offset_x_1 += sprite_1.getBoundingBox().size.width;
         }
         this._layer1MaxOffset = offset_x_1;
@@ -1147,11 +1244,11 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
                            s_bg_h1_layer0_part13,
                           ];
 
-        for (var k = 0; k < 13; k++) {
+        for (var k = 0; k < bg_0_images.length; k++) {
             var sprite_0 = cc_sprite_create(bg_0_images[k]);
             sprite_0.setAnchorPoint(BG_0_AP);
             sprite_0.setScale(BG_0_SCALE);
-            parallaxNode.addChild(sprite_0, 2, BG_0_RATIO, cc_Point(offset_x_0, offset_y_0));
+            parallaxNode.addChild(sprite_0, 2, BG_0_RATIO, cc_Point(offset_x_0 - 2, offset_y_0));
             offset_x_0 += sprite_0.getBoundingBox().size.width;
         }
         this._layer0MaxOffset = offset_x_0;
@@ -1206,6 +1303,68 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         //var goCossinoRight = cc.MoveTo.create(0.1, cc.p(this._wsizewidth / 3, 110));
         var goCossinoRight = cc.MoveTo.create(0.1, cc.p(this._wsizewidth / 2, 110));
         this.cossino_pj.runAction(goCossinoRight);
+    },
+
+    addRocks:function () {
+        cc.log("Agregar rocas...");
+
+        var b2ContactListener = Box2D.Dynamics.b2ContactListener;
+        parallaxNode = this.parallaxChild;
+
+        // Capa de rocas y enemigos
+        var offset_x_0 = 0;
+        var offset_y_0 = 0;
+        var BG_0_SCALE = 0.4;
+        var BG_0_RATIO = cc_Point(2.1, 0);
+        var BG_0_AP = cc_Point(0.5, 0.5);
+
+        var bg_0_images = [s_rock_1];
+
+        for (var k = 0; k < bg_0_images.length; k++) {
+            var sprite_0 = cc_sprite_create(bg_0_images[k]);
+            sprite_0.setAnchorPoint(BG_0_AP);
+            sprite_0.setScale(BG_0_SCALE);
+            parallaxNode.addChild(sprite_0, 3, BG_0_RATIO, cc_Point(this._wsizewidth * 0.8, 100));
+            offset_x_0 += sprite_0.getBoundingBox().size.width;
+
+            this.addBoxBodyForSprite(sprite_0);
+        }
+
+        // Collision listener override
+        var collisionListener = new b2ContactListener();
+        collisionListener.BeginContact = function (contact) {
+                // cc.log("Begin Contact.");
+                bodyA = contact.GetFixtureA().GetBody().GetUserData();
+                bodyB = contact.GetFixtureB().GetBody().GetUserData();
+
+                if (bodyA !== null) {
+                    bodyA.setColor(new cc.Color4B(0, 0, 255, 255));
+                    //cc.log("Begin BodyA: " + bodyA.getPosition().x + " " + bodyA.getPosition().y);
+                }
+
+                if (bodyB !== null) {
+                    bodyB.setColor(new cc.Color4B(255, 0, 0, 255));
+                    //cc.log("Begin BodyB: " + bodyB.getPosition().x + " " + bodyB.getPosition().y);
+                }
+        };
+
+        collisionListener.EndContact = function (contact) {
+                // cc.log("End Contact.");
+                bodyA = contact.GetFixtureA().GetBody().GetUserData();
+                bodyB = contact.GetFixtureB().GetBody().GetUserData();
+
+                if (bodyA !== null) {
+                    bodyA.setColor(cc.white());
+                    //cc.log("End BodyA: " + bodyA.getPosition().x + " " + bodyA.getPosition().y);
+                }
+
+                if (bodyB !== null) {
+                    bodyB.setColor(cc.white());
+                    //cc.log("End BodyB: " + bodyB.getPosition().x + " " + bodyB.getPosition().y);
+                }
+        };
+
+        this.physics.world.SetContactListener(collisionListener);
     }
 });
 
