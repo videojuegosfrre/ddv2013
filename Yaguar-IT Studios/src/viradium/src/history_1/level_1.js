@@ -43,6 +43,7 @@ var CossinoSprite = cc.Sprite.extend({
     _onTerrainType: null,
     audioEngine: null,
     spriteDescription: null,
+    _footSoundCounter: 0,
 
     ctor:function () {
         cc.log("Constructor: CossinoSprite");
@@ -368,6 +369,7 @@ var CossinoSprite = cc.Sprite.extend({
         this.stopWalkEffect();
         this._FNWalkIdx = 1;
         this._onFinishWalkStop = false;
+        this._footSoundCounter = 0;
     },
 
     reqOnFinishWalkStop:function (next_status) {
@@ -414,6 +416,7 @@ var CossinoSprite = cc.Sprite.extend({
 
         this._FNJumpIdx = 1;
         this._onFinishJumpStop = false;
+        this._footSoundCounter = 0;
     },
 
     reqOnFinishJumpStop:function (next_status) {
@@ -447,7 +450,7 @@ var CossinoSprite = cc.Sprite.extend({
 
         // Importante: la luz es más rápida que el sonido.
         // Reproducir sonido antes de animar.
-        this.schedule(this.playRunEffect, 0.45);
+        this.schedule(this.playRunEffect, 0.5);
         this.schedule(this.updateRun, 0.04);
         this._executingAnimation = true;
     },
@@ -458,6 +461,7 @@ var CossinoSprite = cc.Sprite.extend({
         this.stopRunEffect();
         this._FNRunIdx = 1;
         this._onFinishRunStop = false;
+        this._footSoundCounter = 0;
     },
 
     reqOnFinishRunStop:function (next_status) {
@@ -550,31 +554,55 @@ var CossinoSprite = cc.Sprite.extend({
 
     playWalkEffect:function () {
         cc.log("Efecto de caminar.");
-        this.audioEngine.playEffect(s_footstep_dirt_1, false);
+        if ((this._footSoundCounter % 2) === 0) {
+            this.audioEngine.playEffect(s_footstep_dirt_2, false);
+        }
+        else {
+            this.audioEngine.playEffect(s_footstep_dirt_1, false);
+        }
+
+        this._footSoundCounter += 1;
     },
 
     stopWalkEffect:function () {
         this.unschedule(this.playWalkEffect);
         this.audioEngine.stopEffect(s_footstep_dirt_1);
+        this.audioEngine.stopEffect(s_footstep_dirt_2);
     },
 
     playRunEffect:function () {
         cc.log("Efecto de correr.");
-        this.audioEngine.playEffect(s_footstep_dirt_1, false);
+        if ((this._footSoundCounter % 2) === 0) {
+            this.audioEngine.playEffect(s_footstep_dirt_2, false);
+        }
+        else {
+            this.audioEngine.playEffect(s_footstep_dirt_1, false);
+        }
+
+        this._footSoundCounter += 1;
     },
 
     stopRunEffect:function () {
         this.unschedule(this.playRunEffect);
         this.audioEngine.stopEffect(s_footstep_dirt_1);
+        this.audioEngine.stopEffect(s_footstep_dirt_2);
     },
 
     playJumpEffect:function () {
-        this.audioEngine.playEffect(s_footstep_dirt_1, false);
+        if ((this._footSoundCounter % 2) === 0) {
+            this.audioEngine.playEffect(s_footstep_dirt_2, false);
+        }
+        else {
+            this.audioEngine.playEffect(s_footstep_dirt_1, false);
+        }
+
+        this._footSoundCounter += 1;
     },
 
     stopJumpEffect:function () {
         // this.audioEngine.playEffect(s_footstep_dirt_1, false);
         this.unschedule(this.playJumpEffect);
+
     },
 
     getSpriteDescription:function () {
@@ -648,7 +676,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         cc.log("Crear sprite de Cossino...");
         this.cossino_pj = new CossinoSprite();
         this.cossino_pj.setScale(0.55);
-        this.cossino_pj.setPosition(cc_Point(this._wsizewidth / 2, 200));
+        this.cossino_pj.setPosition(cc_Point(this._wsizewidth / 2, 100));
         this.cossino_pj.setTerrainType(TERRAIN_TYPE.DIRT);
         cc.log(this.cossino_pj);
 

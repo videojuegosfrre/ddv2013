@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="374" height="19" tilewidth="32" tileheight="32">
+ <objectgroup name="Capa de Enemigos" width="374" height="19"/>
+ <imagelayer name="Capa de Imagen 1" width="374" height="19"/>
+ <layer name="Capa de patrones 1" width="374" height="19">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BgQAAAADDoPlTX+EAVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMBvpX6deghvAAA=
+  </data>
+ </layer>
+</map>
