@@ -60,8 +60,8 @@ var CossinoSprite = cc.Sprite.extend({
 
         this.spriteDescription = "Cossino";
 
-        // this.initWithSpriteFrameName(this._FNStandPrefix + "1.png");
-        this.init();
+        this.initWithSpriteFrameName(this._FNStandPrefix + "1.png");
+        //this.init();
 
         // Schedule updates
         cc.log("Scheduling Cossino Global Update...");
@@ -701,8 +701,8 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
 
         // Construct a world object, which will hold and simulate the rigid bodies.
         var Physics = function (element, scale) {
-            var gravity = new b2Vec2(0, -9.8);
-            var doSleep = true;
+            var gravity = new b2Vec2(0.0, 0.0);
+            var doSleep = false;
             this.world = new b2World(gravity, doSleep);
             this.world.SetContinuousPhysics(true);
             this.element = element;
@@ -736,7 +736,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         this.physics = new Physics(this._canvas, 30);
 
         var fixDef = new b2FixtureDef();
-        fixDef.density = 1.0;
+        fixDef.density = 10.0;
         fixDef.friction = 0.5;
         fixDef.restitution = 0.2;
 
@@ -778,7 +778,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
 
         // Set up sprite physics for Cossino
         // FIXME:
-        this.addBoxBodyForSprite(this.cossino_pj);
+        this.addBoxBodyForSprite(this.cossino_pj, 0, false);
 
         // Agregar algunas rocas
         this.addRocks();
@@ -1007,8 +1007,8 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
                 var spriteAngle = -1 * cc.DEGREES_TO_RADIANS(sprite.getRotation());
 
                 body.SetPosition(spritePosition);
-                // cc.log("Position: " + body.GetPosition().x + " " + body.GetPosition().y);
                 body.SetAngle(spriteAngle);
+                // cc.log("Position: " + body.GetPosition().x + " " + body.GetPosition().y);
             }
         }
 
@@ -1132,7 +1132,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         body.CreateFixture(fixtureDef);
     },
 
-    addBoxBodyForSprite:function (sprite) {
+    addBoxBodyForSprite:function (sprite, bodyType, setSensor) {
         cc.log("Add box body for sprite...");
 
         var b2BodyDef = Box2D.Dynamics.b2BodyDef;
@@ -1142,7 +1142,20 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         var b2Fixture = Box2D.Dynamics.b2Fixture;
 
         var spriteBodyDef = new b2BodyDef();
-        spriteBodyDef.type = b2Body.b2_dynamicBody;
+
+        switch (bodyType) {
+            case 0:
+                spriteBodyDef.type = b2Body.b2_dynamicBody;
+                break;
+            case 1:
+                spriteBodyDef.type = b2Body.b2_staticBody;
+                break;
+            case 2:
+                spriteBodyDef.type = b2Body.b2_kinematicBody;
+                break;
+            default:
+                spriteBodyDef.type = b2Body.b2_dynamicBody;
+        }
 
         spriteBodyDef.position.Set(sprite.getPosition().x / this.physics.scale,
                                    sprite.getPosition().y /this.physics.scale);
@@ -1150,19 +1163,22 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
         spriteBodyDef.userData = sprite;
         var spriteBody = this.physics.world.CreateBody(spriteBodyDef);
 
-        var spriteShape = new b2PolygonShape();
-        spriteShape.SetAsBox(sprite.getBoundingBox().size.width / this.physics.scale/ 2,
-                            sprite.getBoundingBox().size.height / this.physics.scale/ 2);
+        cc.log(sprite.getBoundingBox().size.width);
+        cc.log(sprite.getBoundingBox().size.height);
 
-        // spriteShape.SetAsBox(sprite.getContentSize().width / this.physics.scale/ 2,
-        //                      sprite.getContentSize().height / this.physics.scale/ 2);
+        var spriteShape = new b2PolygonShape();
+        spriteShape.SetAsBox(sprite.getBoundingBox().size.width / this.physics.scale / 2,
+                             sprite.getBoundingBox().size.height / this.physics.scale / 2);
+
+        // spriteShape.SetAsBox(sprite.getContentSize().width / this.physics.scale / 2,
+        //                      sprite.getContentSize().height / this.physics.scale / 2);
 
         // Define the dynamic body fixture.
         var spriteShapeDef = new b2FixtureDef();
         spriteShapeDef.shape = spriteShape;
         spriteShapeDef.density = 5.0;
         spriteShapeDef.friction = 0.2;
-        spriteShapeDef.isSensor = true;
+        spriteShapeDef.isSensor = setSensor || false;
         spriteBody.CreateFixture(spriteShapeDef);
     },
 
@@ -1355,7 +1371,7 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
             parallaxNode.addChild(sprite_0, 3, BG_0_RATIO, cc_Point(this._wsizewidth * 0.8, 100));
             offset_x_0 += sprite_0.getBoundingBox().size.width;
 
-            this.addBoxBodyForSprite(sprite_0);
+            this.addBoxBodyForSprite(sprite_0, 1, true);
         }
 
         // Collision listener override
@@ -1367,12 +1383,12 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
 
                 if (bodyA !== null) {
                     bodyA.setColor(new cc.Color4B(0, 0, 255, 255));
-                    //cc.log("Begin BodyA: " + bodyA.getPosition().x + " " + bodyA.getPosition().y);
+                    cc.log("Begin Body A: " + bodyA.getPosition().x + " " + bodyA.getPosition().y);
                 }
 
                 if (bodyB !== null) {
                     bodyB.setColor(new cc.Color4B(255, 0, 0, 255));
-                    //cc.log("Begin BodyB: " + bodyB.getPosition().x + " " + bodyB.getPosition().y);
+                    cc.log("Begin Body B: " + bodyB.getPosition().x + " " + bodyB.getPosition().y);
                 }
         };
 
@@ -1383,12 +1399,12 @@ var Hist1Lvl1Layer = cc.LayerColor.extend({
 
                 if (bodyA !== null) {
                     bodyA.setColor(cc.white());
-                    //cc.log("End BodyA: " + bodyA.getPosition().x + " " + bodyA.getPosition().y);
+                    cc.log("End Body A: " + bodyA.getPosition().x + " " + bodyA.getPosition().y);
                 }
 
                 if (bodyB !== null) {
                     bodyB.setColor(cc.white());
-                    //cc.log("End BodyB: " + bodyB.getPosition().x + " " + bodyB.getPosition().y);
+                    cc.log("End Body B: " + bodyB.getPosition().x + " " + bodyB.getPosition().y);
                 }
         };
 

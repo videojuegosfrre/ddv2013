@@ -54,7 +54,7 @@ cc.AudioEngine = cc.Class.extend(/** @lends cc.AudioEngine# */{
             // <audio> tag is supported, go on
             var _check = function(typeStr) {
                 var result = au.canPlayType(typeStr);
-                return result != "no" && result !== "";
+                return result != "no" && result != "";
             };
 
             capabilities["mp3"] = _check("audio/mpeg");
@@ -486,7 +486,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * cc.AudioEngine.getInstance().pauseEffect(audioID);
      */
     pauseEffect:function (audioID) {
-        if (audioID === null) return;
+        if (audioID == null) return;
 
         if (this._audioIDList.hasOwnProperty(audioID)) {
             var au = this._audioIDList[audioID];
@@ -523,7 +523,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * cc.AudioEngine.getInstance().resumeEffect(audioID);
      */
     resumeEffect:function (audioID) {
-        if (audioID === null) return;
+        if (audioID == null) return;
 
         if (this._audioIDList.hasOwnProperty(audioID)) {
             var au = this._audioIDList[audioID];
@@ -561,7 +561,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * cc.AudioEngine.getInstance().stopEffect(audioID);
      */
     stopEffect:function (audioID) {
-        if (audioID === null) return;
+        if (audioID == null) return;
 
         if (this._audioIDList.hasOwnProperty(audioID)) {
             var au = this._audioIDList[audioID];
@@ -702,8 +702,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
          * browser has proved to support Web Audio API in miniFramework.js
          * only in that case will cc.WebAudioEngine be chosen to run, thus the following is guaranteed to work
          */
-        window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext;
-        this._ctx = new AudioContext();
+        this._ctx = new (window.AudioContext || window.webkitAudioContext || window.mozAudioContext)();
 
         // gather capabilities information, enable sound if any of the audio format is supported
         var capabilities = {};
@@ -793,7 +792,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
         sfxCache.sourceNode = this._ctx.createBufferSource();
         sfxCache.sourceNode.buffer = this._audioData[key];
         sfxCache.sourceNode.loop = loop;
-        sfxCache.volumeNode = this._ctx.createGain ? this._ctx.createGain() : this._ctx.createGainNode();
+        sfxCache.volumeNode = this._ctx.createGain();
         sfxCache.volumeNode.gain.value = volume;
 
         sfxCache.sourceNode.connect(sfxCache.volumeNode);
@@ -1124,19 +1123,24 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
             // load now only if the type is supported and it is not being loaded currently
             this._audiosLoading[keyName] = true;
             var engine = this;
+
+            audioID = this._audioID++;
+            this._audioIDList[audioID] = null;
             this._fetchData(path, function(buffer) {
                 // resource fetched, save it and call playEffect() again, this time it should be alright
                 engine._audioData[keyName] = buffer;
                 delete engine._audiosLoading[keyName];
-                engine.playEffect(path, loop);
+                engine._audioIDList[audioID] = engine._beginSound(keyName, loop, engine.getEffectsVolume());
             }, function() {
                 // resource fetching failed, doing nothing here
                 delete engine._audiosLoading[keyName];
+                delete engine._audioIDList[audioID];
                 /*
                  * Potential Bug: if fetching data fails every time, loading will be tried again and again.
                  * Preloading would prevent this issue: if it fails to fetch, preloading procedure will not achieve 100%.
                  */
             });
+            return audioID;
         }
         return null;
     },
@@ -1176,7 +1180,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
     _pauseSoundList: function(effectList) {
         for (var idx = 0, len = effectList.length; idx < len; idx++) {
             var sfxCache = effectList[idx];
-            if (this._isSoundPlaying(sfxCache))
+            if (sfxCache && this._isSoundPlaying(sfxCache))
                 this._pauseSound(sfxCache);
         }
     },
@@ -1189,12 +1193,12 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
      * cc.AudioEngine.getInstance().pauseEffect(audioID);
      */
     pauseEffect: function(audioID) {
-        if (audioID === null)
+        if (audioID == null)
             return;
 
         if (this._audioIDList.hasOwnProperty(audioID)){
             var sfxCache = this._audioIDList[audioID];
-            if (this._isSoundPlaying(sfxCache))
+            if (sfxCache && this._isSoundPlaying(sfxCache))
                 this._pauseSound(sfxCache);
         }
     },
@@ -1235,12 +1239,12 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
      * cc.AudioEngine.getInstance().resumeEffect(audioID);
      */
     resumeEffect: function(audioID) {
-        if (audioID === null)
+        if (audioID == null)
             return;
 
         if (this._audioIDList.hasOwnProperty(audioID)){
             var sfxCache = this._audioIDList[audioID];
-            if (this._isSoundPaused(sfxCache)){
+            if (sfxCache && this._isSoundPaused(sfxCache)){
                 this._audioIDList[audioID] = this._resumeSound(sfxCache, this.getEffectsVolume());
                 this._updateEffectsList(sfxCache, this._audioIDList[audioID]);
             }
@@ -1278,7 +1282,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
      * cc.AudioEngine.getInstance().stopEffect(audioID);
      */
     stopEffect: function(audioID) {
-        if (audioID === null)
+        if (audioID == null)
             return;
 
         var locAudioIDList = this._audioIDList;
