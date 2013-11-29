@@ -65,10 +65,18 @@ var s_bg_h1_layer2_part5 = h_1_img_dir + "background_2_5.png";
 var s_bg_h1_layer2_part6 = h_1_img_dir + "background_2_6.png";
 var s_bg_h1_layer2_part7 = h_1_img_dir + "background_2_7.png";
 
-var s_rock_1 = h_1_img_dir + "roca_1.png";
 var s_espina_1 = h_1_img_dir + "espina_1.png";
 var s_espina_2 = h_1_img_dir + "espina_2.png";
 var s_espina_3 = h_1_img_dir + "espina_3.png";
+var s_bad_alien_1 = h_1_img_dir + "bad_alien.png";
+
+var s_objects_layer_tmx = h_1_img_dir + "objects_layer.tmx";
+var s_roca_1_chica = h_1_img_dir + "roca_1_chica.png";
+var s_roca_1_media = h_1_img_dir + "roca_1_media.png";
+var s_roca_1_grande = h_1_img_dir + "roca_1_grande.png";
+
+var s_rocas_img = h_1_img_dir + "rocas.png";
+var s_rocas_plist = h_1_img_dir + "rocas.plist";
 
 // History 2 Resources
 // ---------------------------------------------------------------------
@@ -95,8 +103,6 @@ var g_resources = [
     //image
     {type:"image", src:s_cossino_img},
     {type:"image", src:s_font_bitmap_img},
-    {type:"image", src:s_pathBlock},
-    {type:"image", src:s_pathBlock},
 
     {type:"image", src:s_bg_h1_layer0_part0},
     {type:"image", src:s_bg_h1_layer0_part1},
@@ -131,18 +137,24 @@ var g_resources = [
     {type:"image", src:s_bg_h1_layer2_part6},
     {type:"image", src:s_bg_h1_layer2_part7},
 
-    {type:"image", src:s_rock_1},
     {type:"image", src:s_espina_1},
     {type:"image", src:s_espina_2},
     {type:"image", src:s_espina_3},
+    {type:"image", src:s_bad_alien_1},
+    {type:"image", src:s_roca_1_chica},
+    {type:"image", src:s_roca_1_media},
+    {type:"image", src:s_roca_1_grande},
+    {type:"image", src:s_rocas_img},
 
     //plist
     {type:"plist", src:s_cossino_plist},
+    {type:"plist", src:s_rocas_plist},
 
     //fnt
     {type:"fnt", src:s_font_bitmap_fnt},
 
     //tmx
+    {type:"xml", src:s_objects_layer_tmx},
 
     //bgm
     {type:"sound", src:s_background_music_ogg},
@@ -159,8 +171,8 @@ var g_resources = [
     {type:"sound", src:s_effect_mp3},
     {type:"sound", src:s_footstep_dirt_1_ogg},
     {type:"sound", src:s_footstep_dirt_1_mp3},
+    {type:"sound", src:s_footstep_dirt_2_ogg},
     {type:"sound", src:s_footstep_dirt_2_mp3},
-    {type:"sound", src:s_footstep_dirt_2_ogg}
 ];
 
 var TAGS = {

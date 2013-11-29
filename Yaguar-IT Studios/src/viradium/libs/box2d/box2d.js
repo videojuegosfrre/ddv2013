@@ -15,7 +15,7 @@
  * misrepresented as being the original software.
  * 3. This notice may not be removed or altered from any source distribution.
  *
- *
+ * 
  * Sean Lin 2012-5-8,
  *
  * The library is box2dweb, http://code.google.com/p/box2dweb/
@@ -30,21 +30,23 @@ var Box2D = {};
 
 (function (a2j, undefined) {
 
-    if(!(Object.defineProperty instanceof Function) && (Object.prototype.__defineGetter__ instanceof Function) && (Object.prototype.__defineSetter__ instanceof Function))
+    if(!(Object.defineProperty instanceof Function)
+        && Object.prototype.__defineGetter__ instanceof Function
+        && Object.prototype.__defineSetter__ instanceof Function)
     {
         Object.defineProperty = function(obj, p, cfg) {
             if(cfg.get instanceof Function)
                 obj.__defineGetter__(p, cfg.get);
             if(cfg.set instanceof Function)
                 obj.__defineSetter__(p, cfg.set);
-        };
+        }
     }
 
-    function emptyFn() {}
+    function emptyFn() {};
     a2j.inherit = function(cls, base) {
         var tmpCtr = cls;
         emptyFn.prototype = base.prototype;
-        cls.prototype = new emptyFn();
+        cls.prototype = new emptyFn;
         cls.prototype.constructor = tmpCtr;
     };
 
@@ -65,13 +67,13 @@ var Box2D = {};
     a2j.is = function is(o1, o2) {
         if (o1 === null) return false;
         if ((o2 instanceof Function) && (o1 instanceof o2)) return true;
-        if ((o1.constructor.__implements !== undefined) && (o1.constructor.__implements[o2])) return true;
+        if ((o1.constructor.__implements != undefined) && (o1.constructor.__implements[o2])) return true;
         return false;
     };
 
     a2j.parseUInt = function(v) {
         return Math.abs(parseInt(v));
-    };
+    }
 
 })(Box2D);
 
