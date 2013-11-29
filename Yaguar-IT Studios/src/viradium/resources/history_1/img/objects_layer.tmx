@@ -22,7 +22,115 @@
  </tileset>
  <layer name="Background" width="350" height="19">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3ZuQoCMRCA4S3WEzzBo/F4/6d07CwSWFGMm3wf/KRbploGpusAAAAAAAAAAACAp/4lAH7LPxjgfX2mT74DwDhNomk0i+aFZwFowSpaR5toW3gWgBYcomN0is6FZwFIWUTLxDtWl+ga3aJ72VEAknbRPvEC8B25/baWfdddDfg3uf22ln3XXQ0obeh+W8u+664GlDZ0v61l33VXg3Y9ANIfu/HoZwAA
+   H4sIAAAAAAAAC+3VSQqDQBAFUBdmhIyQYZPh/qdMZReCghjLqLwHn97VopvfVRQAAAAAAAAAAADAW/kRAPrlD4bxKQvd/afv+//lPbwjAAAAXVlF1hUnADkOkWPFSb/sP5iuun7r+3/ZfzBddf3W937ZfzBdTfud3fdZZB5ZRJYJ88fG/oPpatrv7L5vItvILrJPmD90Q9l/QPfa9ju776fIOXKJXBPmD91Q9h/Qvbb9zu77LXKPPCLPhPl1XtHTCyXoZwAA
   </data>
  </layer>
+ <objectgroup name="Coleccionables" width="350" height="19">
+  <object name="Viradium" type="Viradium" x="1825" y="217" width="64" height="64">
+   <properties>
+    <property name="Collectable" value="True"/>
+   </properties>
+  </object>
+  <object name="Viradium" type="Viradium" x="2273" y="185" width="64" height="64">
+   <properties>
+    <property name="Collectable" value="True"/>
+   </properties>
+  </object>
+  <object name="Viradium" type="Viradium" x="9888" y="192" width="64" height="64">
+   <properties>
+    <property name="Collectable" value="True"/>
+   </properties>
+  </object>
+  <object name="Viradium" type="Viradium" x="10048" y="544" width="64" height="64">
+   <properties>
+    <property name="Collectable" value="True"/>
+   </properties>
+  </object>
+  <object name="Viradium" type="Viradium" x="9728" y="544" width="64" height="64">
+   <properties>
+    <property name="Collectable" value="True"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Trayectorias" width="350" height="19">
+  <object name="Trayectoria" type="Trayectoria" x="9696" y="512">
+   <polyline points="0,0 448,0"/>
+  </object>
+  <object name="Trayectoria" type="Trayectoria" x="2624" y="544">
+   <polyline points="0,0 384,0"/>
+  </object>
+  <object name="Trayectoria" type="Trayectoria" x="3136" y="544">
+   <polyline points="0,0 416,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Finish" width="350" height="19">
+  <object name="Finish" type="Finish" x="10752" y="288" width="160" height="320"/>
+ </objectgroup>
+ <objectgroup name="Colisiones" width="350" height="19">
+  <object name="Rock" type="Rock" x="1088" y="544" width="448" height="64">
+   <properties>
+    <property name="Collidable" value="True"/>
+   </properties>
+  </object>
+  <object name="Rock" type="Rock" x="1216" y="480" width="320" height="64">
+   <properties>
+    <property name="Collidable" value="True"/>
+   </properties>
+  </object>
+  <object name="Rock" type="Rock" x="1344" y="416" width="192" height="64">
+   <properties>
+    <property name="Collidable" value="True"/>
+   </properties>
+  </object>
+  <object name="Rock" type="Rock" x="1728" y="288" width="256" height="32">
+   <properties>
+    <property name="Collidable" value="True"/>
+   </properties>
+  </object>
+  <object name="Rock" type="Rock" x="2144" y="224" width="96" height="32">
+   <properties>
+    <property name="Collidable" value="True"/>
+   </properties>
+  </object>
+  <object name="Rock" type="Rock" x="2336" y="288" width="96" height="32">
+   <properties>
+    <property name="Collidable" value="True"/>
+   </properties>
+  </object>
+  <object name="Rock" type="Rock" x="2240" y="256" width="96" height="32">
+   <properties>
+    <property name="Collidable" value="True"/>
+   </properties>
+  </object>
+  <object name="Rock" type="Rock" x="9024" y="544" width="576" height="64">
+   <properties>
+    <property name="Collidable" value="True"/>
+   </properties>
+  </object>
+  <object name="Rock" type="Rock" x="9152" y="480" width="448" height="64">
+   <properties>
+    <property name="Collidable" value="True"/>
+   </properties>
+  </object>
+  <object name="Rock" type="Rock" x="9280" y="416" width="320" height="64">
+   <properties>
+    <property name="Collidable" value="True"/>
+   </properties>
+  </object>
+  <object name="Rock" type="Rock" x="9408" y="352" width="192" height="64">
+   <properties>
+    <property name="Collidable" value="True"/>
+   </properties>
+  </object>
+  <object name="Rock" type="Rock" x="10240" y="480" width="128" height="128">
+   <properties>
+    <property name="Collidable" value="True"/>
+   </properties>
+  </object>
+  <object name="Rock" type="Rock" x="9856" y="256" width="128" height="32">
+   <properties>
+    <property name="Collidable" value="True"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

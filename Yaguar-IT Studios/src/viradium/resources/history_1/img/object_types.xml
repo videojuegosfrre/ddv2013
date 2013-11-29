@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objecttypes>
+ <objecttype name="Rock" color="#5500ff"/>
+ <objecttype name="Enemy" color="#ff5500"/>
+ <objecttype name="Viradium" color="#00ff00"/>
+ <objecttype name="Trayectoria" color="#ffff00"/>
+ <objecttype name="Finish" color="#aaffff"/>
+</objecttypes>
