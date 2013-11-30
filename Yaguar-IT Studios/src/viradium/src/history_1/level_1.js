@@ -1018,7 +1018,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             }
         }
 
-        // cc.log(this.parallaxChild.getPosition().x + " " + this.parallaxChild.getPosition().y);
+        // cc.log((this.parallaxChild.getPosition().x + 1024) + " " + this.parallaxChild.getPosition().y);
 
         physics.world.DrawDebugData();
         physics.world.ClearForces();
@@ -1040,7 +1040,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         if ((cossinoDirection == CHR_DIRECTION.LEFT) && (currentParallaxPos.x < 1)) {
                 this_obj.scrollParallaxRight(cossinoDeltaPos, 0);
-        } else if ((cossinoDirection == CHR_DIRECTION.RIGHT) && (currentParallaxPos.x > -5000)) {    // TODO: Límite derecho automático
+        } else if ((cossinoDirection == CHR_DIRECTION.RIGHT) && (currentParallaxPos.x > -4924)) {    // TODO: Límite derecho automático
             this_obj.scrollParallaxLeft(cossinoDeltaPos, 0);
         }
     },
