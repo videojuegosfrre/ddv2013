@@ -657,8 +657,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         var menuItemX, menuItemY = 0;
 
-        this.audioEngine.setEffectsVolume(0.8);
-        this.audioEngine.setMusicVolume(0.8);
+        this.audioEngine.setEffectsVolume(0.5);
+        this.audioEngine.setMusicVolume(0.5);
 
         menuItemX = this._centerScreenX = wSizeWidth / 2;
         menuItemY = this._centerScreenY = wSizeHeight / 2;
@@ -823,7 +823,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     onEnter:function () {
         this._super();
         cc.log("Reproducir música de fondo.");
-        this.audioEngine.playMusic(s_ambient_music_1, true);
+        this.audioEngine.playMusic(s_hist_1_amb_music, true);
         cc.log("ZOrder Hist1Lvl1Layer: " + this.getZOrder());
     },
 

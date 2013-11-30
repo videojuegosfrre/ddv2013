@@ -138,7 +138,7 @@ var DebugMenuLayer = cc.LayerColor.extend({
 
     showIntroHist1:function () {
         cc.log("Mostrar introducción a Historia 1.");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
 
         var history1Intro = cc.TransitionFade.create(1,
@@ -150,13 +150,13 @@ var DebugMenuLayer = cc.LayerColor.extend({
 
     showIntroHist2:function () {
         cc.log("Mostrar introducción a Historia 2.");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
     },
 
     showHist1Lvl1:function () {
         cc.log("Mostrar Historia 1: Nivel 1");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
 
         var history1Level1 = cc.TransitionFade.create(1,
@@ -168,37 +168,37 @@ var DebugMenuLayer = cc.LayerColor.extend({
 
     showHist1Lvl2:function () {
         cc.log("Mostrar Historia 1: Nivel 2");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
     },
 
     showHist1Lvl3:function () {
         cc.log("Mostrar Historia 1: Nivel 3");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
     },
 
     showHist2Lvl1:function () {
         cc.log("Mostrar Historia 2: Nivel 1");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
     },
 
     showHist2Lvl2:function () {
         cc.log("Mostrar Historia 2: Nivel 1");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
     },
 
     showHist2Lvl3:function () {
         cc.log("Mostrar Historia 2: Nivel 1");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
     },
 
     backToMainMenu:function () {
         cc.log("Volver al menú principal.");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
 
         var mainScene = cc.TransitionFade.create(1,

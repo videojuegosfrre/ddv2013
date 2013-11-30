@@ -4,31 +4,11 @@ var menu_music_dir = "resources/menu/music/";
 
 // History 1 Resources
 // ---------------------------------------------------------------------
+// Imagen
 var h_1_img_dir = "resources/history_1/img/";
-var h_1_music_dir = "resources/history_1/music/";
 
 var s_cossino_img = h_1_img_dir + "cossino.png";
 var s_cossino_plist = h_1_img_dir + "cossino.plist";
-
-var s_intro_music_1 = h_1_music_dir + "background/music_intro_1";
-var s_intro_music_1_mp3 = s_intro_music_1 + ".mp3";
-var s_intro_music_1_ogg = s_intro_music_1 + ".ogg";
-
-var s_intro_music_2 = h_1_music_dir + "background/music_intro_2";
-var s_intro_music_2_mp3 = s_intro_music_2 + ".mp3";
-var s_intro_music_2_ogg = s_intro_music_2 + ".ogg";
-
-var s_ambient_music_1 = h_1_music_dir + "background/music_ambiente";
-var s_ambient_music_1_mp3 = s_ambient_music_1 + ".mp3";
-var s_ambient_music_1_ogg = s_ambient_music_1 + ".ogg";
-
-var s_footstep_dirt_1 = h_1_music_dir + "footsteps/footstep_dirt1";
-var s_footstep_dirt_1_mp3 = s_footstep_dirt_1 + ".mp3";
-var s_footstep_dirt_1_ogg = s_footstep_dirt_1 + ".ogg";
-
-var s_footstep_dirt_2 = h_1_music_dir + "footsteps/footstep_dirt2";
-var s_footstep_dirt_2_mp3 = s_footstep_dirt_2 + ".mp3";
-var s_footstep_dirt_2_ogg = s_footstep_dirt_2 + ".ogg";
 
 var s_bg_h1_layer0_part0 = h_1_img_dir + "background_0_0.png";
 var s_bg_h1_layer0_part1 = h_1_img_dir + "background_0_1.png";
@@ -78,19 +58,49 @@ var s_roca_1_grande = h_1_img_dir + "roca_1_grande.png";
 var s_rocas_img = h_1_img_dir + "rocas.png";
 var s_rocas_plist = h_1_img_dir + "rocas.plist";
 
+// Sonido
+var h_1_music_dir = "resources/history_1/music/";
+
+var s_hist_1_acc_1_music = h_1_music_dir + "background/m_hist_1_acc_1";
+var s_hist_1_acc_1_music_ogg = s_hist_1_acc_1_music + ".ogg";
+var s_hist_1_acc_1_music_mp3 = s_hist_1_acc_1_music + ".mp3";
+
+var s_hist_1_acc_2_music = h_1_music_dir + "background/m_hist_1_acc_1";
+var s_hist_1_acc_2_music_ogg = s_hist_1_acc_2_music + ".ogg";
+var s_hist_1_acc_2_music_mp3 = s_hist_1_acc_2_music + ".mp3";
+
+var s_hist_1_amb_music = h_1_music_dir + "background/m_hist_1_amb";
+var s_hist_1_amb_music_ogg = s_hist_1_amb_music + ".ogg";
+var s_hist_1_amb_music_mp3 = s_hist_1_amb_music + ".mp3";
+
+var s_hist_1_intro_music = h_1_music_dir + "background/m_hist_1_intro";
+var s_hist_1_intro_music_ogg = s_hist_1_intro_music + ".ogg";
+var s_hist_1_intro_music_mp3 = s_hist_1_intro_music + ".mp3";
+
+var s_footstep_dirt_1 = h_1_music_dir + "footsteps/footstep_dirt1";
+var s_footstep_dirt_1_mp3 = s_footstep_dirt_1 + ".mp3";
+var s_footstep_dirt_1_ogg = s_footstep_dirt_1 + ".ogg";
+
+var s_footstep_dirt_2 = h_1_music_dir + "footsteps/footstep_dirt2";
+var s_footstep_dirt_2_mp3 = s_footstep_dirt_2 + ".mp3";
+var s_footstep_dirt_2_ogg = s_footstep_dirt_2 + ".ogg";
+
+var s_menu_laser_effect = menu_music_dir + "m_efecto_laser";
+var s_menu_laser_effect_ogg = s_menu_laser_effect + ".ogg";
+var s_menu_laser_effect_mp3 = s_menu_laser_effect + ".mp3";
+
+
 // History 2 Resources
 // ---------------------------------------------------------------------
 var h_2_img_dir = "resources/history_2/img/";
 var h_2_music_dir = "resources/history_2/music/";
 
-var s_background_music = menu_music_dir + "background";
-var s_background_music_mp3 = s_background_music + ".mp3";
-var s_background_music_wav = s_background_music + ".wav";
-var s_background_music_ogg = s_background_music + ".ogg";
+var s_menu_background_music = menu_music_dir + "m_menu_principal";
+var s_menu_background_music_mp3 = s_menu_background_music + ".mp3";
+var s_menu_background_music_ogg = s_menu_background_music + ".ogg";
 
 var s_effect = menu_music_dir + "effect2";
 var s_effect_mp3 = s_effect + ".mp3";
-var s_effect_wav = s_effect + ".wav";
 var s_effect_ogg = s_effect + ".ogg";
 
 var s_font_bitmap_img = menu_img_dir + "font_bitmap.png";
@@ -157,22 +167,26 @@ var g_resources = [
     {type:"xml", src:s_objects_layer_tmx},
 
     //bgm
-    {type:"sound", src:s_background_music_ogg},
-    {type:"sound", src:s_background_music_mp3},
-    {type:"sound", src:s_intro_music_1_ogg},
-    {type:"sound", src:s_intro_music_1_mp3},
-    {type:"sound", src:s_intro_music_2_ogg},
-    {type:"sound", src:s_intro_music_2_mp3},
-    {type:"sound", src:s_ambient_music_1_ogg},
-    {type:"sound", src:s_ambient_music_1_mp3},
+    // Ofrecer al navegador primero el audio en formato .ogg
+    // En caso de no soportarlo, realizar fallback a .mp3
+    {type:"sound", src:s_menu_background_music_ogg},
+    {type:"sound", src:s_menu_background_music_mp3},
+    {type:"sound", src:s_hist_1_acc_1_music_ogg},
+    {type:"sound", src:s_hist_1_acc_1_music_mp3},
+    {type:"sound", src:s_hist_1_acc_2_music_ogg},
+    {type:"sound", src:s_hist_1_acc_2_music_mp3},
+    {type:"sound", src:s_hist_1_amb_music_ogg},
+    {type:"sound", src:s_hist_1_amb_music_mp3},
+    {type:"sound", src:s_hist_1_intro_music_ogg},
+    {type:"sound", src:s_hist_1_intro_music_mp3},
 
     //effect
-    {type:"sound", src:s_effect_ogg},
-    {type:"sound", src:s_effect_mp3},
     {type:"sound", src:s_footstep_dirt_1_ogg},
     {type:"sound", src:s_footstep_dirt_1_mp3},
     {type:"sound", src:s_footstep_dirt_2_ogg},
     {type:"sound", src:s_footstep_dirt_2_mp3},
+    {type:"sound", src:s_menu_laser_effect_ogg},
+    {type:"sound", src:s_menu_laser_effect_mp3},
 ];
 
 var TAGS = {

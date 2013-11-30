@@ -87,25 +87,25 @@ var IntroHist1Layer = cc.LayerColor.extend({
     onEnter:function () {
         this._super();
         cc.log("Reproducir música de fondo.");
-        cc.AudioEngine.getInstance().playMusic(s_intro_music_2, true);
+        cc.AudioEngine.getInstance().playMusic(s_hist_1_intro_music, true);
         cc.log("ZOrder MainMenuLayer: " + this.getZOrder());
     },
 
     playNewGame:function () {
         cc.log("Comenzar nuevo juego.");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
     },
 
     resumeGame:function () {
         cc.log("Continuar juego.");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
     },
 
     setPreferences:function () {
         cc.log("Ver/Establecer opciones.");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
     },
 
@@ -124,13 +124,13 @@ var IntroHist1Layer = cc.LayerColor.extend({
 
     exitApp:function () {
         cc.log("Salir del juego.");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
     },
 
     saltarIntro:function () {
         cc.log("Show debug menu.");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
 
         var history1Level1 = cc.TransitionFade.create(1,

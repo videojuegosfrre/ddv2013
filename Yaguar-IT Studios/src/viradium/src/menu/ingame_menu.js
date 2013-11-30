@@ -95,13 +95,13 @@ var InGameMenuLayer = cc.LayerColor.extend({
 
     backToGame:function () {
         cc.log("Volver al juego.");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
     },
 
     setPreferences:function () {
         cc.log("Ver/Establecer opciones.");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
     },
 
@@ -128,7 +128,7 @@ var InGameMenuLayer = cc.LayerColor.extend({
 
     exitGame:function () {
         cc.log("Salir del juego.");
-        cc.AudioEngine.getInstance().playEffect(s_effect, false);
+        cc.AudioEngine.getInstance().playEffect(s_menu_laser_effect, false);
         this.stopBGMusic();
     },
 
