@@ -16,9 +16,11 @@ Array.prototype.contains = function (v) {
 
 var cc_Point = cc.p;
 var cc_pAdd = cc.pAdd;
+var cc_pSub = cc.pSub;
 var cc_Sprite = cc.Sprite;
 var cc_sprite_create = cc.Sprite.create;
 var cc_DEGREES_TO_RADIANS = cc.DEGREES_TO_RADIANS;
+var cc_RADIANS_TO_DEGREES = cc.RADIANS_TO_DEGREES;
 
 var lastEvent = -1;
 var heldKeys = {};
@@ -59,18 +61,19 @@ var CossinoSprite = cc.Sprite.extend({
     frameCache: null,
     wSizeWidth: 0,
     wSizeHeight: 0,
-    _walkDeltaPos: 1.1,
+    _walkDeltaPos: null,
     _walkDeltaPostCount: 0,
-    _jumpDeltaPos: 1,
+    _jumpDeltaPos: null,
     _jumpDeltaPosCount: 0,
-    _runDeltaPos: 3,
+    _runDeltaPos: null,
     _runDeltaPosCount: 0,
-    _deltaPosTotal: 0,
+    _deltaPosTotal: null,
     _onTerrainType: null,
     audioEngine: null,
     spriteDescription: null,
     _footSoundCounter: 0,
     _rocks: null,
+    _playerPhysicBody: null,
 
     ctor:function () {
         cc.log("Constructor: CossinoSprite");
@@ -88,6 +91,11 @@ var CossinoSprite = cc.Sprite.extend({
         this.audioEngine = cc.AudioEngine.getInstance();
 
         this.spriteDescription = "Cossino";
+
+        this._walkDeltaPos = cc_Point(1.1, 0);
+        this._runDeltaPos = cc_Point(3, 0);
+        this._jumpDeltaPos = cc_Point(1, 0);
+        this._deltaPosTotal = cc_Point(0, 0);
 
         this.initWithSpriteFrameName(this._FNStandPrefix + "1.png");
         //this.init();
@@ -371,7 +379,21 @@ var CossinoSprite = cc.Sprite.extend({
 
     beginWalk:function () {
         cc.log("Walk Cossino.");
-        this._setDeltaPos(this._walkDeltaPos);
+        switch (this._currentDirection) {
+            case CHR_DIRECTION.RIGHT:
+                this._setDeltaPos(this._walkDeltaPos.x, this._walkDeltaPos.y);
+                break;
+            case CHR_DIRECTION.LEFT:
+                this._setDeltaPos(this._walkDeltaPos.x * -1, this._walkDeltaPos.y);
+                break;
+            case CHR_DIRECTION.UP:
+                this._setDeltaPos(this._walkDeltaPos.x, this._walkDeltaPos.y);
+                break;
+            case CHR_DIRECTION.DOWN:
+                this._setDeltaPos(this._walkDeltaPos.x, this._walkDeltaPos.y * -1);
+                break;
+        }
+
         this._currentStatus = CHR_STATUS.WALK;
         // Quick & Dirty, Hacky, Nasty...
         // Must be refactored, improved...
@@ -416,7 +438,21 @@ var CossinoSprite = cc.Sprite.extend({
 
     beginJump:function () {
         cc.log("Jump Cossino.");
-        this._setDeltaPos(this._jumpDeltaPos);
+        switch (this._currentDirection) {
+            case CHR_DIRECTION.RIGHT:
+                this._setDeltaPos(this._jumpDeltaPos.x, this._jumpDeltaPos.y);
+                break;
+            case CHR_DIRECTION.LEFT:
+                this._setDeltaPos(this._jumpDeltaPos.x * -1, this._jumpDeltaPos.y);
+                break;
+            case CHR_DIRECTION.UP:
+                this._setDeltaPos(this._jumpDeltaPos.x, this._jumpDeltaPos.y);
+                break;
+            case CHR_DIRECTION.DOWN:
+                this._setDeltaPos(this._jumpDeltaPos.x, this._jumpDeltaPos.y * -1);
+                break;
+        }
+
         this._currentStatus = CHR_STATUS.JUMP;
         // Quick & Dirty, Hacky, Nasty...
         // Must be refactored, improved...
@@ -463,7 +499,21 @@ var CossinoSprite = cc.Sprite.extend({
 
     beginRun:function () {
         cc.log("Run Cossino.");
-        this._setDeltaPos(this._runDeltaPos);
+        switch (this._currentDirection) {
+            case CHR_DIRECTION.RIGHT:
+                this._setDeltaPos(this._runDeltaPos.x, this._runDeltaPos.y);
+                break;
+            case CHR_DIRECTION.LEFT:
+                this._setDeltaPos(this._runDeltaPos.x * -1, this._runDeltaPos.y);
+                break;
+            case CHR_DIRECTION.UP:
+                this._setDeltaPos(this._runDeltaPos.x, this._runDeltaPos.y);
+                break;
+            case CHR_DIRECTION.DOWN:
+                this._setDeltaPos(this._runDeltaPos.x, this._runDeltaPos.y * -1);
+                break;
+        }
+
         this._currentStatus = CHR_STATUS.RUN;
         // Quick & Dirty, Hacky, Nasty...
         // Must be refactored, improved...
@@ -556,11 +606,12 @@ var CossinoSprite = cc.Sprite.extend({
     },
 
     clearDeltaPos:function () {
-        this._deltaPosTotal = 0;
+        this._deltaPosTotal = cc_Point(0, 0);
     },
 
-    _setDeltaPos:function (delta) {
-        this._deltaPosTotal = delta;
+    _setDeltaPos:function (x, y) {
+        this._deltaPosTotal.x = x;
+        this._deltaPosTotal.y = y;
     },
 
     _setNextStatus:function (nextStatus) {
@@ -658,6 +709,12 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     _wsizewidth: 0,
     _previousDirection: null,
     _currentDirection: null,
+    _playerPrevPhyPos: null,
+    _playerCurrPhyPos: null,
+    _playerCurrPhyRot: null,
+    _playerPrevUIPos: null,
+    _playerCurrUIPos: null,
+    _playerCurrUIRot: null,
     _tileMap: null,
     _tileSize: null,
     _mapOrientation: null,
@@ -820,17 +877,17 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         cc.log(this.physics);
 
         // Límite inferior (piso)
-        // var fixDefInf = new b2FixtureDef();
-        // var bodyDefInf = new b2BodyDef();
+        var fixDefInf = new b2FixtureDef();
+        var bodyDefInf = new b2BodyDef();
 
-        // fixDefInf.density = 10.0;
-        // fixDefInf.friction = 0.5;
-        // fixDefInf.restitution = 0.2;
-        // bodyDefInf.type = b2Body.b2_staticBody;
-        // fixDefInf.shape = new b2PolygonShape();
-        // bodyDefInf.position.Set((wSizeWidth / 2) / 30, 0 / 30);
-        // fixDefInf.shape.SetAsBox((wSizeWidth / 2) / 30, 0.1 / 30);
-        // this.physics.world.CreateBody(bodyDefInf).CreateFixture(fixDefInf);
+        fixDefInf.density = 10.0;
+        fixDefInf.friction = 0.5;
+        fixDefInf.restitution = 0.2;
+        bodyDefInf.type = b2Body.b2_staticBody;
+        fixDefInf.shape = new b2PolygonShape();
+        bodyDefInf.position.Set((12000 / 2) / 30, 0 / 30);
+        fixDefInf.shape.SetAsBox((12000 / 2) / 30, 0.01 / 30);
+        this.physics.world.CreateBody(bodyDefInf).CreateFixture(fixDefInf);
 
         // Enable debug draw
         // var canvasDebug = document.getElementById(myApp.config.tag);
@@ -969,6 +1026,10 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 this._previousDirection = this._currentDirection;
                 this._currentDirection = CHR_DIRECTION.LEFT;
                 break;
+            case cc.KEY.i:
+                var b2Vec2 = Box2D.Common.Math.b2Vec2;
+                this._playerPhysicBody.ApplyForce(new b2Vec2(100000, 20000), this._playerPhysicBody.GetWorldCenter());
+                break;
         }
 
         // Propagate key down to children
@@ -993,61 +1054,75 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var this_obj = this;
         var physics = this_obj.physics;
         var b2Vec2 = Box2D.Common.Math.b2Vec2;
-        var spritePosition = null;
-        var spriteAngle = 0;
-        var spritePositionOffset = 0;
-        var userData = null;
-        var sprite = null;
-        var objectTMX = null;
-        var bodyList =  physics.world.GetBodyList();
+        var spriteAngle, spritePositionOffset = 0;
+        var bodyList = physics.world.GetBodyList();
         var cossinoDirection = this_obj._currentPlayer.getCurrentDirection();
         var cossinoDeltaPos = this_obj._currentPlayer.getDeltaPos();
         var currentParallaxPos = this_obj.parallaxChild.getPosition();
-
-        //Iterate over the bodies in the physics world
-        // for (var b = physics.world.GetBodyList(); b; b = b.GetNext()) {
-        //     if (b.GetUserData() !== null) {
-        //         //Synchronize the AtlasSprites position and rotation with the corresponding body
-        //         var myActor = b.GetUserData();
-
-        //         myActor.setPosition(cc.p(b.GetPosition().x * physics.scale,
-        //                                  b.GetPosition().y * physics.scale));
-
-        //         myActor.setRotation(-1 * cc.RADIANS_TO_DEGREES(b.GetAngle()));
-
-        //         // cc.log(myActor.getPosition().x + " " + myActor.getPosition().y);
-        //     }
-        // }
-
-        // Instruct the world to perform a single step of simulation.
-        physics.step(dt);
+        var sprite, objectTMX, spritePosition, spriteCurrPhyPos, spriteDeltaUIPos = null;
 
         for (var body = bodyList; body; body = body.GetNext()) {
             userData = body.GetUserData();
 
-            if (userData !== null) {
-                if (userData instanceof cc_Sprite) {
-                    sprite = userData;
+            if (userData === null) { continue; }
 
-                    if (sprite === this_obj._currentPlayer) {
-                        spritePositionOffset = sprite.getPosition();
-                    }
-                    else {
-                        spritePositionOffset = cc_pAdd(sprite.getPosition(),
-                                                       this_obj.parallaxChild.getPosition());
-                    }
+            if (userData instanceof cc_Sprite) {
+                sprite = userData;
 
-                    spritePosition = new b2Vec2(spritePositionOffset.x / physics.scale,
-                                                spritePositionOffset.y / physics.scale);
+                if (sprite === this_obj._currentPlayer) {
+                    // Actualizar posición previa del jugador
+                    this_obj._playerPrevUIPos = this_obj._playerCurrUIPos;
+                    // Sumar ambos vectores para obtener el desplazamiento total
+                    this_obj._playerCurrUIPos = cc_pAdd(this_obj._playerCurrUIPos,
+                                                        sprite.getDeltaPos());
+
+                    // Crear vector de desplazamiento de Box2D
+                    spritePosition = new b2Vec2(this_obj._playerCurrUIPos.x / physics.scale,
+                                                this_obj._playerCurrUIPos.y / physics.scale);
 
                     spriteAngle = -1 * cc_DEGREES_TO_RADIANS(sprite.getRotation());
 
                     body.SetPosition(spritePosition);
                     body.SetAngle(spriteAngle);
+
+                    // Actualizar referencias a posiciones físicas del jugador
+                    this_obj._playerPrevPhyPos = this_obj._playerCurrPhyPos;
+                    this_obj._playerCurrPhyPos = spritePosition;
                 }
-                else {
-                    objectTMX = userData;
+            }
+            else {
+                objectTMX = userData;
+            }
+        }
+
+        // Instruct the world to perform a single step of simulation.
+        physics.step(dt);
+
+        //Iterate over the bodies in the physics world
+        for (var bodyf = bodyList; bodyf; bodyf = bodyf.GetNext()) {
+            userData = bodyf.GetUserData();
+
+            if (userData === null) { continue; }
+
+            if (userData instanceof cc_Sprite) {
+                // Analizar sprites
+                if (userData === this_obj._currentPlayer) {
+                    sprite = userData;
+
+                    spritePosition = cc_Point(bodyf.GetPosition().x * physics.scale,
+                                              bodyf.GetPosition().y * physics.scale);
+
+                    spriteAngle = -1 * cc_RADIANS_TO_DEGREES(bodyf.GetAngle());
+
+                    //this_obj._playerPrevUIPos = this_obj._playerCurrUIPos;
+                    this_obj._playerCurrUIPos = spritePosition;
+                    this_obj._playerCurrUIRot = spriteAngle;
+                    this_obj._currentPlayer.setRotation(spriteAngle);
                 }
+            }
+            else {
+                // Analizar objetos TMX
+                objectTMX = userData;
             }
         }
 
@@ -1065,11 +1140,15 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         // }
 
         // Actualizar parallax
-        if ((cossinoDirection == CHR_DIRECTION.LEFT) && (currentParallaxPos.x < 1)) {
-                this_obj.scrollParallaxRight(cossinoDeltaPos, 0);
-        } else if ((cossinoDirection == CHR_DIRECTION.RIGHT) && (currentParallaxPos.x > -4924)) {    // TODO: Límite derecho automático
-            this_obj.scrollParallaxLeft(cossinoDeltaPos, 0);
-        }
+        this_obj._updateParallax();
+
+        // if ((cossinoDirection == CHR_DIRECTION.LEFT) && (currentParallaxPos.x < 1)) {
+                // this_obj.scrollParallaxRight(cossinoDeltaPos, 0);
+        //        this_obj.scrollParallaxRight(this_obj._playerPhysicBody.GetPosition().x, 0);
+        // } else if ((cossinoDirection == CHR_DIRECTION.RIGHT) && (currentParallaxPos.x > -4924)) {    // TODO: Límite derecho automático
+            // this_obj.scrollParallaxLeft(cossinoDeltaPos, 0);
+        //    this_obj.scrollParallaxLeft(this_obj._playerPhysicBody.GetPosition().x, 0);
+        // }
     },
 
     showMouseButtonInfo:function (event, trigger) {
@@ -1147,8 +1226,11 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         spriteShapeDef.shape = spriteShape;
         spriteShapeDef.density = 5.0;
         spriteShapeDef.friction = 0.1;
+        spriteShapeDef.restitution = 0.1;
         spriteShapeDef.isSensor = setSensor || false;
         spriteBody.CreateFixture(spriteShapeDef);
+
+        return spriteBody;
     },
 
     addBoxBodyForTMXObject:function (object) {
@@ -1238,7 +1320,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         objectBodyDef.userData = object;
 
-        var spriteBody = this.physics.world.CreateBody(objectBodyDef);
+        var objectBody = this.physics.world.CreateBody(objectBodyDef);
 
         var spriteShape = new b2PolygonShape();
         spriteShape.SetAsBox(objCenterWidth / this.physics.scale,
@@ -1252,7 +1334,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         spriteShapeDef.friction = objFriction;
         spriteShapeDef.restitution = objRestitution;
         spriteShapeDef.isSensor = objIsSensor;
-        spriteBody.CreateFixture(spriteShapeDef);
+        objectBody.CreateFixture(spriteShapeDef);
 
         cc.log("Object Body Def:");
         cc.log(objectBodyDef);
@@ -1260,7 +1342,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         cc.log("Shape Def:");
         cc.log(spriteShapeDef);
 
-        return true;
+        return objectBody;
     },
 
     spriteDone:function (sender) {
@@ -1384,6 +1466,13 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         this.parallaxChild.setPosition(cc_Point(0, 0));
     },
 
+    _updateParallax:function () {
+        var node = this.parallaxChild;
+        var currentPos = node.getPosition();
+        var deltaPoint = cc_pSub(this._playerPrevUIPos, this._playerCurrUIPos);
+        node.setPosition(cc_pAdd(currentPos, deltaPoint));
+    },
+
     scrollParallaxLeft:function (deltaX, deltaY) {
         var node = this.parallaxChild;
         var currentPos = node.getPosition();
@@ -1435,8 +1524,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     addObjsAndEnemiesLayer:function () {
         cc.log("Agregar obstáculos...");
 
-        var b2ContactListener = Box2D.Dynamics.b2ContactListener;
-        parallaxNode = this.parallaxChild;
+        var parallaxNode = this.parallaxChild;
 
         // Capa de rocas y enemigos
         var offset_x_0 = 0;
@@ -1482,7 +1570,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             cc.log(this._tileMap);
 
             var mapProperties = this._tileMap.getProperties();
-            for (var p = 0; p < mapProperties.length; p++) {
+            var mapPropertiesLength = mapProperties.length;
+            for (var p = 0; p < mapPropertiesLength; p++) {
                 var property = mapProperties[p];
 
                 // Gravedad X
@@ -1492,7 +1581,10 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 else if ("gravedadx" in property) {
                     mapGravityXCalc = parseFloat(property["gravedadx"]);
                 }
-                if (!isNaN(mapGravityXCalc)) { mapGravityX = mapGravityXCalc; }
+                if (!isNaN(mapGravityXCalc)) {
+                    mapGravityX = mapGravityXCalc;
+                    doSleep = true;
+                }
 
                 // Gravedad Y
                 if ("GravedadY" in property) {
@@ -1501,20 +1593,31 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 else if ("gravedady" in property) {
                     mapGravityYCalc = parseFloat(property["gravedady"]);
                 }
-                if (!isNaN(mapGravityYCalc)) { mapGravityY = mapGravityYCalc; }
+                if (!isNaN(mapGravityYCalc)) {
+                    mapGravityY = mapGravityYCalc;
+                    doSleep = true;
+                }
 
                 // Do Sleep
                 if ("DoSleep" in property) {
                     doSleepProp = property["DoSleep"].trim().toLowerCase();
 
-                    if (doSleepProp == "true") { doSleep = true; }
-                    else { doSleep = false; }
+                    if (doSleepProp == "true") {
+                        doSleep = true;
+                    }
+                    else if (doSleepProp == "false") {
+                        doSleep = false;
+                    }
                 }
                 else if ("dosleep" in property) {
                     doSleepProp = property["dosleep"].trim().toLowerCase();
 
-                    if (doSleepProp == "true") { doSleep = true; }
-                    else { doSleep = false; }
+                    if (doSleepProp == "true") {
+                        doSleep = true;
+                    }
+                    else if (doSleepProp == "false") {
+                        doSleep = false;
+                    }
                 }
 
                 // Escala del mundo físico
@@ -1540,63 +1643,86 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             this._initPhysics(mapGravityX, mapGravityY, doSleep, scaleWorld, stepAmount);
 
             // Agregar físicas al personaje actual
-            this.addBoxBodyForSprite(this._currentPlayer, 0, false);
+            this._playerPhysicBody = this.addBoxBodyForSprite(this._currentPlayer, 0, false);
+            // Registrar su posición actual en el mundo físico
+            this._playerCurrPhyPos = this._playerPhysicBody.GetPosition();
+            this._playerPrevPhyPos = this._playerPhysicBody.GetPosition();
+            this._playerCurrUIPos = cc_Point(this._playerCurrPhyPos.x * this.physics.scale,
+                                             this._playerCurrPhyPos.y * this.physics.scale);
+            this._playerPrevUIPos = cc_Point(this._playerPrevPhyPos.x * this.physics.scale,
+                                             this._playerPrevPhyPos.y * this.physics.scale);
+            this._playerCurrPhyRot = this._playerPhysicBody.GetAngle();
+            this._playerCurrUIRot = -1 * cc_RADIANS_TO_DEGREES(this._playerCurrPhyRot);
+
+            cc.log("Player Body");
+            cc.log(this._playerPhysicBody);
 
             this._processBackgroundLayer();
             this._processColisionesLayer();
             this._processTrayectoriasLayer();
             this._processFinishLayer();
         }
+    },
+
+    _setCollisionsListener:function () {
+        if ((this.physics === null) && (this.physics === undefined)) { return; }
 
         // Collision listener override
+        var b2ContactListener = Box2D.Dynamics.b2ContactListener;
         var collisionListener = new b2ContactListener();
+
         collisionListener.BeginContact = function (contact) {
-                bodyA = contact.GetFixtureA().GetBody().GetUserData();
-                bodyB = contact.GetFixtureB().GetBody().GetUserData();
+            bodyA = contact.GetFixtureA().GetBody();
+            userDataA = bodyA.GetUserData();
+            bodyB = contact.GetFixtureB().GetBody();
+            userDataB = bodyB.GetUserData();
 
-                if (bodyA instanceof cc_Sprite) {
-                    if (bodyA !== null) {
-                        bodyA.setColor(new cc.Color4B(0, 0, 255, 255));
-                        cc.log("Begin Body A: " + bodyA.getPosition().x + " " + bodyA.getPosition().y);
-                    }
+            if (userDataA !== null) {
+                if (userDataA instanceof cc_Sprite) {
+                    cc.log("Begin Body A (Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                    userDataA.setColor(new cc.Color4B(0, 0, 255, 255));
                 }
-                else {
+                else if (userDataA instanceof Object) {
+                    cc.log("Begin Body A (TMX Object): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
                 }
+            }
 
-                if (bodyB instanceof cc_Sprite) {
-                    if (bodyB !== null) {
-                        bodyB.setColor(new cc.Color4B(255, 0, 0, 255));
-                        cc.log("Begin Body B: " + bodyB.getPosition().x + " " + bodyB.getPosition().y);
-                    }
+            if (userDataB !== null) {
+                if (userDataB instanceof cc_Sprite) {
+                    cc.log("Begin Body B (Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
+                    userDataB.setColor(new cc.Color4B(255, 0, 0, 255));
                 }
-                else {
-
+                else if (userDataB instanceof Object) {
+                    cc.log("Begin Body B (TMX Object): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                 }
+            }
         };
 
         collisionListener.EndContact = function (contact) {
-                bodyA = contact.GetFixtureA().GetBody().GetUserData();
-                bodyB = contact.GetFixtureB().GetBody().GetUserData();
+            bodyA = contact.GetFixtureA().GetBody();
+            userDataA = bodyA.GetUserData();
+            bodyB = contact.GetFixtureB().GetBody();
+            userDataB = bodyB.GetUserData();
 
-                if (bodyA instanceof cc_Sprite) {
-                    if (bodyA !== null) {
-                        bodyA.setColor(cc.white());
-                        cc.log("End Body A: " + bodyA.getPosition().x + " " + bodyA.getPosition().y);
-                    }
+            if (userDataA !== null) {
+                if (userDataA instanceof cc_Sprite) {
+                    cc.log("End Body A (Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                    userDataA.setColor(new cc.Color4B(0, 0, 255, 255));
                 }
-                else {
+                else if (userDataA instanceof Object) {
+                    cc.log("End Body A (TMX Object): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                }
+            }
 
+            if (userDataB !== null) {
+                if (userDataB instanceof cc_Sprite) {
+                    cc.log("End Body B (Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
+                    userDataB.setColor(new cc.Color4B(255, 0, 0, 255));
                 }
-
-                if (bodyB instanceof cc_Sprite) {
-                    if (bodyB !== null) {
-                        bodyB.setColor(cc.white());
-                        cc.log("End Body B: " + bodyB.getPosition().x + " " + bodyB.getPosition().y);
-                    }
+                else if (userDataB instanceof Object) {
+                    cc.log("End Body B (TMX Object): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                 }
-                else {
-
-                }
+            }
         };
 
         this.physics.world.SetContactListener(collisionListener);
@@ -1607,6 +1733,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         if (this._tileMap === null) { return false; }
 
         var layerBackground = this._tileMap.getLayer("Background");
+        cc.log("-----------------");
+        cc.log("Layer Background");
         cc.log(layerBackground);
 
         return true;
@@ -1618,6 +1746,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         var layerColisiones = this._tileMap.getObjectGroup("Colisiones");
         var objectsColisiones = layerColisiones.getObjects();
+        cc.log("-----------------");
+        cc.log("Layer Colisiones");
         cc.log(layerColisiones);
         cc.log(objectsColisiones);
 
@@ -1629,6 +1759,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             this.addBoxBodyForTMXObject(colision);
         }
 
+        this._setCollisionsListener();
+
         return true;
     },
 
@@ -1638,6 +1770,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         var layerTrayectorias = this._tileMap.getObjectGroup("Trayectorias");
         var objectsTrayectorias = layerTrayectorias.getObjects();
+        cc.log("-----------------");
+        cc.log("Layer Trayectorias");
         cc.log(layerTrayectorias);
         cc.log(objectsTrayectorias);
 
@@ -1654,6 +1788,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         var layerColeccionables = this._tileMap.getObjectGroup("Coleccionables");
         var objectsColeccionables = layerColeccionables.getObjects();
+        cc.log("-----------------");
+        cc.log("Layer Coleccionables");
         cc.log(layerColeccionables);
         cc.log(objectsColeccionables);
 
@@ -1670,6 +1806,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         var layerFinish = this._tileMap.getObjectGroup("Finish");
         var objectsFinish = layerFinish.getObjects();
+        cc.log("-----------------");
+        cc.log("Layer Finish");
         cc.log(layerFinish);
         cc.log(objectsFinish);
 
