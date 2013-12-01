@@ -4,6 +4,16 @@ if (!String.prototype.trim) {
   };
 }
 
+/**
+ * Array.prototype.[method name] allows you to define/overwrite an objects method
+ * needle is the item you are searching for
+ * this is a special variable that refers to "this" instance of an Array.
+ * returns true if needle is in the array, and false otherwise
+ */
+Array.prototype.contains = function (v) {
+    return arr.indexOf(v) > -1;
+};
+
 var cc_Point = cc.p;
 var cc_pAdd = cc.pAdd;
 var cc_Sprite = cc.Sprite;
@@ -15,6 +25,13 @@ var heldKeys = {};
 
 var TAG_SPRITE_MANAGER = 8888;
 var PTM_RATIO = 30;
+
+var KEYS = {
+    GOLEFT: cc.KEY.left,
+    GORIGHT: cc.KEY.right,
+    JUMP: cc.KEY.w,
+    RUN: cc.KEY.s
+};
 
 
 var CossinoSprite = cc.Sprite.extend({
@@ -212,16 +229,15 @@ var CossinoSprite = cc.Sprite.extend({
         cc.log("Handle Key Down Cossino.");
 
         switch (e) {
-            case cc.KEY.left:
+            case KEYS.GOLEFT:
                 if (this._currentStatus == CHR_STATUS.JUMP) {
                     this.reqOnFinishJumpStop(this.beginWalk);
                 } else {
                     this.turnLeft();
                     this.beginWalk();
                 }
-
                 break;
-            case cc.KEY.right:
+            case KEYS.GORIGHT:
                 if (this._currentStatus == CHR_STATUS.JUMP) {
                     this.reqOnFinishJumpStop(this.beginWalk);
                 } else {
@@ -229,19 +245,18 @@ var CossinoSprite = cc.Sprite.extend({
                     this.beginWalk();
                 }
                 break;
-            case cc.KEY.a:
+            case KEYS.RUN:
                 if (this._currentStatus == CHR_STATUS.JUMP) {
                     this.reqOnFinishJumpStop(this.beginRun);
                 } else {
                    this.beginRun();
                 }
                 break;
-            case cc.KEY.s:
+            case KEYS.JUMP:
                 this.beginJump();
                 break;
             default:
-                this.beginStand();
-                break;
+                // this.beginStand();
         }
     },
 
@@ -249,23 +264,23 @@ var CossinoSprite = cc.Sprite.extend({
         cc.log("Handle Key Up Cossino.");
 
         switch (e) {
-            case cc.KEY.left:
+            case KEYS.GOLEFT:
                 if (this._currentStatus == CHR_STATUS.WALK) {
                     this.beginStand();
                 }
                 break;
-            case cc.KEY.right:
+            case KEYS.GORIGHT:
                 if (this._currentStatus == CHR_STATUS.WALK) {
                     this.beginStand();
                 }
                 break;
-            case cc.KEY.a:
+            case KEYS.RUN:
                 if (this._currentStatus == CHR_STATUS.RUN) {
                     // this.stopRun();
                     this.beginStand();
                  }
                 break;
-            case cc.KEY.s:
+            case KEYS.JUMP:
                 if (this._currentStatus == CHR_STATUS.JUMP) {
                     this.reqOnFinishJumpStop();
                     //this.beginStand();
@@ -273,7 +288,6 @@ var CossinoSprite = cc.Sprite.extend({
                 break;
             default:
                 // this.beginStand();
-                break;
         }
     },
 
@@ -947,15 +961,13 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             case cc.KEY.escape:
                 this.exitApp();
                 break;
-            case cc.KEY.right:
+            case KEYS.GORIGHT:
                 this._previousDirection = this._currentDirection;
                 this._currentDirection = CHR_DIRECTION.RIGHT;
                 break;
-            case cc.KEY.left:
+            case KEYS.GOLEFT:
                 this._previousDirection = this._currentDirection;
                 this._currentDirection = CHR_DIRECTION.LEFT;
-                break;
-            default:
                 break;
         }
 
