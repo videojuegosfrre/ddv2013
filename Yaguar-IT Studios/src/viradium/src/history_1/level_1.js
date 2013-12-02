@@ -92,8 +92,8 @@ var CossinoSprite = cc.Sprite.extend({
 
         this.spriteDescription = "Cossino";
 
-        this._walkDeltaPos = cc_Point(1.1, 0);
-        this._runDeltaPos = cc_Point(3, 0);
+        this._walkDeltaPos = cc_Point(1.5, 0);
+        this._runDeltaPos = cc_Point(3.5, 0);
         this._jumpDeltaPos = cc_Point(1, 0);
         this._deltaPosTotal = cc_Point(0, 0);
 
@@ -817,7 +817,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         return true;
     },
 
-    _initPhysics:function (initGravedadX, initGravedadY, initDoSleep, initScale, initStepAmount) {
+    _initPhysics:function (initGravedadX, initGravedadY, initDoSleep, initScale, initStepAmount, debugElementCanvas) {
         // -------------------------------------------------------------------
         // Configure Box2D ---------------------------------------------------
         // -------------------------------------------------------------------
@@ -835,18 +835,13 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var b2ContactListener = Box2D.Dynamics.b2ContactListener;
 
         // Construct a world object, which will hold and simulate the rigid bodies.
-        var Physics = function (element, gravedadX, gravedadY, doSleep, scale, stepAmount) {
+        var Physics = function (gravedadX, gravedadY, doSleep, scale, stepAmount) {
             var gravity = new b2Vec2(gravedadX, gravedadY);
             this.world = new b2World(gravity, doSleep);
             this.world.SetContinuousPhysics(true);
-            this.element = element;
             this.scale = scale || 30;  // 30 pixeles = 1 metro
             this.dtRemaining = 0;
             this.stepAmount = stepAmount || 1/60;
-
-            try { this.context = element.getContext("2d"); }
-            catch (e) {}
-
         };
 
         Physics.prototype.step = function (dt) {
@@ -864,9 +859,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         };
 
         // Crear nueva instancia de mundo físico
-        this._canvas = document.getElementById(myApp.config.tag);
-        this.physics = new Physics(this._canvas,
-                                   initGravedadX,
+        this.physics = new Physics(initGravedadX,
                                    initGravedadY,
                                    initDoSleep,
                                    initScale,
@@ -885,19 +878,32 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         fixDefInf.restitution = 0.2;
         bodyDefInf.type = b2Body.b2_staticBody;
         fixDefInf.shape = new b2PolygonShape();
-        bodyDefInf.position.Set((12000 / 2) / 30, 0 / 30);
-        fixDefInf.shape.SetAsBox((12000 / 2) / 30, 0.01 / 30);
+        bodyDefInf.position.Set((12000 / 2) / this.physics.scale, 0 / this.physics.scale);
+        fixDefInf.shape.SetAsBox((12000 / 2) / this.physics.scale, 0.01 / this.physics.scale);
         this.physics.world.CreateBody(bodyDefInf).CreateFixture(fixDefInf);
 
+        // Límite superior (techo)
+        var fixDefSup = new b2FixtureDef();
+        var bodyDefSup = new b2BodyDef();
+
+        fixDefSup.density = 10.0;
+        fixDefSup.friction = 0.5;
+        fixDefSup.restitution = 0.2;
+        bodyDefSup.type = b2Body.b2_staticBody;
+        fixDefSup.shape = new b2PolygonShape();
+        bodyDefSup.position.Set((12000 / 2) / this.physics.scale, this._wsizeheight / this.physics.scale);
+        fixDefSup.shape.SetAsBox((12000 / 2) / this.physics.scale, 0.01 / this.physics.scale);
+        this.physics.world.CreateBody(bodyDefSup).CreateFixture(fixDefSup);
+
         // Enable debug draw
-        // var canvasDebug = document.getElementById(myApp.config.tag);
-        // var debugDraw = new b2DebugDraw();  // Objeto de visualización de depuración
-        // debugDraw.SetSprite(canvasDebug.getContext("2d") || canvasDebug.getContext("webgl"));  // Establecemos el canvas para visualizarlo
-        // debugDraw.SetDrawScale(this.physics.scale);     // Escala de la visualización
-        // debugDraw.SetFillAlpha(0.5);    // Transparencia de los elementos (debug)
-        // debugDraw.SetLineThickness(1.0);
-        // debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
-        // this.physics.world.SetDebugDraw(debugDraw);  // Le proporcionamos al "mundo" la salida del debug
+        var canvasDebug = document.getElementById("debugCanvas");
+        var debugDraw = new b2DebugDraw();  // Objeto de visualización de depuración
+        debugDraw.SetSprite(canvasDebug.getContext("2d"));  // Establecemos el canvas para visualizarlo
+        debugDraw.SetDrawScale(10);     // Escala de la visualización
+        debugDraw.SetFillAlpha(0.5);    // Transparencia de los elementos (debug)
+        debugDraw.SetLineThickness(1.0);
+        debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit | b2DebugDraw.e_centerOfMassBit);
+        //this.physics.world.SetDebugDraw(debugDraw);  // Le proporcionamos al "mundo" la salida del debug
     },
 
     onEnter:function () {
@@ -1072,6 +1078,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 if (sprite === this_obj._currentPlayer) {
                     // Actualizar posición previa del jugador
                     this_obj._playerPrevUIPos = this_obj._playerCurrUIPos;
+
                     // Sumar ambos vectores para obtener el desplazamiento total
                     this_obj._playerCurrUIPos = cc_pAdd(this_obj._playerCurrUIPos,
                                                         sprite.getDeltaPos());
@@ -1080,10 +1087,10 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     spritePosition = new b2Vec2(this_obj._playerCurrUIPos.x / physics.scale,
                                                 this_obj._playerCurrUIPos.y / physics.scale);
 
-                    spriteAngle = -1 * cc_DEGREES_TO_RADIANS(sprite.getRotation());
+                    //spriteAngle = -1 * cc_DEGREES_TO_RADIANS(sprite.getRotation());
 
                     body.SetPosition(spritePosition);
-                    body.SetAngle(spriteAngle);
+                    //body.SetAngle(spriteAngle);
 
                     // Actualizar referencias a posiciones físicas del jugador
                     this_obj._playerPrevPhyPos = this_obj._playerCurrPhyPos;
@@ -1470,6 +1477,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var node = this.parallaxChild;
         var currentPos = node.getPosition();
         var deltaPoint = cc_pSub(this._playerPrevUIPos, this._playerCurrUIPos);
+        deltaPoint.x *= 10/21;
         node.setPosition(cc_pAdd(currentPos, deltaPoint));
     },
 
@@ -1639,18 +1647,25 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 if (!isNaN(stepAmountCalc)) { stepAmount = stepAmountCalc; }
             }
 
+            // Debug canvas
+            var debugCanvas = document.getElementById("debugCanvas");
+
             // Inicializar el mundo físico con las propiedades obtenidas
-            this._initPhysics(mapGravityX, mapGravityY, doSleep, scaleWorld, stepAmount);
+            this._initPhysics(mapGravityX,
+                              mapGravityY,
+                              doSleep,
+                              scaleWorld,
+                              stepAmount,
+                              debugCanvas);
 
             // Agregar físicas al personaje actual
             this._playerPhysicBody = this.addBoxBodyForSprite(this._currentPlayer, 0, false);
             // Registrar su posición actual en el mundo físico
             this._playerCurrPhyPos = this._playerPhysicBody.GetPosition();
-            this._playerPrevPhyPos = this._playerPhysicBody.GetPosition();
+            this._playerPrevPhyPos = this._playerCurrPhyPos;
             this._playerCurrUIPos = cc_Point(this._playerCurrPhyPos.x * this.physics.scale,
                                              this._playerCurrPhyPos.y * this.physics.scale);
-            this._playerPrevUIPos = cc_Point(this._playerPrevPhyPos.x * this.physics.scale,
-                                             this._playerPrevPhyPos.y * this.physics.scale);
+            this._playerPrevUIPos = this._playerPrevUIPos;
             this._playerCurrPhyRot = this._playerPhysicBody.GetAngle();
             this._playerCurrUIRot = -1 * cc_RADIANS_TO_DEGREES(this._playerCurrPhyRot);
 
