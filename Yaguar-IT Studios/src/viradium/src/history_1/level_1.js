@@ -684,6 +684,18 @@ var CossinoSprite = cc.Sprite.extend({
 
     getSpriteDescription:function () {
         return this.spriteDescription;
+    },
+
+    setWalkDeltaPos:function (deltaPoint) {
+        this._walkDeltaPos = deltaPoint;
+    },
+
+    setRunDeltaPos:function (deltaPoint) {
+        this._runDeltaPos = deltaPoint;
+    },
+
+    setJumpDeltaPos:function (deltaPoint) {
+        this._jumpDeltaPos = deltaPoint;
     }
 });
 
@@ -761,21 +773,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         menuTitulo.setPosition(cc_Point(menuItemX, wSizeHeight - 35));
         // Add the label as a child to this layer
         this.addChild(menuTitulo);
-
-        // -------------------------------------------------------------------
-        // Create Cossino sprite
-        cc.log("Crear sprite de Cossino...");
-        cossino_pj = new CossinoSprite();
-        cossino_pj.setScale(0.55);
-        cossino_pj.setPosition(cc_Point(this._wsizewidth / 2, 100));
-        cossino_pj.setTerrainType(TERRAIN_TYPE.DIRT);
-        cc.log(cossino_pj);
-
-        cc.log("Agregar sprite Cossino a escena.");
-        this.addChild(cossino_pj, 0, 1111);
-
-        // Establecer a Cossino como el personaje actual
-        this._currentPlayer = cossino_pj;
 
         // Agregar capa de enemigos y objetos
         this.addObjsAndEnemiesLayer();
@@ -883,17 +880,43 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         this.physics.world.CreateBody(bodyDefInf).CreateFixture(fixDefInf);
 
         // Límite superior (techo)
-        var fixDefSup = new b2FixtureDef();
-        var bodyDefSup = new b2BodyDef();
+        // var fixDefSup = new b2FixtureDef();
+        // var bodyDefSup = new b2BodyDef();
 
-        fixDefSup.density = 10.0;
-        fixDefSup.friction = 0.5;
-        fixDefSup.restitution = 0.2;
-        bodyDefSup.type = b2Body.b2_staticBody;
-        fixDefSup.shape = new b2PolygonShape();
-        bodyDefSup.position.Set((12000 / 2) / this.physics.scale, this._wsizeheight / this.physics.scale);
-        fixDefSup.shape.SetAsBox((12000 / 2) / this.physics.scale, 0.01 / this.physics.scale);
-        this.physics.world.CreateBody(bodyDefSup).CreateFixture(fixDefSup);
+        // fixDefSup.density = 10.0;
+        // fixDefSup.friction = 0.5;
+        // fixDefSup.restitution = 0.2;
+        // bodyDefSup.type = b2Body.b2_staticBody;
+        // fixDefSup.shape = new b2PolygonShape();
+        // bodyDefSup.position.Set((12000 / 2) / this.physics.scale, this._wsizeheight / this.physics.scale);
+        // fixDefSup.shape.SetAsBox((12000 / 2) / this.physics.scale, 0.01 / this.physics.scale);
+        // this.physics.world.CreateBody(bodyDefSup).CreateFixture(fixDefSup);
+
+        // Límite izquierdo
+        var fixDefIzq = new b2FixtureDef();
+        var bodyDefIzq = new b2BodyDef();
+
+        fixDefIzq.density = 10.0;
+        fixDefIzq.friction = 0.5;
+        fixDefIzq.restitution = 0.2;
+        bodyDefIzq.type = b2Body.b2_staticBody;
+        fixDefIzq.shape = new b2PolygonShape();
+        bodyDefIzq.position.Set(0 / this.physics.scale, this._wsizeheight / 2 / this.physics.scale);
+        fixDefIzq.shape.SetAsBox(0.01 / this.physics.scale, this._wsizeheight / this.physics.scale);
+        this.physics.world.CreateBody(bodyDefIzq).CreateFixture(fixDefIzq);
+
+        // Límite derecho
+        var fixDefDer = new b2FixtureDef();
+        var bodyDefDer = new b2BodyDef();
+
+        fixDefDer.density = 10.0;
+        fixDefDer.friction = 0.5;
+        fixDefDer.restitution = 0.2;
+        bodyDefDer.type = b2Body.b2_staticBody;
+        fixDefDer.shape = new b2PolygonShape();
+        bodyDefDer.position.Set(12000 / this.physics.scale, this._wsizeheight / 2 / this.physics.scale);
+        fixDefDer.shape.SetAsBox(0.01 / this.physics.scale, this._wsizeheight / this.physics.scale);
+        this.physics.world.CreateBody(bodyDefDer).CreateFixture(fixDefDer);
 
         // Enable debug draw
         var canvasDebug = document.getElementById("debugCanvas");
@@ -903,7 +926,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         debugDraw.SetFillAlpha(0.5);    // Transparencia de los elementos (debug)
         debugDraw.SetLineThickness(1.0);
         debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit | b2DebugDraw.e_centerOfMassBit);
-        //this.physics.world.SetDebugDraw(debugDraw);  // Le proporcionamos al "mundo" la salida del debug
+        this.physics.world.SetDebugDraw(debugDraw);  // Le proporcionamos al "mundo" la salida del debug
     },
 
     onEnter:function () {
@@ -1136,26 +1159,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         physics.world.DrawDebugData();
         physics.world.ClearForces();
 
-        // Actualizar posición de cámara
-        // if (this_obj._previousDirection != this_obj._currentDirection) {
-        //     if (this_obj._currentDirection == CHR_DIRECTION.RIGHT) {
-        //         this_obj.updateCameraRight();
-        //     } else {
-        //         this_obj.updateCameraLeft();
-        //     }
-        //     this_obj._previousDirection = this_obj._currentDirection;
-        // }
-
         // Actualizar parallax
         this_obj._updateParallax();
-
-        // if ((cossinoDirection == CHR_DIRECTION.LEFT) && (currentParallaxPos.x < 1)) {
-                // this_obj.scrollParallaxRight(cossinoDeltaPos, 0);
-        //        this_obj.scrollParallaxRight(this_obj._playerPhysicBody.GetPosition().x, 0);
-        // } else if ((cossinoDirection == CHR_DIRECTION.RIGHT) && (currentParallaxPos.x > -4924)) {    // TODO: Límite derecho automático
-            // this_obj.scrollParallaxLeft(cossinoDeltaPos, 0);
-        //    this_obj.scrollParallaxLeft(this_obj._playerPhysicBody.GetPosition().x, 0);
-        // }
     },
 
     showMouseButtonInfo:function (event, trigger) {
@@ -1181,7 +1186,11 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     },
 
     addBoxBodyForSprite:function (sprite, bodyType, setSensor, customPosition) {
+        if ((sprite === null) || !(sprite instanceof cc_Sprite)) { return false; }
+
         cc.log("Add box body for sprite...");
+
+        cc.log(sprite);
 
         var b2BodyDef = Box2D.Dynamics.b2BodyDef;
         var b2Body = Box2D.Dynamics.b2Body;
@@ -1206,7 +1215,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         }
 
         var spritePosition = null;
-        if ((customPosition !== null) && (customPosition instanceof cc.Point)) {
+        if ((customPosition !== null) && (customPosition instanceof cc_Point)) {
             cc.log("Posición personalizada.");
             spritePosition = customPosition;
         }
@@ -1240,8 +1249,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         return spriteBody;
     },
 
-    addBoxBodyForTMXObject:function (object) {
-        if ((object !== null) && (typeof(object) === Array)) { return false; }
+    addBoxBodyForTMXObject:function (object, userData) {
+        if ((object === null) || !(object instanceof Object)) { return false; }
 
         cc.log("Add box body for TMX object...");
 
@@ -1282,7 +1291,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         if (!isNaN(frictionCalc)) { objFriction = frictionCalc; }
 
         // Restitución
-        var objRestitution, restitutionCalc = 1.0;
+        var objRestitution, restitutionCalc = 0.0;
         if ("Restitucion" in object) {
             restitutionCalc = parseFloat(object["Restitucion"]);
         }
@@ -1325,7 +1334,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         objectBodyDef.position.Set((object.x + objCenterWidth) / this.physics.scale,
                                    (object.y + objCenterHeight) / this.physics.scale);
 
-        objectBodyDef.userData = object;
+        objectBodyDef.userData = ((userData !== null) && (userData !== undefined)) ? userData : object;
 
         var objectBody = this.physics.world.CreateBody(objectBodyDef);
 
@@ -1335,7 +1344,122 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         // Define the dynamic body fixture.
         var spriteShapeDef = new b2FixtureDef();
-        spriteShapeDef.userData = object;
+        spriteShapeDef.userData = ((userData !== null) && (userData !== undefined)) ? userData : object;
+        spriteShapeDef.shape = spriteShape;
+        spriteShapeDef.density = objDensity;
+        spriteShapeDef.friction = objFriction;
+        spriteShapeDef.restitution = objRestitution;
+        spriteShapeDef.isSensor = objIsSensor;
+        objectBody.CreateFixture(spriteShapeDef);
+
+        cc.log("Object Body Def:");
+        cc.log(objectBodyDef);
+
+        cc.log("Shape Def:");
+        cc.log(spriteShapeDef);
+
+        return objectBody;
+    },
+
+    addBoxBodyForTMXObjectSprite:function (sprite, object) {
+        if ((sprite === null) || !(sprite instanceof cc_Sprite)) { return false; }
+
+        cc.log("Add box body for TMX Object & Sprite...");
+
+        var b2BodyDef = Box2D.Dynamics.b2BodyDef;
+        var b2Body = Box2D.Dynamics.b2Body;
+        var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
+        var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
+        var b2Fixture = Box2D.Dynamics.b2Fixture;
+
+        var objectBodyDef = new b2BodyDef();
+
+        var objType = "";
+        if ("Cuerpo" in object) {
+            objType = object["Cuerpo"].trim().toLowerCase();
+        }
+        else if ("cuerpo" in object) {
+            objType = object["cuerpo"].trim().toLowerCase();
+        }
+
+        // Densidad
+        var objDensity, densityCalc = 1.0;
+        if ("Densidad" in object) {
+            densityCalc = parseFloat(object["Densidad"]);
+        }
+        else if ("densidad" in object) {
+            densityCalc = parseFloat(object["densidad"]);
+        }
+        if (!isNaN(densityCalc)) { objDensity = densityCalc; }
+
+        // Fricción
+        var objFriction, frictionCalc = 1.0;
+        if ("Friccion" in object) {
+            frictionCalc = parseFloat(object["Friccion"]);
+        }
+        else if ("friccion" in object) {
+            frictionCalc = parseFloat(object["friccion"]);
+        }
+        if (!isNaN(frictionCalc)) { objFriction = frictionCalc; }
+
+        // Restitución
+        var objRestitution, restitutionCalc = 0.0;
+        if ("Restitucion" in object) {
+            restitutionCalc = parseFloat(object["Restitucion"]);
+        }
+        else if ("restitucion" in object) {
+            restitutionCalc = parseFloat(object["restitucion"]);
+        }
+        if (!isNaN(restitutionCalc)) { objRestitution = restitutionCalc; }
+
+        // Determinar si el objeto es un sensor
+        var objIsSensor = false;
+        if ("Sensor" in object) {
+            if (object["Sensor"].trim().toLowerCase() == "true") {
+                objIsSensor = true; }
+            else { objIsSensor = false; }
+        }
+        else if ("Sensor" in object) {
+            if (object["sensor"].trim().toLowerCase() == "true") {
+                objIsSensor = true;
+            }
+            else { objIsSensor = false; }
+        }
+
+        switch (objType) {
+            case "dynamic":
+                objectBodyDef.type = b2Body.b2_dynamicBody;
+                break;
+            case "static":
+                objectBodyDef.type = b2Body.b2_staticBody;
+                break;
+            case "kinematic":
+                objectBodyDef.type = b2Body.b2_kinematicBody;
+                break;
+            default:
+                objectBodyDef.type = b2Body.b2_dynamicBody;
+        }
+
+        objCenterWidth = object.width / 2;
+        objCenterHeight = object.height / 2;
+
+        objectBodyDef.position.Set((object.x + objCenterWidth) / this.physics.scale,
+                                   (object.y + objCenterHeight) / this.physics.scale);
+
+        objectBodyDef.userData = sprite;
+
+        var objectBody = this.physics.world.CreateBody(objectBodyDef);
+
+        cc.log(sprite.getBoundingBox().size.width);
+        cc.log(sprite.getBoundingBox().size.height);
+
+        var spriteShape = new b2PolygonShape();
+        spriteShape.SetAsBox(sprite.getBoundingBox().size.width / this.physics.scale / 2,
+                             sprite.getBoundingBox().size.height / this.physics.scale / 2);
+
+        // Define the dynamic body fixture.
+        var spriteShapeDef = new b2FixtureDef();
+        spriteShapeDef.userData = sprite;
         spriteShapeDef.shape = spriteShape;
         spriteShapeDef.density = objDensity;
         spriteShapeDef.friction = objFriction;
@@ -1658,20 +1782,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                               stepAmount,
                               debugCanvas);
 
-            // Agregar físicas al personaje actual
-            this._playerPhysicBody = this.addBoxBodyForSprite(this._currentPlayer, 0, false);
-            // Registrar su posición actual en el mundo físico
-            this._playerCurrPhyPos = this._playerPhysicBody.GetPosition();
-            this._playerPrevPhyPos = this._playerCurrPhyPos;
-            this._playerCurrUIPos = cc_Point(this._playerCurrPhyPos.x * this.physics.scale,
-                                             this._playerCurrPhyPos.y * this.physics.scale);
-            this._playerPrevUIPos = this._playerPrevUIPos;
-            this._playerCurrPhyRot = this._playerPhysicBody.GetAngle();
-            this._playerCurrUIRot = -1 * cc_RADIANS_TO_DEGREES(this._playerCurrPhyRot);
-
-            cc.log("Player Body");
-            cc.log(this._playerPhysicBody);
-
+            this._processCossinoPLayer();
             this._processBackgroundLayer();
             this._processColisionesLayer();
             this._processTrayectoriasLayer();
@@ -1741,6 +1852,162 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         };
 
         this.physics.world.SetContactListener(collisionListener);
+    },
+
+    _processCossinoPLayer:function () {
+        var layerCossino = this._tileMap.getObjectGroup("Cossino");
+        var objectCossino = null;
+
+        if ((layerCossino !== null) & (layerCossino !== undefined)) {
+            objectCossino = layerCossino.objectNamed("Cossino");
+        }
+
+        var b2Vec2 = Box2D.Common.Math.b2Vec2;
+        var objEscala = 0.55;
+        var escalaCalc = 0.55;
+        var walkDeltaPos = cc_Point(1.5, 0);
+        var walkDeltaPosXCalc = 1.5;
+        var walkDeltaPosYCalc = 0;
+        var jumpDeltaPos = cc_Point(3.5, 0);
+        var jumpDeltaPosXCalc = 3.5;
+        var jumpDeltaPosYCalc = 0;
+        var runDeltaPos = cc_Point(1.0, 0);
+        var runDeltaPosXCalc = 1.0;
+        var runDeltaPosYCalc = 0;
+        // Posición inicial de Cossino
+        var objPosicionInicial = cc_Point(this._wsizewidth / 2, 100);
+        // var objPosicionInicial = cc_Point(objectCossino.x + (objectCossino.width / 2),
+        //                                   objectCossino.y + (objectCossino.height / 2));
+
+        cc.log("Layer Cossino");
+        cc.log(objectCossino);
+
+        if ((objectCossino !== null) & (objectCossino !== undefined)) {
+            // Escala
+            if ("Escala" in objectCossino) {
+                escalaCalc = parseFloat(objectCossino["Escala"]);
+            }
+            else if ("escala" in objectCossino) {
+                escalaCalc = parseFloat(objectCossino["escala"]);
+            }
+            if (!isNaN(escalaCalc)) { objEscala = escalaCalc; }
+
+            // Delta Walk
+            if ("CaminarDeltaX" in objectCossino) {
+                walkDeltaPosXCalc = parseFloat(objectCossino["CaminarDeltaX"]);
+            }
+            else if ("caminardeltax" in objectCossino) {
+                walkDeltaPosXCalc = parseFloat(objectCossino["caminardeltax"]);
+            }
+
+            if ("CaminarDeltaY" in objectCossino) {
+                walkDeltaPosYCalc = parseFloat(objectCossino["CaminarDeltaY"]);
+            }
+            else if ("caminardeltay" in objectCossino) {
+                walkDeltaPosYCalc = parseFloat(objectCossino["caminardeltay"]);
+            }
+
+            if (!isNaN(walkDeltaPosXCalc) & !isNaN(walkDeltaPosYCalc)) {
+                walkDeltaPos = cc_Point(walkDeltaPosXCalc, walkDeltaPosYCalc);
+            }
+            else {
+                walkDeltaPos = cc_Point(1.5, 0);
+            }
+
+            // Delta Jump
+            if ("SaltarDeltaX" in objectCossino) {
+                jumpDeltaPosXCalc = parseFloat(objectCossino["SaltarDeltaX"]);
+            }
+            else if ("saltardeltax" in objectCossino) {
+                jumpDeltaPosXCalc = parseFloat(objectCossino["saltardeltax"]);
+            }
+
+            if ("SaltarDeltaY" in objectCossino) {
+                jumpDeltaPosYCalc = parseFloat(objectCossino["SaltarDeltaY"]);
+            }
+            else if ("saltardeltay" in objectCossino) {
+                jumpDeltaPosYCalc = parseFloat(objectCossino["saltardeltay"]);
+            }
+
+            if (!isNaN(jumpDeltaPosXCalc) & !isNaN(jumpDeltaPosYCalc)) {
+                jumpDeltaPos = cc_Point(jumpDeltaPosXCalc, jumpDeltaPosYCalc);
+            }
+            else {
+                jumpDeltaPos = cc_Point(3.5, 0);
+            }
+
+            // Delta Run
+            if ("CorrerDeltaX" in objectCossino) {
+                runDeltaPosXCalc = parseFloat(objectCossino["CorrerDeltaX"]);
+            }
+            else if ("correrdeltax" in objectCossino) {
+                runDeltaPosXCalc = parseFloat(objectCossino["correrdeltax"]);
+            }
+
+            if ("CorrerDeltaY" in objectCossino) {
+                runDeltaPosYCalc = parseFloat(objectCossino["CorrerDeltaY"]);
+            }
+            else if ("correrdeltay" in objectCossino) {
+                runDeltaPosYCalc = parseFloat(objectCossino["correrdeltay"]);
+            }
+
+            if (!isNaN(runDeltaPosXCalc) & !isNaN(runDeltaPosYCalc)) {
+                runDeltaPos = cc_Point(runDeltaPosXCalc, runDeltaPosYCalc);
+            }
+            else {
+                runDeltaPos = cc_Point(1.0, 0);
+            }
+        }
+
+        // -------------------------------------------------------------------
+        // Create Cossino sprite
+        cc.log("Crear sprite de Cossino...");
+        cossino_pj = new CossinoSprite();
+        cossino_pj.setScale(objEscala);
+        cossino_pj.setPosition(objPosicionInicial);
+        cossino_pj.setTerrainType(TERRAIN_TYPE.DIRT);
+        cossino_pj.setWalkDeltaPos(walkDeltaPos);
+        cossino_pj.setRunDeltaPos(runDeltaPos);
+        cossino_pj.setJumpDeltaPos(jumpDeltaPos);
+        cc.log(cossino_pj);
+
+        cc.log("Agregar sprite Cossino a escena.");
+        this.addChild(cossino_pj, 0, 1111);
+
+        // Establecer a Cossino como el personaje actual
+        this._currentPlayer = cossino_pj;
+
+        // Agregar físicas al personaje actual
+        if ((objectCossino !== null & objectCossino !== undefined)) {
+            cc.log("Objeto TMX Sprite definido.");
+            if (objectCossino.x < objPosicionInicial.x) {
+                objectCossino.x = objPosicionInicial.x;
+            }
+
+            if (objectCossino.y < objPosicionInicial.y) {
+                objectCossino.y = objPosicionInicial.y;
+            }
+
+            this._playerPhysicBody = this.addBoxBodyForTMXObjectSprite(cossino_pj, objectCossino);
+        }
+        else {
+            cc.log("Objeto TMX Sprite NO definido.");
+            this._playerPhysicBody = this.addBoxBodyForSprite(cossino_pj, 0, false);
+        }
+
+        // Registrar su posición actual en el mundo físico
+        this._playerCurrPhyPos = this._playerPhysicBody.GetPosition();
+        this._playerPrevPhyPos = this._playerCurrPhyPos;
+
+        this._playerCurrUIPos = cc_Point(this._playerCurrPhyPos.x * this.physics.scale,
+                                         this._playerCurrPhyPos.y * this.physics.scale);
+        this._playerPrevUIPos = this._playerPrevUIPos;
+
+        this._playerCurrPhyRot = this._playerPhysicBody.GetAngle();
+        this._playerCurrUIRot = -1 * cc_RADIANS_TO_DEGREES(this._playerCurrPhyRot);
+
+        cc.log("Player Body");
+        cc.log(this._playerPhysicBody);
     },
 
     _processBackgroundLayer:function () {
@@ -1838,6 +2105,10 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             this.parallaxChild.removeChild(this._tileMap, true);
             this._tileMap = null;
         }
+
+        this._currentPlayer = null;
+        this.physics.world = null;
+        this.physics = null;
 
         cc.log(s_objects_layer_tmx);
         cc.Loader.getInstance().releaseResources([{src: "/" + s_objects_layer_tmx}]);
