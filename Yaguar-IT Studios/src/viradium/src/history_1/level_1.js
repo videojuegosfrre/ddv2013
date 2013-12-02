@@ -847,16 +847,14 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         };
 
         Physics.prototype.step = function (dt) {
-            this.dtRemaining += dt;
+            var this_obj = this;
+            this_obj.dtRemaining += dt;
 
-            while (this.dtRemaining > this.stepAmount) {
-                this.dtRemaining -= this.stepAmount;
-                this.world.Step(this.stepAmount,
-                8, // velocity iterations
-                3); // position iterations
-            }
-            if (this.debugDraw) {
-                this.world.DrawDebugData();
+            while (this_obj.dtRemaining > this_obj.stepAmount) {
+                this_obj.dtRemaining -= this_obj.stepAmount;
+                this_obj.world.Step(this_obj.stepAmount,
+                                8, // velocity iterations
+                                3); // position iterations
             }
         };
 
