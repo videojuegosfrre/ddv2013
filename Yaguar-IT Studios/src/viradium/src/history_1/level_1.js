@@ -921,11 +921,13 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         // Enable debug draw
         var canvasDebug = document.getElementById("debugCanvas");
         var debugDraw = new b2DebugDraw();  // Objeto de visualización de depuración
-        debugDraw.SetSprite(canvasDebug.getContext("2d"));  // Establecemos el canvas para visualizarlo
-        debugDraw.SetDrawScale(10);     // Escala de la visualización
+        var ctx = canvasDebug.getContext("2d");
+        ctx.canvas.height /= 5;
+        debugDraw.SetSprite(ctx);  // Establecemos el canvas para visualizarlo
+        debugDraw.SetDrawScale(5);     // Escala de la visualización
         debugDraw.SetFillAlpha(0.5);    // Transparencia de los elementos (debug)
         debugDraw.SetLineThickness(1.0);
-        debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit | b2DebugDraw.e_centerOfMassBit);
+        debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_centerOfMassBit);
         this.physics.world.SetDebugDraw(debugDraw);  // Le proporcionamos al "mundo" la salida del debug
     },
 
@@ -1057,7 +1059,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 break;
             case cc.KEY.i:
                 var b2Vec2 = Box2D.Common.Math.b2Vec2;
-                this._playerPhysicBody.ApplyForce(new b2Vec2(100000, 20000), this._playerPhysicBody.GetWorldCenter());
+                this._playerPhysicBody.ApplyForce(new b2Vec2(0, 20000), this._playerPhysicBody.GetWorldCenter());
                 break;
         }
 
@@ -1110,10 +1112,10 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     spritePosition = new b2Vec2(this_obj._playerCurrUIPos.x / physics.scale,
                                                 this_obj._playerCurrUIPos.y / physics.scale);
 
-                    //spriteAngle = -1 * cc_DEGREES_TO_RADIANS(sprite.getRotation());
+                    spriteAngle = -1 * cc_DEGREES_TO_RADIANS(sprite.getRotation());
 
                     body.SetPosition(spritePosition);
-                    //body.SetAngle(spriteAngle);
+                    body.SetAngle(spriteAngle);
 
                     // Actualizar referencias a posiciones físicas del jugador
                     this_obj._playerPrevPhyPos = this_obj._playerCurrPhyPos;
@@ -1147,7 +1149,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     //this_obj._playerPrevUIPos = this_obj._playerCurrUIPos;
                     this_obj._playerCurrUIPos = spritePosition;
                     this_obj._playerCurrUIRot = spriteAngle;
-                    this_obj._currentPlayer.setRotation(spriteAngle);
+                    sprite.setRotation(spriteAngle);
+                    sprite.setPosition(cc_Point(512, spritePosition.y));
                 }
             }
             else {
@@ -1440,11 +1443,14 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 objectBodyDef.type = b2Body.b2_dynamicBody;
         }
 
-        objCenterWidth = object.width / 2;
-        objCenterHeight = object.height / 2;
+        // objCenterWidth = object.width / 2;
+        // objCenterHeight = object.height / 2;
 
-        objectBodyDef.position.Set((object.x + objCenterWidth) / this.physics.scale,
-                                   (object.y + objCenterHeight) / this.physics.scale);
+        // objectBodyDef.position.Set((object.x + objCenterWidth) / this.physics.scale,
+        //                            (object.y + objCenterHeight) / this.physics.scale);
+
+        objectBodyDef.position.Set(sprite.getPosition().x / this.physics.scale,
+                                   sprite.getPosition().y / this.physics.scale);
 
         objectBodyDef.userData = sprite;
 

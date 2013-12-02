@@ -54,7 +54,7 @@ cc.AudioEngine = cc.Class.extend(/** @lends cc.AudioEngine# */{
             // <audio> tag is supported, go on
             var _check = function(typeStr) {
                 var result = au.canPlayType(typeStr);
-                return result != "no" && result != "";
+                return result != "no" && result !== "";
             };
 
             capabilities["mp3"] = _check("audio/mpeg");
@@ -489,7 +489,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * cc.AudioEngine.getInstance().pauseEffect(audioID);
      */
     pauseEffect:function (audioID) {
-        if (audioID == null) return;
+        if (audioID === null) return;
 
         if (this._audioIDList.hasOwnProperty(audioID)) {
             var au = this._audioIDList[audioID];
@@ -526,7 +526,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * cc.AudioEngine.getInstance().resumeEffect(audioID);
      */
     resumeEffect:function (audioID) {
-        if (audioID == null) return;
+        if (audioID === null) return;
 
         if (this._audioIDList.hasOwnProperty(audioID)) {
             var au = this._audioIDList[audioID];
@@ -564,7 +564,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * cc.AudioEngine.getInstance().stopEffect(audioID);
      */
     stopEffect:function (audioID) {
-        if (audioID == null) return;
+        if (audioID === null) return;
 
         if (this._audioIDList.hasOwnProperty(audioID)) {
             var au = this._audioIDList[audioID];
@@ -695,7 +695,7 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
         var locSoundList = this._soundList;
         if (locSoundList.hasOwnProperty(this._playingMusic)){
             var currMusic = locSoundList[this._playingMusic];
-            currMusic.audio.removeEventListener("pause",this._musicListenerBound , false)
+            currMusic.audio.removeEventListener("pause",this._musicListenerBound , false);
             currMusic.audio.pause();
         }
 
@@ -796,7 +796,7 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
         }
         locPlayingTaskList.push(playingTask);
         this._currentTask = playingTask;
-        this._playingAudioTask(playingTask)
+        this._playingAudioTask(playingTask);
     },
 
     _playingAudioTask: function(playTask){
@@ -944,7 +944,7 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
      * cc.AudioEngine.getInstance().pauseEffect(audioID);
      */
     pauseEffect:function (audioID) {
-        if (audioID == null) return;
+        if (audioID === null) return;
 
         var strID = audioID.toString();
         if (this._audioIDList.hasOwnProperty(strID)) {
@@ -990,7 +990,7 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
      * cc.AudioEngine.getInstance().resumeEffect(audioID);
      */
     resumeEffect:function (audioID) {
-        if (audioID == null) return;
+        if (audioID === null) return;
 
         if (this._audioIDList.hasOwnProperty(audioID)) {
             var au = this._audioIDList[audioID];
@@ -1025,7 +1025,7 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
             if(selTask.status === cc.PlayingTaskStatus.pause)
                 selTask.status = cc.PlayingTaskStatus.waiting;
         }
-        if(this._currentTask == null){
+        if(this._currentTask === null){
             var locCurrentTask = this._getNextTaskToPlay();
             if(locCurrentTask){
                 //pause music
@@ -1048,7 +1048,7 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
      * cc.AudioEngine.getInstance().stopEffect(audioID);
      */
     stopEffect:function (audioID) {
-        if (audioID == null) return;
+        if (audioID === null) return;
 
         if (this._audioIDList.hasOwnProperty(audioID)) {
             var au = this._audioIDList[audioID];
@@ -1165,7 +1165,8 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
          * browser has proved to support Web Audio API in miniFramework.js
          * only in that case will cc.WebAudioEngine be chosen to run, thus the following is guaranteed to work
          */
-        this._ctx = new (window.AudioContext || window.webkitAudioContext || window.mozAudioContext)();
+        var audioCtx = window.AudioContext || window.webkitAudioContext || window.mozAudioContext;
+        this._ctx = new audioCtx();
 
         // gather capabilities information, enable sound if any of the audio format is supported
         var capabilities = {};
@@ -1656,7 +1657,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
      * cc.AudioEngine.getInstance().pauseEffect(audioID);
      */
     pauseEffect: function(audioID) {
-        if (audioID == null)
+        if (audioID === null)
             return;
 
         if (this._audioIDList.hasOwnProperty(audioID)){
@@ -1702,7 +1703,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
      * cc.AudioEngine.getInstance().resumeEffect(audioID);
      */
     resumeEffect: function(audioID) {
-        if (audioID == null)
+        if (audioID === null)
             return;
 
         if (this._audioIDList.hasOwnProperty(audioID)){
@@ -1745,7 +1746,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
      * cc.AudioEngine.getInstance().stopEffect(audioID);
      */
     stopEffect: function(audioID) {
-        if (audioID == null)
+        if (audioID === null)
             return;
 
         var locAudioIDList = this._audioIDList;
