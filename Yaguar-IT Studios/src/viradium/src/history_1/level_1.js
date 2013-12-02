@@ -732,6 +732,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     _mapOrientation: null,
     _physicsDoSleep: false,
     _currentPlayer: null,
+    _leftLimitPos: null,
+    _rightLimitPos: null,
 
     ctor:function () {
         cc.log("Init Function: Hist1Lvl1Layer.");
@@ -759,6 +761,9 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         menuItemY = this._centerScreenY = wSizeHeight / 2;
 
         this._currentDirection = this._previousDirection = CHR_DIRECTION.RIGHT;
+
+        this._leftLimitPos = this._wsizewidth / 2;
+        this._rightLimitPos = -3900;
 
         // Inicializar fondos parallax
         this.initParallax();
@@ -870,13 +875,13 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var fixDefInf = new b2FixtureDef();
         var bodyDefInf = new b2BodyDef();
 
-        fixDefInf.density = 10.0;
+        fixDefInf.density = 20.0;
         fixDefInf.friction = 0.5;
         fixDefInf.restitution = 0.2;
         bodyDefInf.type = b2Body.b2_staticBody;
         fixDefInf.shape = new b2PolygonShape();
-        bodyDefInf.position.Set((12000 / 2) / this.physics.scale, 0 / this.physics.scale);
-        fixDefInf.shape.SetAsBox((12000 / 2) / this.physics.scale, 0.01 / this.physics.scale);
+        bodyDefInf.position.Set((12000 / 2) / this.physics.scale, -0.5 / this.physics.scale);
+        fixDefInf.shape.SetAsBox((12000 / 2) / this.physics.scale, 0.5 / this.physics.scale);
         this.physics.world.CreateBody(bodyDefInf).CreateFixture(fixDefInf);
 
         // Límite superior (techo)
@@ -896,26 +901,26 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var fixDefIzq = new b2FixtureDef();
         var bodyDefIzq = new b2BodyDef();
 
-        fixDefIzq.density = 10.0;
+        fixDefIzq.density = 20.0;
         fixDefIzq.friction = 0.5;
         fixDefIzq.restitution = 0.2;
         bodyDefIzq.type = b2Body.b2_staticBody;
         fixDefIzq.shape = new b2PolygonShape();
         bodyDefIzq.position.Set(0 / this.physics.scale, this._wsizeheight / 2 / this.physics.scale);
-        fixDefIzq.shape.SetAsBox(0.01 / this.physics.scale, this._wsizeheight / this.physics.scale);
+        fixDefIzq.shape.SetAsBox(0.5 / this.physics.scale, this._wsizeheight / this.physics.scale);
         this.physics.world.CreateBody(bodyDefIzq).CreateFixture(fixDefIzq);
 
         // Límite derecho
         var fixDefDer = new b2FixtureDef();
         var bodyDefDer = new b2BodyDef();
 
-        fixDefDer.density = 10.0;
+        fixDefDer.density = 20.0;
         fixDefDer.friction = 0.5;
         fixDefDer.restitution = 0.2;
         bodyDefDer.type = b2Body.b2_staticBody;
         fixDefDer.shape = new b2PolygonShape();
         bodyDefDer.position.Set(12000 / this.physics.scale, this._wsizeheight / 2 / this.physics.scale);
-        fixDefDer.shape.SetAsBox(0.01 / this.physics.scale, this._wsizeheight / this.physics.scale);
+        fixDefDer.shape.SetAsBox(0.5 / this.physics.scale, this._wsizeheight / this.physics.scale);
         this.physics.world.CreateBody(bodyDefDer).CreateFixture(fixDefDer);
 
         // Enable debug draw
@@ -1085,21 +1090,21 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var this_obj = this;
         var physics = this_obj.physics;
         var b2Vec2 = Box2D.Common.Math.b2Vec2;
-        var spriteAngle, spritePositionOffset = 0;
+        var spriteAngle = 0;
+        var spritePositionOffset = 0;
         var bodyList = physics.world.GetBodyList();
-        var cossinoDirection = this_obj._currentPlayer.getCurrentDirection();
-        var cossinoDeltaPos = this_obj._currentPlayer.getDeltaPos();
-        var currentParallaxPos = this_obj.parallaxChild.getPosition();
-        var sprite, objectTMX, spritePosition, spriteCurrPhyPos, spriteDeltaUIPos = null;
+        var sprite = null;
+        var objectTMX = null;
+        var spritePosition = null;
+        var spriteCurrPhyPos = null;
+        var spriteDeltaUIPos = null;
 
         for (var body = bodyList; body; body = body.GetNext()) {
-            userData = body.GetUserData();
+            sprite = body.GetUserData();
 
-            if (userData === null) { continue; }
+            if (sprite === null) { continue; }
 
-            if (userData instanceof cc_Sprite) {
-                sprite = userData;
-
+            if (sprite instanceof cc_Sprite) {
                 if (sprite === this_obj._currentPlayer) {
                     // Actualizar posición previa del jugador
                     this_obj._playerPrevUIPos = this_obj._playerCurrUIPos;
@@ -1123,7 +1128,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 }
             }
             else {
-                objectTMX = userData;
+                objectTMX = sprite;
             }
         }
 
@@ -1132,30 +1137,27 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         //Iterate over the bodies in the physics world
         for (var bodyf = bodyList; bodyf; bodyf = bodyf.GetNext()) {
-            userData = bodyf.GetUserData();
+            sprite = bodyf.GetUserData();
 
-            if (userData === null) { continue; }
+            if (sprite === null) { continue; }
 
-            if (userData instanceof cc_Sprite) {
-                // Analizar sprites
-                if (userData === this_obj._currentPlayer) {
-                    sprite = userData;
-
+            if (sprite instanceof cc_Sprite) {
+                if (sprite === this_obj._currentPlayer) {
                     spritePosition = cc_Point(bodyf.GetPosition().x * physics.scale,
                                               bodyf.GetPosition().y * physics.scale);
 
                     spriteAngle = -1 * cc_RADIANS_TO_DEGREES(bodyf.GetAngle());
 
-                    //this_obj._playerPrevUIPos = this_obj._playerCurrUIPos;
                     this_obj._playerCurrUIPos = spritePosition;
                     this_obj._playerCurrUIRot = spriteAngle;
                     sprite.setRotation(spriteAngle);
-                    sprite.setPosition(cc_Point(512, spritePosition.y));
+                    sprite.setPosition(cc_Point(this_obj._wsizewidth / 2,
+                                                spritePosition.y - 48));
                 }
             }
             else {
                 // Analizar objetos TMX
-                objectTMX = userData;
+                objectTMX = sprite;
             }
         }
 
@@ -1607,6 +1609,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var node = this.parallaxChild;
         var currentPos = node.getPosition();
         var deltaPoint = cc_pSub(this._playerPrevUIPos, this._playerCurrUIPos);
+        // Corregir desplazamiento para que el parallax se mueva
+        // de acuerdo a Cossino
         deltaPoint.x *= 10/21;
         node.setPosition(cc_pAdd(currentPos, deltaPoint));
     },
