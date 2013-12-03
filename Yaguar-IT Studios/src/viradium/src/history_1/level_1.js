@@ -35,6 +35,12 @@ var KEYS = {
     RUN: cc.KEY.s
 };
 
+var KEYMOD_FLAGS = {
+    ALT: false,
+    SHIFT: false,
+    CONTROL: false
+};
+
 
 var CossinoSprite = cc.Sprite.extend({
     _currentDirection: CHR_DIRECTION.RIGHT,
@@ -1063,7 +1069,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     },
 
     onKeyDown:function (e) {
-        if (lastEvent && lastEvent == e) {
+        if (lastEvent && (lastEvent === e)) {
             return;
         }
 
@@ -1095,7 +1101,17 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 break;
             case cc.KEY.m:
                 var b2Vec2 = Box2D.Common.Math.b2Vec2;
-                this._playerPhysicBody.ApplyForce(new b2Vec2(0, 30000), this._playerPhysicBody.GetWorldCenter());
+                this._playerPhysicBody.ApplyForce(new b2Vec2(10000, 30000),
+                                                  this._playerPhysicBody.GetWorldCenter());
+                break;
+            case cc.KEY.shift:
+                KEYMOD_FLAGS.SHIFT = true;
+                break;
+            case cc.KEY.control:
+                KEYMOD_FLAGS.CONTROL = true;
+                break;
+            case cc.KEY.alt:
+                KEYMOD_FLAGS.ALT = true;
                 break;
         }
 
@@ -1108,8 +1124,17 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         delete heldKeys[e];
 
         switch (e) {
+            case cc.KEY.shift:
+                KEYMOD_FLAGS.SHIFT = false;
+                break;
+            case cc.KEY.control:
+                KEYMOD_FLAGS.CONTROL = false;
+                break;
+            case cc.KEY.alt:
+                KEYMOD_FLAGS.ALT = false;
+                break;
             case cc.KEY.r:
-                this._reloadObjsAndEnemiesLayer();
+                if (KEYMOD_FLAGS.SHIFT) { this._reloadObjsAndEnemiesLayer(); }
                 break;
         }
 
@@ -1148,8 +1173,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     spritePosition = new b2Vec2(this_obj._playerCurrUIPos.x / physics.scale,
                                                 this_obj._playerCurrUIPos.y / physics.scale);
 
-                    spriteAngle = -1 * cc_DEGREES_TO_RADIANS(sprite.getRotation());
-
                     body.SetPosition(spritePosition);
                     body.SetAngle(spriteAngle);
 
@@ -1183,7 +1206,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     this_obj._playerCurrUIRot = spriteAngle;
                     sprite.setRotation(spriteAngle);
                     sprite.setPosition(cc_Point(this_obj._wsizewidth / 2,
-                                                spritePosition.y - 45));
+                                                spritePosition.y));
                 }
             }
             else {
@@ -1744,8 +1767,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     addObjsAndEnemiesLayer:function () {
         cc.log("Agregar obstáculos...");
 
-
-
         var OBJECT_TYPE = {
             ROCK: 0,
             ENEMY: 1,
@@ -2214,6 +2235,9 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         this._playerCurrPhyRot = this._playerPhysicBody.GetAngle();
         this._playerCurrUIRot = -1 * cc_RADIANS_TO_DEGREES(this._playerCurrPhyRot);
 
+        // TODO: Probar con rotación fija por ahora
+        this._playerPhysicBody.SetFixedRotation(true);
+
         cc.log("Player Body");
         cc.log(this._playerPhysicBody);
     },
@@ -2308,23 +2332,59 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         return true;
     },
 
-    _reloadObjsAndEnemiesLayer:function () {
-        if (this._tileMap !== null) {
-            this.parallaxChild.removeChild(this._tileMap, true);
-            this._tileMap = null;
+    _destroyPhysicWorld:function () {
+        if (this.physics.world !== null) {
+            //Iterate over the bodies in the physics world
+            for (var bodyf = this.physics.world.GetBodyList(); bodyf; bodyf = bodyf.GetNext()) {
+                this.physics.world.DestroyBody(bodyf);
+            }
+
+            this.physics.step(1/60);
+            this.physics.world = null;
+            this.physics = null;
         }
+    },
 
-        this.removeChildByTag(1111);
-        this._currentPlayer = null;
-        this.physics.world = null;
-        this.physics = null;
-
-        cc.log(s_objects_layer_tmx);
+    _reloadObjsAndEnemiesLayer:function () {
+        if ((this.parallaxChild === null) || (this._tileMap === null)) { return; }
+        // In the meantime, preload TMX
         cc.Loader.getInstance().releaseResources([{src: "/" + s_objects_layer_tmx}]);
         cc.Loader.purgeCachedData([{src: "/" + s_objects_layer_tmx}]);
         cc.SAXParser.getInstance().preloadPlist(s_objects_layer_tmx);
-        this.addObjsAndEnemiesLayer();
-        this.update();
+
+        this.unscheduleUpdate();
+
+        this._destroyPhysicWorld();
+
+        // Destroy everything
+        this.removeChild(this.parallaxChild);
+        this.removeChild(this._currentPlayer);
+        this._parallaxNode = null;
+        this.parallaxChild = null;
+        this._tileMap = null;
+        this._previousDirection = null;
+        this._currentDirection = null;
+        this._playerPrevPhyPos = null;
+        this._playerCurrPhyPos = null;
+        this._playerCurrPhyRot = null;
+        this._playerPrevUIPos = null;
+        this._playerCurrUIPos = null;
+        this._playerCurrUIRot = null;
+        this._tileMap = null;
+        this._tileSize = null;
+        this._mapOrientation = null;
+        this._physicsDoSleep = false;
+        this._currentPlayer = null;
+        this._debugPhysicsDraw = false;
+        this._parallaxBG2Ratio = null;
+        this._parallaxBG1Ratio = null;
+        this._parallaxBG0Ratio = null;
+        this._parallaxTilemapRatio = null;
+
+        // Re-create
+        this.initParallax();
+
+        this.scheduleUpdate();
     },
 
     applyImpulseToPlayer:function (multiplicador) {
@@ -2348,6 +2408,9 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                                                      (deltaPos.y / this.physics.scale) * multiplier),
                                           this._playerPhysicBody.GetWorldCenter());
     },
+
+    jumpCurrentPlayer:function () {
+    }
 });
 
 

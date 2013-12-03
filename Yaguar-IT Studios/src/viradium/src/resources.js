@@ -223,7 +223,9 @@ var CHR_STATUS = {
     WALK: 1,
     RUN: 2,
     JUMP: 3,
-    NOTSET: 4
+    NOTSET: 4,
+    ONAIR: 5,
+    ONGROUND: 6
 };
 
 var CHR_DIRECTION = {
