@@ -700,6 +700,28 @@ var CossinoSprite = cc.Sprite.extend({
 });
 
 
+var Cossino = (function () {
+  // Instance stores a reference to the Singleton
+  var instance;
+
+  function init() {
+    return new CossinoSprite();
+  }
+
+  return {
+    // Get the Singleton instance if one exists
+    // or create one if it doesn't
+    getInstance:function () {
+      if ( !instance ) {
+        instance = init();
+      }
+
+      return instance;
+    }
+  };
+})();
+
+
 var Hist1Lvl1Layer = cc.Layer.extend({
     _debug: cc.COCOS2D_DEBUG,
     physics: null,
@@ -1419,52 +1441,52 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var objectBodyDef = new b2BodyDef();
 
         var objType = "";
-        if ("Cuerpo" in object) {
-            objType = object["Cuerpo"].trim().toLowerCase();
+        if (object.Cuerpo) {
+            objType = object.Cuerpo.trim().toLowerCase();
         }
-        else if ("cuerpo" in object) {
-            objType = object["cuerpo"].trim().toLowerCase();
+        else if (object.cuerpo) {
+            objType = object.cuerpo.trim().toLowerCase();
         }
 
         // Densidad
         var objDensity, densityCalc = 1.0;
-        if ("Densidad" in object) {
-            densityCalc = parseFloat(object["Densidad"]);
+        if (object.Densidad) {
+            densityCalc = parseFloat(object.Densidad);
         }
-        else if ("densidad" in object) {
-            densityCalc = parseFloat(object["densidad"]);
+        else if (object.densidad) {
+            densityCalc = parseFloat(object.densidad);
         }
         if (!isNaN(densityCalc)) { objDensity = densityCalc; }
 
         // Fricción
         var objFriction, frictionCalc = 1.0;
-        if ("Friccion" in object) {
-            frictionCalc = parseFloat(object["Friccion"]);
+        if (object.Friccion) {
+            frictionCalc = parseFloat(object.Friccion);
         }
-        else if ("friccion" in object) {
-            frictionCalc = parseFloat(object["friccion"]);
+        else if (object.friccion) {
+            frictionCalc = parseFloat(object.friccion);
         }
         if (!isNaN(frictionCalc)) { objFriction = frictionCalc; }
 
         // Restitución
         var objRestitution, restitutionCalc = 0.0;
-        if ("Restitucion" in object) {
-            restitutionCalc = parseFloat(object["Restitucion"]);
+        if (object.Restitucion) {
+            restitutionCalc = parseFloat(object.Restitucion);
         }
-        else if ("restitucion" in object) {
-            restitutionCalc = parseFloat(object["restitucion"]);
+        else if (object.restitucion) {
+            restitutionCalc = parseFloat(object.restitucion);
         }
         if (!isNaN(restitutionCalc)) { objRestitution = restitutionCalc; }
 
         // Determinar si el objeto es un sensor
         var objIsSensor = false;
-        if ("Sensor" in object) {
-            if (object["Sensor"].trim().toLowerCase() == "true") {
+        if (object.Sensor) {
+            if (object.Sensor.trim().toLowerCase() == "true") {
                 objIsSensor = true; }
             else { objIsSensor = false; }
         }
-        else if ("Sensor" in object) {
-            if (object["sensor"].trim().toLowerCase() == "true") {
+        else if (object.sensor) {
+            if (object.sensor.trim().toLowerCase() == "true") {
                 objIsSensor = true;
             }
             else { objIsSensor = false; }
@@ -2011,7 +2033,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         // -------------------------------------------------------------------
         // Create Cossino sprite
         cc.log("Crear sprite de Cossino...");
-        cossino_pj = new CossinoSprite();
+        cossino_pj = Cossino.getInstance();
         cossino_pj.setScale(objEscala);
         cossino_pj.setPosition(objPosicionInicial);
         cossino_pj.setTerrainType(TERRAIN_TYPE.DIRT);
