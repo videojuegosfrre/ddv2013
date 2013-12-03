@@ -74,6 +74,7 @@ var CossinoSprite = cc.Sprite.extend({
     _footSoundCounter: 0,
     _rocks: null,
     _playerPhysicBody: null,
+    _parallaxNode: null,
 
     ctor:function () {
         cc.log("Constructor: CossinoSprite");
@@ -756,6 +757,11 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     _currentPlayer: null,
     _leftLimitPos: null,
     _rightLimitPos: null,
+    _debugPhysicsDraw: false,
+    _parallaxBG2Ratio: null,
+    _parallaxBG1Ratio: null,
+    _parallaxBG0Ratio: null,
+    _parallaxTilemapRatio: null,
 
     ctor:function () {
         cc.log("Init Function: Hist1Lvl1Layer.");
@@ -787,9 +793,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         this._leftLimitPos = this._wsizewidth / 2;
         this._rightLimitPos = -3900;
 
-        // Inicializar fondos parallax
-        this.initParallax();
-
         // Create new label
         var menuTitulo = cc.LabelTTF.create("Historia 1 Nivel 1",
                                             "Courier New",
@@ -801,8 +804,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         // Add the label as a child to this layer
         this.addChild(menuTitulo);
 
-        // Agregar capa de enemigos y objetos
-        this.addObjsAndEnemiesLayer();
+        // Inicializar fondos parallax
+        this.initParallax();
 
         // Check for input support -------------------------------------------
         // -------------------------------------------------------------------
@@ -943,17 +946,19 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         fixDefDer.shape.SetAsBox(0.5 / this.physics.scale, this._wsizeheight / this.physics.scale);
         this.physics.world.CreateBody(bodyDefDer).CreateFixture(fixDefDer);
 
-        // Enable debug draw
-        var canvasDebug = document.getElementById("debugCanvas");
-        var debugDraw = new b2DebugDraw();  // Objeto de visualización de depuración
-        var ctx = canvasDebug.getContext("2d");
-        ctx.canvas.height /= 5;
-        debugDraw.SetSprite(ctx);  // Establecemos el canvas para visualizarlo
-        debugDraw.SetDrawScale(5);     // Escala de la visualización
-        debugDraw.SetFillAlpha(0.5);    // Transparencia de los elementos (debug)
-        debugDraw.SetLineThickness(1.0);
-        debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_centerOfMassBit);
-        this.physics.world.SetDebugDraw(debugDraw);  // Le proporcionamos al "mundo" la salida del debug
+        if (this._debugPhysicsDraw) {
+            // Enable debug draw
+            var canvasDebug = document.getElementById("debugCanvas");
+            var debugDraw = new b2DebugDraw();  // Objeto de visualización de depuración
+            var ctx = canvasDebug.getContext("2d");
+            ctx.canvas.height /= 5;
+            debugDraw.SetSprite(ctx);  // Establecemos el canvas para visualizarlo
+            debugDraw.SetDrawScale(5);     // Escala de la visualización
+            debugDraw.SetFillAlpha(0.5);    // Transparencia de los elementos (debug)
+            debugDraw.SetLineThickness(1.0);
+            debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_centerOfMassBit);
+            this.physics.world.SetDebugDraw(debugDraw);  // Le proporcionamos al "mundo" la salida del debug
+        }
     },
 
     onEnter:function () {
@@ -1083,10 +1088,14 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 this._currentDirection = CHR_DIRECTION.LEFT;
                 break;
             case cc.KEY.i:
-                this.applyImpulseToPlayer(10000);
+                this.applyImpulseToPlayer(100000);
                 break;
             case cc.KEY.f:
-                this.applyForceToPlayer(10000);
+                this.applyForceToPlayer(100000);
+                break;
+            case cc.KEY.m:
+                var b2Vec2 = Box2D.Common.Math.b2Vec2;
+                this._playerPhysicBody.ApplyForce(new b2Vec2(0, 30000), this._playerPhysicBody.GetWorldCenter());
                 break;
         }
 
@@ -1174,7 +1183,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     this_obj._playerCurrUIRot = spriteAngle;
                     sprite.setRotation(spriteAngle);
                     sprite.setPosition(cc_Point(this_obj._wsizewidth / 2,
-                                                spritePosition.y - 48));
+                                                spritePosition.y - 45));
                 }
             }
             else {
@@ -1572,14 +1581,18 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     initParallax:function () {
         cc.log("Inicializar parallax...");
         // Fondo Parallax
-        var parallaxNode = cc.ParallaxNode.create();
+        var parallaxNode = this._parallaxNode = cc.ParallaxNode.create();
         parallaxNode.setPosition(cc_Point(0, 0));
+
+        this.addObjsAndEnemiesLayer();
 
         // Background más profundo
         var offset_x_2 = 0;
         var offset_y_2 = 0;
         var BG_2_SCALE = 1.0;
-        var BG_2_RATIO = cc_Point(1.0, 0);
+        var BG_2_RATIO = this._parallaxBG2Ratio;
+        cc.log("BG_2_RATIO:");
+        cc.log(BG_2_RATIO);
         var BG_2_AP = cc_Point(0, 0);
 
         var bg_2_images = [s_bg_h1_layer2_part0,
@@ -1605,7 +1618,9 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var offset_x_1 = 0;
         var offset_y_1 = 0;
         var BG_1_SCALE = 1.0;
-        var BG_1_RATIO = cc_Point(1.5, 0);
+        var BG_1_RATIO = this._parallaxBG1Ratio;
+        cc.log("BG_1_RATIO:");
+        cc.log(BG_1_RATIO);
         var BG_1_AP = cc_Point(0, 0);
 
         var bg_1_images = [s_bg_h1_layer1_part0,
@@ -1633,7 +1648,9 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var offset_x_0 = 0;
         var offset_y_0 = -120;
         var BG_0_SCALE = 0.95;
-        var BG_0_RATIO = cc_Point(2.1, 0);
+        var BG_0_RATIO = this._parallaxBG0Ratio;
+        cc.log("BG_0_RATIO:");
+        cc.log(BG_0_RATIO);
         var BG_0_AP = cc_Point(0, 0);
 
         var bg_0_images = [s_bg_h1_layer0_part0,
@@ -1727,14 +1744,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     addObjsAndEnemiesLayer:function () {
         cc.log("Agregar obstáculos...");
 
-        var parallaxNode = this.parallaxChild;
 
-        // Capa de rocas y enemigos
-        var offset_x_0 = 0;
-        var offset_y_0 = 0;
-        var BG_0_SCALE = 1.0;
-        var BG_0_RATIO = cc_Point(2.1, 0);
-        var BG_0_AP = cc_Point(0, 0);
 
         var OBJECT_TYPE = {
             ROCK: 0,
@@ -1754,14 +1764,21 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         this._tileMap = cc.TMXTiledMap.create(s_objects_layer_tmx);
 
         if (this._tileMap !== null) {
-            parallaxNode.addChild(this._tileMap, 3, BG_0_RATIO, cc_Point(0, 0));
-
             // Propiedades por defecto
-            var mapGravityX, mapGravityXCalc = 0.0;
-            var mapGravityY, mapGravityYCalc = 0.0;
+            var mapGravityXCalc, mapGravityX = 0.0;
+            var mapGravityYCalc, mapGravityY = 0.0;
             var doSleep = false;
-            var scaleWorld, scaleWorldCalc = 30;
-            var stepAmount, stepAmountCalc = 1/60;
+            var scaleWorldCalc, scaleWorld = 30;
+            var stepAmountCalc, stepAmount = 1/60;
+            var enableDebugDraw = false;
+            var prxBG2RatioXCalc, prxBG2RatioX = 1.0;
+            var prxBG2RatioYCalc, prxBG2RatioY = 0;
+            var prxBG1RatioXCalc, prxBG1RatioX = 1.5;
+            var prxBG1RatioYCalc, prxBG1RatioY = 0;
+            var prxBG0RatioXCalc, prxBG0RatioX = 2.1;
+            var prxBG0RatioYCalc, prxBG0RatioY = 0;
+            var prxTileMapRatioXCalc, prxTileMapRatioX = 2.1;
+            var prxTileMapRatioYCalc, prxTileMapRatioY = 0;
 
             this._tileSize = null;
             this._mapOrientation = null;
@@ -1774,15 +1791,16 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
             var mapProperties = this._tileMap.getProperties();
             var mapPropertiesLength = mapProperties.length;
+
             for (var p = 0; p < mapPropertiesLength; p++) {
                 var property = mapProperties[p];
 
                 // Gravedad X
-                if ("GravedadX" in property) {
-                    mapGravityXCalc = parseFloat(property["GravedadX"]);
+                if (property.GravedadX) {
+                    mapGravityXCalc = parseFloat(property.GravedadX);
                 }
-                else if ("gravedadx" in property) {
-                    mapGravityXCalc = parseFloat(property["gravedadx"]);
+                else if (property.gravedadx) {
+                    mapGravityXCalc = parseFloat(property.gravedadx);
                 }
                 if (!isNaN(mapGravityXCalc)) {
                     mapGravityX = mapGravityXCalc;
@@ -1790,11 +1808,11 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 }
 
                 // Gravedad Y
-                if ("GravedadY" in property) {
-                    mapGravityYCalc = parseFloat(property["GravedadY"]);
+                if (property.GravedadY) {
+                    mapGravityYCalc = parseFloat(property.GravedadY);
                 }
-                else if ("gravedady" in property) {
-                    mapGravityYCalc = parseFloat(property["gravedady"]);
+                else if (property.gravedady) {
+                    mapGravityYCalc = parseFloat(property.gravedady);
                 }
                 if (!isNaN(mapGravityYCalc)) {
                     mapGravityY = mapGravityYCalc;
@@ -1802,8 +1820,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 }
 
                 // Do Sleep
-                if ("DoSleep" in property) {
-                    doSleepProp = property["DoSleep"].trim().toLowerCase();
+                if (property.DoSleep) {
+                    doSleepProp = property.DoSleep.trim().toLowerCase();
 
                     if (doSleepProp == "true") {
                         doSleep = true;
@@ -1812,8 +1830,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                         doSleep = false;
                     }
                 }
-                else if ("dosleep" in property) {
-                    doSleepProp = property["dosleep"].trim().toLowerCase();
+                else if (property.dosleep) {
+                    doSleepProp = property.dosleep.trim().toLowerCase();
 
                     if (doSleepProp == "true") {
                         doSleep = true;
@@ -1824,23 +1842,142 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 }
 
                 // Escala del mundo físico
-                if ("Escala" in property) {
-                    scaleWorldCalc = parseFloat(property["Escala"]);
+                if (property.Escala) {
+                    scaleWorldCalc = parseFloat(property.Escala);
                 }
-                else if ("escala" in property) {
-                    scaleWorldCalc = parseFloat(property["escala"]);
+                else if (property.escala) {
+                    scaleWorldCalc = parseFloat(property.escala);
                 }
                 if (!isNaN(scaleWorldCalc)) { scaleWorld = scaleWorldCalc; }
 
                 // Step Amount
-                if ("Avance" in property) {
-                    stepAmountCalc = parseFloat(property["Avance"]);
+                if (property.Avance) {
+                    stepAmountCalc = parseFloat(property.Avance);
                 }
-                else if ("avance" in property) {
-                    stepAmountCalc = parseFloat(property["avance"]);
+                else if (property.avance) {
+                    stepAmountCalc = parseFloat(property.avance);
                 }
                 if (!isNaN(stepAmountCalc)) { stepAmount = stepAmountCalc; }
+
+                // Habilitar DebugDraw de físicas
+                // Do Sleep
+                if (property.DebugDraw) {
+                    enableDebugDraw = property.DebugDraw.trim().toLowerCase();
+
+                    if (enableDebugDraw == "true") {
+                        this._debugPhysicsDraw = true;
+                    }
+                    else if (enableDebugDraw == "false") {
+                        this._debugPhysicsDraw = false;
+                    }
+                }
+                else if (property.debugdraw) {
+                    enableDebugDraw = property.debugdraw.trim().toLowerCase();
+
+                    if (enableDebugDraw == "true") {
+                        this._debugPhysicsDraw = true;
+                    }
+                    else if (enableDebugDraw == "false") {
+                        this._debugPhysicsDraw = false;
+                    }
+                }
+
+                // Parallax Background 2
+                // Ratio X
+                if (property.ParallaxBG2RatioX) {
+                    prxBG2RatioXCalc = parseFloat(property.ParallaxBG2RatioX);
+                }
+                else if (property.parallaxbg2ratiox) {
+                    prxBG2RatioXCalc = parseFloat(property.parallaxbg2ratiox);
+                }
+                if (!isNaN(prxBG2RatioXCalc)) { prxBG2RatioX = prxBG2RatioXCalc; }
+
+                // Ratio Y
+                if (property.ParallaxBG2RatioY) {
+                    prxBG2RatioYCalc = parseFloat(property.ParallaxBG2RatioY);
+                }
+                else if (property.parallaxbg2ratioy) {
+                    prxBG2RatioYCalc = parseFloat(property.parallaxbg2ratioy);
+                }
+                if (!isNaN(prxBG2RatioYCalc)) { prxBG2RatioY = prxBG2RatioYCalc; }
+
+                // Parallax Background 1
+                // Ratio X
+                if (property.ParallaxBG1RatioX) {
+                    prxBG1RatioXCalc = parseFloat(property.ParallaxBG1RatioX);
+                }
+                else if (property.parallaxbg1ratiox) {
+                    prxBG1RatioXCalc = parseFloat(property.parallaxbg1ratiox);
+                }
+                if (!isNaN(prxBG1RatioXCalc)) { prxBG1RatioX = prxBG1RatioXCalc; }
+
+                // Ratio Y
+                if (property.ParallaxBG1RatioY) {
+                    prxBG1RatioYCalc = parseFloat(property.ParallaxBG1RatioY);
+                }
+                else if (property.parallaxbg1ratioy) {
+                    prxBG1RatioYCalc = parseFloat(property.parallaxbg1ratioy);
+                }
+                if (!isNaN(prxBG1RatioYCalc)) { prxBG1RatioY = prxBG1RatioYCalc; }
+
+                // Parallax Background 0
+                // Ratio X
+                if (property.ParallaxBG0RatioX) {
+                    prxBG0RatioXCalc = parseFloat(property.ParallaxBG0RatioX);
+                }
+                else if (property.parallaxbg0ratiox) {
+                    prxBG0RatioXCalc = parseFloat(property.parallaxbg0ratiox);
+                }
+                if (!isNaN(prxBG0RatioXCalc)) { prxBG0RatioX = prxBG0RatioXCalc; }
+
+                // Ratio Y
+                if (property.ParallaxBG0RatioY) {
+                    prxBG0RatioYCalc = parseFloat(property.ParallaxBG0RatioY);
+                }
+                else if (property.parallaxbg0ratioy) {
+                    prxBG0RatioYCalc = parseFloat(property.parallaxbg0ratioy);
+                }
+                if (!isNaN(prxBG0RatioYCalc)) { prxBG0RatioY = prxBG0RatioYCalc; }
+
+                // Parallax Tilemap
+                // Ratio X
+                if (property.ParallaxTilemapRatioX) {
+                    prxTileMapRatioXCalc = parseFloat(property.ParallaxTilemapRatioX);
+                }
+                else if (property.parallaxtilemapratiox) {
+                    prxTileMapRatioXCalc = parseFloat(property.parallaxtilemapratiox);
+                }
+                if (!isNaN(prxTileMapRatioXCalc)) { prxTileMapRatioX = prxTileMapRatioXCalc; }
+
+                // Ratio Y
+                if (property.ParallaxTilemapRatioY) {
+                    prxTileMapRatioYCalc = parseFloat(property.ParallaxTilemapRatioY);
+                }
+                else if (property.parallaxtilemapratioy) {
+                    prxTileMapRatioYCalc = parseFloat(property.parallaxtilemapratioy);
+                }
+                if (!isNaN(prxTileMapRatioYCalc)) { prxTileMapRatioY = prxTileMapRatioYCalc; }
             }
+
+            // Establecer ratios de las capas del parallax
+            this._parallaxBG2Ratio = cc_Point(prxBG2RatioX,
+                                              prxBG2RatioY);
+
+            this._parallaxBG1Ratio = cc_Point(prxBG1RatioX,
+                                              prxBG1RatioY);
+
+            this._parallaxBG0Ratio = cc_Point(prxBG0RatioX,
+                                              prxBG0RatioY);
+
+            // Capa de rocas y enemigos
+            var offset_x_0 = 0;
+            var offset_y_0 = 0;
+            var BG_0_SCALE = 1.0;
+            var BG_0_RATIO = this._parallaxTilemapRatio = cc_Point(prxTileMapRatioX,
+                                                                   prxTileMapRatioY);
+            var BG_0_AP = cc_Point(0, 0);
+
+            this._parallaxNode.addChild(this._tileMap, 3, BG_0_RATIO, cc_Point(0, 0));
 
             // Debug canvas
             var debugCanvas = document.getElementById("debugCanvas");
@@ -2196,8 +2333,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var multiplier = ((multiplicador !== null) &&
                          (multiplicador !== undefined)) ? multiplicador : 1.0;
 
-        this._playerPhysicBody.ApplyImpulse(new b2Vec2((deltaPos.x * multiplier) / this.physics.scale,
-                                                       (deltaPos.y * multiplier) / this.physics.scale),
+        this._playerPhysicBody.ApplyImpulse(new b2Vec2((deltaPos.x / this.physics.scale) * multiplier,
+                                                       (deltaPos.y / this.physics.scale) * multiplier),
                                             this._playerPhysicBody.GetWorldCenter());
     },
 
@@ -2207,8 +2344,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var multiplier = ((multiplicador !== null) &&
                          (multiplicador !== undefined)) ? multiplicador : 1.0;
 
-        this._playerPhysicBody.ApplyForce(new b2Vec2((deltaPos.x * multiplier) / this.physics.scale,
-                                                     (deltaPos.y * multiplier) / this.physics.scale),
+        this._playerPhysicBody.ApplyForce(new b2Vec2((deltaPos.x / this.physics.scale) * multiplier,
+                                                     (deltaPos.y / this.physics.scale) * multiplier),
                                           this._playerPhysicBody.GetWorldCenter());
     },
 });
