@@ -1061,8 +1061,10 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 this._currentDirection = CHR_DIRECTION.LEFT;
                 break;
             case cc.KEY.i:
-                var b2Vec2 = Box2D.Common.Math.b2Vec2;
-                this._playerPhysicBody.ApplyForce(new b2Vec2(0, 20000), this._playerPhysicBody.GetWorldCenter());
+                this.applyImpulseToPlayer(10000);
+                break;
+            case cc.KEY.f:
+                this.applyForceToPlayer(10000);
                 break;
         }
 
@@ -1256,66 +1258,71 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         if ((object === null) || !(object instanceof Object)) { return false; }
 
         cc.log("Add box body for TMX object...");
-
         var b2BodyDef = Box2D.Dynamics.b2BodyDef;
         var b2Body = Box2D.Dynamics.b2Body;
         var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
         var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
         var b2Fixture = Box2D.Dynamics.b2Fixture;
-
-        var objectBodyDef = new b2BodyDef();
+        var b2Vec2 = Box2D.Common.Math.b2Vec2;
+        var b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
+        var spriteShape = null;
+        var objectBodyDef = null;
+        var objectBody = null;
+        var inferedShape = null;
 
         var objType = "";
-        if ("Cuerpo" in object) {
-            objType = object["Cuerpo"].trim().toLowerCase();
+        if (object.Cuerpo) {
+            objType = object.Cuerpo.trim().toLowerCase();
         }
-        else if ("cuerpo" in object) {
-            objType = object["cuerpo"].trim().toLowerCase();
+        else if (object.cuerpo) {
+            objType = object.cuerpo.trim().toLowerCase();
         }
 
         // Densidad
         var objDensity, densityCalc = 1.0;
-        if ("Densidad" in object) {
-            densityCalc = parseFloat(object["Densidad"]);
+        if (object.Densidad) {
+            densityCalc = parseFloat(object.Densidad);
         }
-        else if ("densidad" in object) {
-            densityCalc = parseFloat(object["densidad"]);
+        else if (object.densidad) {
+            densityCalc = parseFloat(object.densidad);
         }
         if (!isNaN(densityCalc)) { objDensity = densityCalc; }
 
         // Fricción
         var objFriction, frictionCalc = 1.0;
-        if ("Friccion" in object) {
-            frictionCalc = parseFloat(object["Friccion"]);
+        if (object.Friccion) {
+            frictionCalc = parseFloat(object.Friccion);
         }
-        else if ("friccion" in object) {
-            frictionCalc = parseFloat(object["friccion"]);
+        else if (object.friccion) {
+            frictionCalc = parseFloat(object.friccion);
         }
         if (!isNaN(frictionCalc)) { objFriction = frictionCalc; }
 
         // Restitución
         var objRestitution, restitutionCalc = 0.0;
-        if ("Restitucion" in object) {
-            restitutionCalc = parseFloat(object["Restitucion"]);
+        if (object.Restitucion) {
+            restitutionCalc = parseFloat(object.Restitucion);
         }
-        else if ("restitucion" in object) {
-            restitutionCalc = parseFloat(object["restitucion"]);
+        else if (object.restitucion) {
+            restitutionCalc = parseFloat(object.restitucion);
         }
         if (!isNaN(restitutionCalc)) { objRestitution = restitutionCalc; }
 
         // Determinar si el objeto es un sensor
         var objIsSensor = false;
-        if ("Sensor" in object) {
-            if (object["Sensor"].trim().toLowerCase() == "true") {
+        if (object.Sensor) {
+            if (object.Sensor.trim().toLowerCase() == "true") {
                 objIsSensor = true; }
             else { objIsSensor = false; }
         }
-        else if ("Sensor" in object) {
-            if (object["sensor"].trim().toLowerCase() == "true") {
+        else if (object.sensor) {
+            if (object.sensor.trim().toLowerCase() == "true") {
                 objIsSensor = true;
             }
             else { objIsSensor = false; }
         }
+
+        objectBodyDef = new b2BodyDef();
 
         switch (objType) {
             case "dynamic":
@@ -1339,11 +1346,45 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         objectBodyDef.userData = ((userData !== null) && (userData !== undefined)) ? userData : object;
 
-        var objectBody = this.physics.world.CreateBody(objectBodyDef);
+        // Inferir tipo de objeto
+        if (object.polygonPoints) {
+            cc.log("POLYGON.");
 
-        var spriteShape = new b2PolygonShape();
-        spriteShape.SetAsBox(objCenterWidth / this.physics.scale,
-                             objCenterHeight / this.physics.scale);
+            var verticesCount = object.polygonPoints.length;
+
+            // Cantidad máxima de vértices = 8
+            if (verticesCount > 8) {
+                cc.log("Se permiten hasta 8 vértices por polígono.");
+                return false;
+            }
+
+            spriteShape = new b2PolygonShape();
+            var vertices = [];
+
+            for (var i = 0; i < verticesCount; i++) {
+                vertices.push(new b2Vec2(parseFloat(object.polygonPoints[i].x) / this.physics.scale,
+                                         parseFloat(object.polygonPoints[i].y * -1) / this.physics.scale));
+            }
+
+            spriteShape.SetAsArray(vertices, verticesCount);
+        }
+        else if (object.polylinePoints) {
+            cc.log("POLYLINE.");
+            return false;
+        }
+        else if (((object.Forma) && (object.Forma.trim().toLowerCase() == "circunferencia")) ||
+                ((object.forma) && (object.forma.trim().toLowerCase() == "circunferencia"))) {
+                cc.log("CIRCLE.");
+                spriteShape = new b2CircleShape(object.width / 2 / this.physics.scale);
+        }
+        else {
+            cc.log("RECTANGLE.");
+            spriteShape = new b2PolygonShape();
+            spriteShape.SetAsBox(objCenterWidth / this.physics.scale,
+                                 objCenterHeight / this.physics.scale);
+        }
+
+        objectBody = this.physics.world.CreateBody(objectBodyDef);
 
         // Define the dynamic body fixture.
         var spriteShapeDef = new b2FixtureDef();
@@ -1871,8 +1912,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         }
 
         var b2Vec2 = Box2D.Common.Math.b2Vec2;
-        var objEscala = 0.55;
-        var escalaCalc = 0.55;
+        var objEscala = 0.5;
+        var escalaCalc = 0.5;
         var walkDeltaPos = cc_Point(1.5, 0);
         var walkDeltaPosXCalc = 1.5;
         var walkDeltaPosYCalc = 0;
@@ -2114,6 +2155,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             this._tileMap = null;
         }
 
+        this.removeChildByTag(1111);
         this._currentPlayer = null;
         this.physics.world = null;
         this.physics = null;
@@ -2124,7 +2166,29 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         cc.SAXParser.getInstance().preloadPlist(s_objects_layer_tmx);
         this.addObjsAndEnemiesLayer();
         this.update();
-    }
+    },
+
+    applyImpulseToPlayer:function (multiplicador) {
+        var b2Vec2 = Box2D.Common.Math.b2Vec2;
+        var deltaPos = this._currentPlayer.getDeltaPos();
+        var multiplier = ((multiplicador !== null) &&
+                         (multiplicador !== undefined)) ? multiplicador : 1.0;
+
+        this._playerPhysicBody.ApplyImpulse(new b2Vec2((deltaPos.x * multiplier) / this.physics.scale,
+                                                       (deltaPos.y * multiplier) / this.physics.scale),
+                                            this._playerPhysicBody.GetWorldCenter());
+    },
+
+    applyForceToPlayer:function (multiplicador) {
+        var b2Vec2 = Box2D.Common.Math.b2Vec2;
+        var deltaPos = this._currentPlayer.getDeltaPos();
+        var multiplier = ((multiplicador !== null) &&
+                         (multiplicador !== undefined)) ? multiplicador : 1.0;
+
+        this._playerPhysicBody.ApplyForce(new b2Vec2((deltaPos.x * multiplier) / this.physics.scale,
+                                                     (deltaPos.y * multiplier) / this.physics.scale),
+                                          this._playerPhysicBody.GetWorldCenter());
+    },
 });
 
 
