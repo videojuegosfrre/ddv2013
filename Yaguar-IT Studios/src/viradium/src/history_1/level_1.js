@@ -2583,6 +2583,11 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         this._destroyPhysicWorld();
 
+        var canvasDebug = document.getElementById("debugCanvas");
+        var ctx = canvasDebug.getContext("2d");
+        ctx.canvas.height = 600;
+        ctx.canvas.width = 1024;
+
         // Destroy everything
         this.removeChild(this.parallaxChild);
         this.removeChild(this._currentPlayer);
