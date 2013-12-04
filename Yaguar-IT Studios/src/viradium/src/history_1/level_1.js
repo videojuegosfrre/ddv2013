@@ -1376,6 +1376,10 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var inferedShape = null;
         var hasGroundSensor = false;
         var fixedRotation = false;
+        var forcedWidthCalc = null;
+        var forcedWidth = object.width;
+        var forcedHeightCalc = null;
+        var forcedHeight = object.height;
 
         var objType = "";
         if (object.Cuerpo) {
@@ -1500,6 +1504,28 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         else {
             cc.log("RECTANGLE.");
             spriteShape = new b2PolygonShape();
+
+            // Ancho forzado
+            if (object.AnchoForzado && object.AnchoForzado <= object.width) {
+                forcedWidthCalc = parseFloat(object.AnchoForzado);
+            }
+            else if (object.anchoforzado && object.anchoforzado <= object.width) {
+                forcedWidthCalc = parseFloat(object.anchoforzado);
+            }
+            if (!isNaN(forcedWidthCalc)) { forcedWidth = forcedWidthCalc; }
+
+            // Alto forzado
+            if (object.AltoForzado <= object.height) {
+                forcedHeightCalc = parseFloat(object.AltoForzado);
+            }
+            else if (object.altoforzado <= object.height) {
+                forcedHeightCalc = parseFloat(object.altoforzado);
+            }
+            if (!isNaN(forcedHeightCalc)) { forcedHeight = forcedHeightCalc; }
+
+            objCenterWidth = forcedWidth / 2;
+            objCenterHeight = forcedHeight / 2;
+
             spriteShape.SetAsBox(objCenterWidth / this.physics.scale,
                                  objCenterHeight / this.physics.scale);
         }
@@ -2299,7 +2325,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var jumpDeltaMultiplier = 1.0;
         var jumpDeltaMultiplierCalc = 1.0;
         // Posición inicial de Cossino
-        var objPosicionInicial = cc_Point(this._wsizewidth / 2, 100);
+        var objPosicionInicial = cc_Point(this._wsizewidth / 2, 300);
         // var objPosicionInicial = cc_Point(objectCossino.x + (objectCossino.width / 2),
         //                                   objectCossino.y + (objectCossino.height / 2));
 
@@ -2399,7 +2425,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 runDeltaMultiplierCalc = parseFloat(objectCossino.multdeltacorrer);
             }
             if (!isNaN(runDeltaMultiplierCalc)) { runDeltaMultiplier = runDeltaMultiplierCalc; }
-
 
             // Multiplicador saltar
             if (objectCossino.MultDeltaSaltar) {
@@ -2575,8 +2600,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     _reloadObjsAndEnemiesLayer:function () {
         if ((this.parallaxChild === null) || (this._tileMap === null)) { return; }
         // In the meantime, preload TMX
-        cc.Loader.getInstance().releaseResources([{src: "/" + s_objects_layer_tmx}]);
-        cc.Loader.purgeCachedData([{src: "/" + s_objects_layer_tmx}]);
+        cc.Loader.getInstance().releaseResources([{src: s_objects_layer_tmx}]);
+        cc.Loader.purgeCachedData([{src: s_objects_layer_tmx}]);
         cc.SAXParser.getInstance().preloadPlist(s_objects_layer_tmx);
 
         this.unscheduleUpdate();
