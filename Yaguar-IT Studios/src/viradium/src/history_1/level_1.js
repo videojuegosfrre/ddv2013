@@ -81,6 +81,7 @@ var CossinoSprite = cc.Sprite.extend({
     _rocks: null,
     _playerPhysicBody: null,
     _parallaxNode: null,
+    _onGround: false,
 
     ctor:function () {
         cc.log("Constructor: CossinoSprite");
@@ -385,7 +386,10 @@ var CossinoSprite = cc.Sprite.extend({
     },
 
     beginWalk:function () {
+        if (!this._onGround) { return; }
+
         cc.log("Walk Cossino.");
+
         switch (this._currentDirection) {
             case CHR_DIRECTION.RIGHT:
                 this._setDeltaPos(this._walkDeltaPos.x, this._walkDeltaPos.y);
@@ -444,7 +448,10 @@ var CossinoSprite = cc.Sprite.extend({
     },
 
     beginJump:function () {
+        if (!this._onGround) { return; }
+
         cc.log("Jump Cossino.");
+
         switch (this._currentDirection) {
             case CHR_DIRECTION.RIGHT:
                 this._setDeltaPos(this._jumpDeltaPos.x, this._jumpDeltaPos.y);
@@ -505,6 +512,8 @@ var CossinoSprite = cc.Sprite.extend({
     },
 
     beginRun:function () {
+        if (!this._onGround) { return; }
+
         cc.log("Run Cossino.");
         switch (this._currentDirection) {
             case CHR_DIRECTION.RIGHT:
@@ -686,7 +695,6 @@ var CossinoSprite = cc.Sprite.extend({
     stopJumpEffect:function () {
         // this.audioEngine.playEffect(s_footstep_dirt_1, false);
         this.unschedule(this.playJumpEffect);
-
     },
 
     getSpriteDescription:function () {
@@ -703,6 +711,14 @@ var CossinoSprite = cc.Sprite.extend({
 
     setJumpDeltaPos:function (deltaPoint) {
         this._jumpDeltaPos = deltaPoint;
+    },
+
+    setPlayerIsOnGround:function (status) {
+        this._onGround = status;
+    },
+
+    getPlayerIsOnGround:function () {
+        return this._onGround;
     }
 });
 
@@ -727,6 +743,10 @@ var Cossino = (function () {
     }
   };
 })();
+
+
+var playerGroundSensorId = 1000;
+var objectGroundSensorCounter = playerGroundSensorId + 1;
 
 
 var Hist1Lvl1Layer = cc.Layer.extend({
@@ -768,6 +788,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     _parallaxBG1Ratio: null,
     _parallaxBG0Ratio: null,
     _parallaxTilemapRatio: null,
+    _playerGroundSensorId: 1000,
+    _groundSensorIdCounter: 1,
 
     ctor:function () {
         cc.log("Init Function: Hist1Lvl1Layer.");
@@ -1223,7 +1245,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     },
 
     showMouseButtonInfo:function (event, trigger) {
-        var button = null;
+        var button = "";
 
         switch (event._button) {
             case 0:
@@ -1323,6 +1345,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var objectBodyDef = null;
         var objectBody = null;
         var inferedShape = null;
+        var hasGroundSensor = false;
+        var fixedRotation = false;
 
         var objType = "";
         if (object.Cuerpo) {
@@ -1374,6 +1398,19 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 objIsSensor = true;
             }
             else { objIsSensor = false; }
+        }
+
+        // Determinar si el objeto es un sensor
+        if (object.RotacionFija) {
+            if (object.RotacionFija.trim().toLowerCase() == "true") {
+                fixedRotation = true; }
+            else { fixedRotation = false; }
+        }
+        else if (object.rotacionfija) {
+            if (object.rotacionfija.trim().toLowerCase() == "true") {
+                fixedRotation = true;
+            }
+            else { fixedRotation = false; }
         }
 
         objectBodyDef = new b2BodyDef();
@@ -1440,6 +1477,9 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         objectBody = this.physics.world.CreateBody(objectBodyDef);
 
+        // Establecer la rotación fija si fuera necesario
+        objectBody.SetFixedRotation(fixedRotation);
+
         // Define the dynamic body fixture.
         var spriteShapeDef = new b2FixtureDef();
         spriteShapeDef.userData = ((userData !== null) && (userData !== undefined)) ? userData : object;
@@ -1456,6 +1496,42 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         cc.log("Shape Def:");
         cc.log(spriteShapeDef);
 
+        // Ground sensor
+        if (object.SensorTierra && (spriteShape instanceof b2PolygonShape)) {
+            if (object.SensorTierra.trim().toLowerCase() == "true") {
+                hasGroundSensor = true; }
+            else { hasGroundSensor = false; }
+        }
+        else if (object.sensortierra && (spriteShape instanceof b2PolygonShape)) {
+            if (object.sensortierra.trim().toLowerCase() == "true") {
+                hasGroundSensor = true;
+            }
+            else { hasGroundSensor = false; }
+        }
+
+        // Add foot sensor fixture
+        if (hasGroundSensor) {
+            cc.log("HAS GROUND SENSOR");
+            var sensorFixtureDef = new b2FixtureDef();
+            var sensorShape = new b2PolygonShape();
+
+            sensorShape.SetAsOrientedBox(objCenterWidth / 2 / this.physics.scale,
+                                         objCenterHeight / 2 / this.physics.scale,
+                                         new b2Vec2(0, -1 * objCenterHeight / this.physics.scale),
+                                         0);
+
+            sensorFixtureDef.density = 0;
+            sensorFixtureDef.friction = 0;
+            sensorFixtureDef.restitution = 0;
+            sensorFixtureDef.shape = sensorShape;
+            sensorFixtureDef.isSensor = true;
+            sensorFixtureDef.userData = this._playerGroundSensorId + this._groundSensorIdCounter;
+
+            var footSensorFixture = objectBody.CreateFixture(sensorFixtureDef);
+            footSensorFixture.userData = this._playerGroundSensorId + this._groundSensorIdCounter;
+            this._groundSensorIdCounter += 1;
+        }
+
         return objectBody;
     },
 
@@ -1469,6 +1545,9 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
         var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
         var b2Fixture = Box2D.Dynamics.b2Fixture;
+        var b2Vec2 = Box2D.Common.Math.b2Vec2;
+        var hasGroundSensor = false;
+        var fixedRotation = false;
 
         var objectBodyDef = new b2BodyDef();
 
@@ -1524,6 +1603,19 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             else { objIsSensor = false; }
         }
 
+        // Determinar si el objeto es un sensor
+        if (object.RotacionFija) {
+            if (object.RotacionFija.trim().toLowerCase() == "true") {
+                fixedRotation = true; }
+            else { fixedRotation = false; }
+        }
+        else if (object.rotacionfija) {
+            if (object.rotacionfija.trim().toLowerCase() == "true") {
+                fixedRotation = true;
+            }
+            else { fixedRotation = false; }
+        }
+
         switch (objType) {
             case "dynamic":
                 objectBodyDef.type = b2Body.b2_dynamicBody;
@@ -1538,18 +1630,15 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 objectBodyDef.type = b2Body.b2_dynamicBody;
         }
 
-        // objCenterWidth = object.width / 2;
-        // objCenterHeight = object.height / 2;
-
-        // objectBodyDef.position.Set((object.x + objCenterWidth) / this.physics.scale,
-        //                            (object.y + objCenterHeight) / this.physics.scale);
-
         objectBodyDef.position.Set(sprite.getPosition().x / this.physics.scale,
                                    sprite.getPosition().y / this.physics.scale);
 
         objectBodyDef.userData = sprite;
 
         var objectBody = this.physics.world.CreateBody(objectBodyDef);
+
+        // Establecer la rotación fija si fuera necesario
+        objectBody.SetFixedRotation(fixedRotation);
 
         cc.log(sprite.getBoundingBox().size.width);
         cc.log(sprite.getBoundingBox().size.height);
@@ -1573,6 +1662,51 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         cc.log("Shape Def:");
         cc.log(spriteShapeDef);
+
+        // Ground sensor
+        if (object.SensorTierra && (spriteShape instanceof b2PolygonShape)) {
+            if (object.SensorTierra.trim().toLowerCase() == "true") {
+                hasGroundSensor = true; }
+            else { hasGroundSensor = false; }
+        }
+        else if (object.sensortierra && (spriteShape instanceof b2PolygonShape)) {
+            if (object.sensortierra.trim().toLowerCase() == "true") {
+                hasGroundSensor = true;
+            }
+            else { hasGroundSensor = false; }
+        }
+
+        // Add foot sensor fixture
+        if (hasGroundSensor) {
+            cc.log("HAS GROUND SENSOR");
+            var sensorFixtureDef = new b2FixtureDef();
+            var sensorShape = new b2PolygonShape();
+
+            sensorShape.SetAsOrientedBox(sprite.getBoundingBox().size.width  / 2.2 / this.physics.scale,
+                                         sprite.getBoundingBox().size.height / 100 / this.physics.scale,
+                                         new b2Vec2(0, -1 * sprite.getBoundingBox().size.height / 2 / this.physics.scale),
+                                         0);
+
+            sensorFixtureDef.density = 0;
+            sensorFixtureDef.friction = 0;
+            sensorFixtureDef.restitution = 0;
+            sensorFixtureDef.shape = sensorShape;
+            sensorFixtureDef.isSensor = true;
+
+            if (sprite === this._currentPlayer) {
+                sensorFixtureDef.userData = this._playerGroundSensorId;
+            }
+            else {
+                sensorFixtureDef.userData = this._playerGroundSensorId +
+                                            this._groundSensorIdCounter;
+            }
+
+            var footSensorFixture = objectBody.CreateFixture(sensorFixtureDef);
+            footSensorFixture.userData = this._playerGroundSensorId + this._groundSensorIdCounter;
+            this._groundSensorIdCounter += 1;
+
+            objectBody.CreateFixture(sensorFixtureDef);
+        }
 
         return objectBody;
     },
@@ -2027,10 +2161,13 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var collisionListener = new b2ContactListener();
 
         collisionListener.BeginContact = function (contact) {
-            bodyA = contact.GetFixtureA().GetBody();
-            userDataA = bodyA.GetUserData();
-            bodyB = contact.GetFixtureB().GetBody();
-            userDataB = bodyB.GetUserData();
+            var fixtureA = contact.GetFixtureA();
+            var bodyA = fixtureA.GetBody();
+            var userDataA = fixtureA.GetUserData();
+
+            var fixtureB = contact.GetFixtureB();
+            var bodyB = fixtureB.GetBody();
+            var userDataB = fixtureB.GetUserData();
 
             if (userDataA !== null) {
                 if (userDataA instanceof cc_Sprite) {
@@ -2039,6 +2176,11 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 }
                 else if (userDataA instanceof Object) {
                     cc.log("Begin Body A (TMX Object): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                }
+                else if (userDataA == 1000) {
+                    cc.log("Begin Ground Sensor A.");
+                    cc.log(userDataA);
+                    bodyA.GetUserData().setPlayerIsOnGround(true);
                 }
             }
 
@@ -2050,14 +2192,22 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 else if (userDataB instanceof Object) {
                     cc.log("Begin Body B (TMX Object): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                 }
+                else if (userDataB == 1000) {
+                    cc.log("Begin Ground Sensor B.");
+                    cc.log(userDataB);
+                    bodyB.GetUserData().setPlayerIsOnGround(true);
+                }
             }
         };
 
         collisionListener.EndContact = function (contact) {
-            bodyA = contact.GetFixtureA().GetBody();
-            userDataA = bodyA.GetUserData();
-            bodyB = contact.GetFixtureB().GetBody();
-            userDataB = bodyB.GetUserData();
+            var fixtureA = contact.GetFixtureA();
+            var bodyA = fixtureA.GetBody();
+            var userDataA = fixtureA.GetUserData();
+
+            var fixtureB = contact.GetFixtureB();
+            var bodyB = fixtureB.GetBody();
+            var userDataB = fixtureB.GetUserData();
 
             if (userDataA !== null) {
                 if (userDataA instanceof cc_Sprite) {
@@ -2066,6 +2216,11 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 }
                 else if (userDataA instanceof Object) {
                     cc.log("End Body A (TMX Object): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                }
+                else if (userDataA == 1000) {
+                    cc.log("End Ground Sensor A.");
+                    cc.log(userDataA);
+                    bodyA.GetUserData().setPlayerIsOnGround(false);
                 }
             }
 
@@ -2076,6 +2231,11 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 }
                 else if (userDataB instanceof Object) {
                     cc.log("End Body B (TMX Object): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
+                }
+                else if (userDataB == 1000) {
+                    cc.log("End Ground Sensor B.");
+                    cc.log(userDataB);
+                    bodyB.GetUserData().setPlayerIsOnGround(false);
                 }
             }
         };
@@ -2234,9 +2394,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         this._playerCurrPhyRot = this._playerPhysicBody.GetAngle();
         this._playerCurrUIRot = -1 * cc_RADIANS_TO_DEGREES(this._playerCurrPhyRot);
-
-        // TODO: Probar con rotación fija por ahora
-        this._playerPhysicBody.SetFixedRotation(true);
 
         cc.log("Player Body");
         cc.log(this._playerPhysicBody);

@@ -224,8 +224,6 @@ var CHR_STATUS = {
     RUN: 2,
     JUMP: 3,
     NOTSET: 4,
-    ONAIR: 5,
-    ONGROUND: 6
 };
 
 var CHR_DIRECTION = {
@@ -242,3 +240,6 @@ var TERRAIN_TYPE = {
     REGULAR: 2,
     WOOD: 3
 };
+
+
+var FOOT_SENSOR = 7676;
