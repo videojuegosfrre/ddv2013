@@ -29,8 +29,7 @@ var cocos2dApp = cc.Application.extend({
     ctor:function (scene) {
         this._super();
         this.startScene = scene;
-        cc.COCOS2D_DEBUG = this.config['COCOS2D_DEBUG'];
-        cc.initDebugSetting();
+        cc.COCOS2D_DEBUG = this.config.COCOS2D_DEBUG;
         cc.setup(this.config['tag']);
         cc.AppController.shareAppController().didFinishLaunchingWithOptions();
     },
@@ -38,9 +37,11 @@ var cocos2dApp = cc.Application.extend({
         // initialize director
         var director = cc.Director.getInstance();
 
-        var screenSize = cc.EGLView.getInstance().getFrameSize();
-        var resourceSize = cc.size(480, 800);
+       // var screenSize = cc.EGLView.getInstance().getFrameSize();
+        var resourceSize = cc.size( 1355,812);
         var designSize = cc.size(480, 800);
+		
+		//cc.EGLView.getInstance().setDesignResolutionSize(480, 800,cc.RESOLUTION_POLICY.SHOW_ALL);
 
         var searchPaths = [];
         var resDirOrders = [];
@@ -48,26 +49,29 @@ var cocos2dApp = cc.Application.extend({
         searchPaths.push("res");
         cc.FileUtils.getInstance().setSearchPaths(searchPaths);
 
-        var platform = cc.Application.getInstance().getTargetPlatform();
-        if (platform == cc.TARGET_PLATFORM.MOBILE_BROWSER) {
-            resDirOrders.push("HD");
-        }
-        else if (platform == cc.TARGET_PLATFORM.PC_BROWSER) {
-            if (screenSize.height >= 800) {
-                resDirOrders.push("HD");
-            }
-            else {
-                resourceSize = cc.size(320, 480);
-                designSize = cc.size(320, 480);
-                resDirOrders.push("Normal");
-            }
-        }
+        // var platform = cc.Application.getInstance().getTargetPlatform();
+        // if (platform == cc.TARGET_PLATFORM.MOBILE_BROWSER) {
+            // resDirOrders.push("HD");
+                // resDirOrders.push("Music");
+        // }
+        // else if (platform == cc.TARGET_PLATFORM.PC_BROWSER) {
+            // if (resourceSize.height >= 800) {
+                // resDirOrders.push("HD");
+                // resDirOrders.push("Music");
+            // }
+            // else {
+                // resourceSize = cc.size(480, 320);
+                // designSize = cc.size(480, 320);
+                 resDirOrders.push("Normal");
+                 resDirOrders.push("Music");
+            // }
+        // }
 
         cc.FileUtils.getInstance().setSearchResolutionsOrder(resDirOrders);
 
-        director.setContentScaleFactor(resourceSize.width / designSize.width);
+        //director.setContentScaleFactor(resourceSize.width / designSize.width);
 
-        cc.EGLView.getInstance().setDesignResolutionSize(screenSize.width, screenSize.height, cc.RESOLUTION_POLICY.SHOW_ALL);
+        cc.EGLView.getInstance().setDesignResolutionSize(resourceSize.width, resourceSize.height, cc.RESOLUTION_POLICY.SHOW_ALL);
 
         // turn on display FPS
         director.setDisplayStats(this.config['showFPS']);
@@ -84,7 +88,7 @@ var cocos2dApp = cc.Application.extend({
     }
 });
 
-var myApp = new cocos2dApp(MyScene);
+var myApp = new cocos2dApp(SysMenu.scene);
 
 var AnchorPointCenter = new cc.Point(0.5, 0.5);
 var AnchorPointTop = new cc.Point(0.5, 1);
