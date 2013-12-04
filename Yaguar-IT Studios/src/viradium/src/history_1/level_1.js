@@ -82,6 +82,7 @@ var CossinoSprite = cc.Sprite.extend({
     _playerPhysicBody: null,
     _parallaxNode: null,
     _onGround: false,
+    _standDeltaPos: null,
 
     ctor:function () {
         cc.log("Constructor: CossinoSprite");
@@ -100,6 +101,7 @@ var CossinoSprite = cc.Sprite.extend({
 
         this.spriteDescription = "Cossino";
 
+        this._standDeltaPos = cc_Point(0, 0);
         this._walkDeltaPos = cc_Point(1.5, 0);
         this._runDeltaPos = cc_Point(3.5, 0);
         this._jumpDeltaPos = cc_Point(1, 0);
@@ -622,7 +624,8 @@ var CossinoSprite = cc.Sprite.extend({
     },
 
     clearDeltaPos:function () {
-        this._deltaPosTotal = cc_Point(0, 0);
+        this._deltaPosTotal.x = 0;
+        this._deltaPosTotal.y = 0;
     },
 
     _setDeltaPos:function (x, y) {
@@ -717,7 +720,7 @@ var CossinoSprite = cc.Sprite.extend({
         this._onGround = status;
     },
 
-    getPlayerIsOnGround:function () {
+    isPlayerOnGround:function () {
         return this._onGround;
     }
 });
@@ -790,6 +793,11 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     _parallaxTilemapRatio: null,
     _playerGroundSensorId: 1000,
     _groundSensorIdCounter: 1,
+    _playerCurrentDirection: null,
+    _playerCurrentStatus: null,
+    _playerRunDeltaMultiplier: 1.0,
+    _playerWalkDeltaMultiplier: 1.0,
+    _playerJumpDeltaMultiplier: 1.0,
 
     ctor:function () {
         cc.log("Init Function: Hist1Lvl1Layer.");
@@ -1110,21 +1118,14 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             case KEYS.GORIGHT:
                 this._previousDirection = this._currentDirection;
                 this._currentDirection = CHR_DIRECTION.RIGHT;
+                this._playerCurrentDirection = CHR_DIRECTION.RIGHT;
+                this._playerCurrentStatus = CHR_STATUS.WALK;
                 break;
             case KEYS.GOLEFT:
                 this._previousDirection = this._currentDirection;
                 this._currentDirection = CHR_DIRECTION.LEFT;
-                break;
-            case cc.KEY.i:
-                this.applyImpulseToPlayer(100000);
-                break;
-            case cc.KEY.f:
-                this.applyForceToPlayer(100000);
-                break;
-            case cc.KEY.m:
-                var b2Vec2 = Box2D.Common.Math.b2Vec2;
-                this._playerPhysicBody.ApplyForce(new b2Vec2(10000, 30000),
-                                                  this._playerPhysicBody.GetWorldCenter());
+                this._playerCurrentDirection = CHR_DIRECTION.LEFT;
+                this._playerCurrentStatus = CHR_STATUS.WALK;
                 break;
             case cc.KEY.shift:
                 KEYMOD_FLAGS.SHIFT = true;
@@ -1134,6 +1135,17 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 break;
             case cc.KEY.alt:
                 KEYMOD_FLAGS.ALT = true;
+                break;
+            case KEYS.RUN:
+                this._playerCurrentStatus = CHR_STATUS.RUN;
+                break;
+            case KEYS.JUMP:
+                this._playerCurrentStatus = CHR_STATUS.JUMP;
+
+                // FIXME: Refactorizar en un solo lugar
+                if (this._currentPlayer._currentStatus !== CHR_STATUS.JUMP) {
+                        this.makePlayerJump(100);
+                }
                 break;
         }
 
@@ -1158,6 +1170,10 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             case cc.KEY.r:
                 if (KEYMOD_FLAGS.SHIFT) { this._reloadObjsAndEnemiesLayer(); }
                 break;
+            case KEYS.RUN:
+            case KEYS.WALK:
+                this._playerCurrentStatus = CHR_STATUS.STAND;
+                break;
         }
 
         // Propagate key up to children
@@ -1177,36 +1193,49 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var spriteCurrPhyPos = null;
         var spriteDeltaUIPos = null;
 
-        for (var body = bodyList; body; body = body.GetNext()) {
-            sprite = body.GetUserData();
+        this_obj._playerPrevUIPos = this_obj._playerCurrUIPos;
 
-            if (sprite === null) { continue; }
-
-            if (sprite instanceof cc_Sprite) {
-                if (sprite === this_obj._currentPlayer) {
-                    // Actualizar posición previa del jugador
-                    this_obj._playerPrevUIPos = this_obj._playerCurrUIPos;
-
-                    // Sumar ambos vectores para obtener el desplazamiento total
-                    this_obj._playerCurrUIPos = cc_pAdd(this_obj._playerCurrUIPos,
-                                                        sprite.getDeltaPos());
-
-                    // Crear vector de desplazamiento de Box2D
-                    spritePosition = new b2Vec2(this_obj._playerCurrUIPos.x / physics.scale,
-                                                this_obj._playerCurrUIPos.y / physics.scale);
-
-                    body.SetPosition(spritePosition);
-                    body.SetAngle(spriteAngle);
-
-                    // Actualizar referencias a posiciones físicas del jugador
-                    this_obj._playerPrevPhyPos = this_obj._playerCurrPhyPos;
-                    this_obj._playerCurrPhyPos = spritePosition;
-                }
-            }
-            else {
-                objectTMX = sprite;
-            }
+        switch (this_obj._currentPlayer._currentStatus) {
+            case CHR_STATUS.WALK:
+                this_obj.makePlayerWalk();
+                break;
+            case CHR_STATUS.RUN:
+                this_obj.makePlayerRun();
+                break;
+            case CHR_STATUS.JUMP:
+                break;
         }
+
+        // for (var body = bodyList; body; body = body.GetNext()) {
+        //     sprite = body.GetUserData();
+
+        //     if (sprite === null) { continue; }
+
+        //     if (sprite instanceof cc_Sprite) {
+        //         if (sprite === this_obj._currentPlayer) {
+        //             // Actualizar posición previa del jugador
+        //             this_obj._playerPrevUIPos = this_obj._playerCurrUIPos;
+
+        //             // Sumar ambos vectores para obtener el desplazamiento total
+        //             this_obj._playerCurrUIPos = cc_pAdd(this_obj._playerCurrUIPos,
+        //                                                 sprite.getDeltaPos());
+
+        //             // Crear vector de desplazamiento de Box2D
+        //             spritePosition = new b2Vec2(this_obj._playerCurrUIPos.x / physics.scale,
+        //                                         this_obj._playerCurrUIPos.y / physics.scale);
+
+        //             body.SetPosition(spritePosition);
+        //             body.SetAngle(spriteAngle);
+
+        //             // Actualizar referencias a posiciones físicas del jugador
+        //             this_obj._playerPrevPhyPos = this_obj._playerCurrPhyPos;
+        //             this_obj._playerCurrPhyPos = spritePosition;
+        //         }
+        //     }
+        //     else {
+        //         objectTMX = sprite;
+        //     }
+        // }
 
         // Instruct the world to perform a single step of simulation.
         physics.step(dt);
@@ -2263,6 +2292,12 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var runDeltaPos = cc_Point(1.0, 0);
         var runDeltaPosXCalc = 1.0;
         var runDeltaPosYCalc = 0;
+        var walkDeltaMultiplier = 1.0;
+        var walkDeltaMultiplierCalc = 1.0;
+        var runDeltaMultiplier = 1.0;
+        var runDeltaMultiplierCalc = 1.0;
+        var jumpDeltaMultiplier = 1.0;
+        var jumpDeltaMultiplierCalc = 1.0;
         // Posición inicial de Cossino
         var objPosicionInicial = cc_Point(this._wsizewidth / 2, 100);
         // var objPosicionInicial = cc_Point(objectCossino.x + (objectCossino.width / 2),
@@ -2273,27 +2308,27 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         if ((objectCossino !== null) & (objectCossino !== undefined)) {
             // Escala
-            if ("Escala" in objectCossino) {
-                escalaCalc = parseFloat(objectCossino["Escala"]);
+            if (objectCossino.Escala) {
+                escalaCalc = parseFloat(objectCossino.Escala);
             }
-            else if ("escala" in objectCossino) {
-                escalaCalc = parseFloat(objectCossino["escala"]);
+            else if (objectCossino.escala) {
+                escalaCalc = parseFloat(objectCossino.escala);
             }
             if (!isNaN(escalaCalc)) { objEscala = escalaCalc; }
 
             // Delta Walk
-            if ("CaminarDeltaX" in objectCossino) {
-                walkDeltaPosXCalc = parseFloat(objectCossino["CaminarDeltaX"]);
+            if (objectCossino.CaminarDeltaX) {
+                walkDeltaPosXCalc = parseFloat(objectCossino.CaminarDeltaX);
             }
-            else if ("caminardeltax" in objectCossino) {
-                walkDeltaPosXCalc = parseFloat(objectCossino["caminardeltax"]);
+            else if (objectCossino.caminardeltax) {
+                walkDeltaPosXCalc = parseFloat(objectCossino.caminardeltax);
             }
 
-            if ("CaminarDeltaY" in objectCossino) {
-                walkDeltaPosYCalc = parseFloat(objectCossino["CaminarDeltaY"]);
+            if (objectCossino.CaminarDeltaY) {
+                walkDeltaPosYCalc = parseFloat(objectCossino.CaminarDeltaY);
             }
-            else if ("caminardeltay" in objectCossino) {
-                walkDeltaPosYCalc = parseFloat(objectCossino["caminardeltay"]);
+            else if (objectCossino.caminardeltay) {
+                walkDeltaPosYCalc = parseFloat(caminardeltay);
             }
 
             if (!isNaN(walkDeltaPosXCalc) & !isNaN(walkDeltaPosYCalc)) {
@@ -2304,18 +2339,18 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             }
 
             // Delta Jump
-            if ("SaltarDeltaX" in objectCossino) {
-                jumpDeltaPosXCalc = parseFloat(objectCossino["SaltarDeltaX"]);
+            if (objectCossino.SaltarDeltaX) {
+                jumpDeltaPosXCalc = parseFloat(objectCossino.SaltarDeltaX);
             }
-            else if ("saltardeltax" in objectCossino) {
-                jumpDeltaPosXCalc = parseFloat(objectCossino["saltardeltax"]);
+            else if (objectCossino.saltardeltax) {
+                jumpDeltaPosXCalc = parseFloat(objectCossino.saltardeltax);
             }
 
-            if ("SaltarDeltaY" in objectCossino) {
-                jumpDeltaPosYCalc = parseFloat(objectCossino["SaltarDeltaY"]);
+            if (objectCossino.SaltarDeltaY) {
+                jumpDeltaPosYCalc = parseFloat(objectCossino.SaltarDeltaY);
             }
-            else if ("saltardeltay" in objectCossino) {
-                jumpDeltaPosYCalc = parseFloat(objectCossino["saltardeltay"]);
+            else if (objectCossino.saltardeltay) {
+                jumpDeltaPosYCalc = parseFloat(objectCossino.saltardeltay);
             }
 
             if (!isNaN(jumpDeltaPosXCalc) & !isNaN(jumpDeltaPosYCalc)) {
@@ -2326,18 +2361,18 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             }
 
             // Delta Run
-            if ("CorrerDeltaX" in objectCossino) {
-                runDeltaPosXCalc = parseFloat(objectCossino["CorrerDeltaX"]);
+            if (objectCossino.CorrerDeltaX) {
+                runDeltaPosXCalc = parseFloat(objectCossino.CorrerDeltaX);
             }
-            else if ("correrdeltax" in objectCossino) {
-                runDeltaPosXCalc = parseFloat(objectCossino["correrdeltax"]);
+            else if (objectCossino.correrdeltax) {
+                runDeltaPosXCalc = parseFloat(objectCossino.correrdeltax);
             }
 
-            if ("CorrerDeltaY" in objectCossino) {
-                runDeltaPosYCalc = parseFloat(objectCossino["CorrerDeltaY"]);
+            if (objectCossino.CorrerDeltaY) {
+                runDeltaPosYCalc = parseFloat(objectCossino.CorrerDeltaY);
             }
-            else if ("correrdeltay" in objectCossino) {
-                runDeltaPosYCalc = parseFloat(objectCossino["correrdeltay"]);
+            else if (objectCossino.correrdeltay) {
+                runDeltaPosYCalc = parseFloat(objectCossino.correrdeltay);
             }
 
             if (!isNaN(runDeltaPosXCalc) & !isNaN(runDeltaPosYCalc)) {
@@ -2346,6 +2381,34 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             else {
                 runDeltaPos = cc_Point(1.0, 0);
             }
+
+            // Multiplicador caminar
+            if (objectCossino.MultDeltaCaminar) {
+                walkDeltaMultiplierCalc = parseFloat(objectCossino.MultDeltaCaminar);
+            }
+            else if (objectCossino.multdeltacaminar) {
+                walkDeltaMultiplierCalc = parseFloat(objectCossino.multdeltacaminar);
+            }
+            if (!isNaN(walkDeltaMultiplierCalc)) { walkDeltaMultiplier = walkDeltaMultiplierCalc; }
+
+            // Multiplicador correr
+            if (objectCossino.MultDeltaCorrer) {
+                runDeltaMultiplierCalc = parseFloat(objectCossino.MultDeltaCorrer);
+            }
+            else if (objectCossino.multdeltacorrer) {
+                runDeltaMultiplierCalc = parseFloat(objectCossino.multdeltacorrer);
+            }
+            if (!isNaN(runDeltaMultiplierCalc)) { runDeltaMultiplier = runDeltaMultiplierCalc; }
+
+
+            // Multiplicador saltar
+            if (objectCossino.MultDeltaSaltar) {
+                jumpDeltaMultiplierCalc = parseFloat(objectCossino.MultDeltaSaltar);
+            }
+            else if (objectCossino.multdeltasaltar) {
+                jumpDeltaMultiplierCalc = parseFloat(objectCossino.multdeltasaltar);
+            }
+            if (!isNaN(jumpDeltaMultiplierCalc)) { jumpDeltaMultiplier = jumpDeltaMultiplierCalc; }
         }
 
         // -------------------------------------------------------------------
@@ -2365,6 +2428,13 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         // Establecer a Cossino como el personaje actual
         this._currentPlayer = cossino_pj;
+        this._playerCurrentStatus = cossino_pj._currentStatus;
+        this._playerCurrentDirection = cossino_pj._currentDirection;
+
+        // Establecer multiplicadores de impulsos físicos
+        this._playerWalkDeltaMultiplier = walkDeltaMultiplier;
+        this._playerRunDeltaMultiplier = runDeltaMultiplier;
+        this._playerJumpDeltaMultiplier = jumpDeltaMultiplier;
 
         // Agregar físicas al personaje actual
         if ((objectCossino !== null & objectCossino !== undefined)) {
@@ -2544,29 +2614,56 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         this.scheduleUpdate();
     },
 
-    applyImpulseToPlayer:function (multiplicador) {
-        var b2Vec2 = Box2D.Common.Math.b2Vec2;
-        var deltaPos = this._currentPlayer.getDeltaPos();
-        var multiplier = ((multiplicador !== null) &&
-                         (multiplicador !== undefined)) ? multiplicador : 1.0;
+    makePlayerJump:function () {
+            var this_obj = this;
+            var b2Vec2 = Box2D.Common.Math.b2Vec2;
+            var body = this_obj._playerPhysicBody;
+            var multiplier = this_obj._playerJumpDeltaMultiplier;
+            cc.log(multiplier);
+            var deltaX = (this_obj._currentPlayer.getJumpDeltaPos().x /
+                          this_obj.physics.scale) * multiplier;
+            var deltaY = (this_obj._currentPlayer.getJumpDeltaPos().y /
+                          this_obj.physics.scale) * multiplier;
 
-        this._playerPhysicBody.ApplyImpulse(new b2Vec2((deltaPos.x / this.physics.scale) * multiplier,
-                                                       (deltaPos.y / this.physics.scale) * multiplier),
-                                            this._playerPhysicBody.GetWorldCenter());
+            deltaX *= (this_obj._currentPlayer._currentDirection === CHR_DIRECTION.RIGHT) ? 1 : -1;
+            // deltaY *= (this_obj._currentPlayer._currentDirection === CHR_DIRECTION.UP) ? 1 : -1;
+
+            var velChangeX = deltaX - body.GetLinearVelocity().x;
+            var velChangeY = deltaY - body.GetLinearVelocity().y;
+            var bodyMass = body.GetMass();
+
+            body.ApplyImpulse(new b2Vec2(bodyMass * velChangeX, bodyMass * velChangeY),
+                                         body.GetWorldCenter());
     },
 
-    applyForceToPlayer:function (multiplicador) {
+    makePlayerRun:function () {
+        var this_obj = this;
         var b2Vec2 = Box2D.Common.Math.b2Vec2;
-        var deltaPos = this._currentPlayer.getDeltaPos();
-        var multiplier = ((multiplicador !== null) &&
-                         (multiplicador !== undefined)) ? multiplicador : 1.0;
+        var body = this_obj._playerPhysicBody;
+        var multiplier = this_obj._playerRunDeltaMultiplier;
 
-        this._playerPhysicBody.ApplyForce(new b2Vec2((deltaPos.x / this.physics.scale) * multiplier,
-                                                     (deltaPos.y / this.physics.scale) * multiplier),
-                                          this._playerPhysicBody.GetWorldCenter());
+        var deltaX = (this_obj._currentPlayer.getDeltaPos().x /
+                      this_obj.physics.scale) * multiplier;
+
+        var velChangeX = deltaX - body.GetLinearVelocity().x;
+        var bodyMass = body.GetMass();
+
+        body.ApplyImpulse(new b2Vec2(bodyMass * velChangeX, 0), body.GetWorldCenter());
     },
 
-    jumpCurrentPlayer:function () {
+    makePlayerWalk:function () {
+        var this_obj = this;
+        var b2Vec2 = Box2D.Common.Math.b2Vec2;
+        var body = this_obj._playerPhysicBody;
+        var multiplier = this_obj._playerWalkDeltaMultiplier;
+
+        var deltaX = (this_obj._currentPlayer.getDeltaPos().x /
+                      this_obj.physics.scale) * multiplier;
+
+        var velChangeX = deltaX - body.GetLinearVelocity().x;
+        var bodyMass = body.GetMass();
+
+        body.ApplyImpulse(new b2Vec2(bodyMass * velChangeX, 0), body.GetWorldCenter());
     }
 });
 
