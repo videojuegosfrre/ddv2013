@@ -2632,8 +2632,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     _reloadObjsAndEnemiesLayer:function () {
         if ((this.parallaxChild === null) || (this._tileMap === null)) { return; }
         // In the meantime, preload TMX
-        cc.Loader.getInstance().releaseResources([{src: s_objects_layer_tmx}]);
-        cc.Loader.purgeCachedData([{src: s_objects_layer_tmx}]);
+        cc.Loader.getInstance().releaseResources([{src: "../../" + s_objects_layer_tmx}]);
+        cc.Loader.purgeCachedData([{src: "../../" + s_objects_layer_tmx}]);
         cc.SAXParser.getInstance().preloadPlist(s_objects_layer_tmx);
 
         this.unscheduleUpdate();
