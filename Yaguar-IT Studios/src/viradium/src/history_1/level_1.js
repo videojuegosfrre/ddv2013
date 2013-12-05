@@ -1376,10 +1376,10 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var inferedShape = null;
         var hasGroundSensor = false;
         var fixedRotation = false;
-        var forcedWidthCalc = null;
-        var forcedWidth = object.width;
-        var forcedHeightCalc = null;
-        var forcedHeight = object.height;
+        var forcedWidthCalc = object.width;
+        var forcedWidth = forcedWidthCalc;
+        var forcedHeightCalc = object.height;
+        var forcedHeight = forcedHeightCalc;
 
         var objType = "";
         if (object.Cuerpo) {
@@ -1503,25 +1503,29 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         }
         else {
             cc.log("RECTANGLE.");
-            spriteShape = new b2PolygonShape();
-
             // Ancho forzado
-            if (object.AnchoForzado && object.AnchoForzado <= object.width) {
+            if (object.AnchoForzado) {
                 forcedWidthCalc = parseFloat(object.AnchoForzado);
             }
-            else if (object.anchoforzado && object.anchoforzado <= object.width) {
+            else if (object.anchoforzado) {
                 forcedWidthCalc = parseFloat(object.anchoforzado);
             }
-            if (!isNaN(forcedWidthCalc)) { forcedWidth = forcedWidthCalc; }
+            if (!isNaN(forcedWidthCalc) &&  (forcedWidthCalc <= object.width)) {
+                forcedWidth = forcedWidthCalc;
+            }
 
             // Alto forzado
-            if (object.AltoForzado <= object.height) {
+            if (object.AltoForzado) {
                 forcedHeightCalc = parseFloat(object.AltoForzado);
             }
-            else if (object.altoforzado <= object.height) {
+            else if (object.altoforzado) {
                 forcedHeightCalc = parseFloat(object.altoforzado);
             }
-            if (!isNaN(forcedHeightCalc)) { forcedHeight = forcedHeightCalc; }
+            if (!isNaN(forcedHeightCalc) && (forcedHeightCalc <= object.height)) {
+                forcedHeight = forcedHeightCalc;
+            }
+
+            spriteShape = new b2PolygonShape();
 
             objCenterWidth = forcedWidth / 2;
             objCenterHeight = forcedHeight / 2;
@@ -1603,6 +1607,10 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var b2Vec2 = Box2D.Common.Math.b2Vec2;
         var hasGroundSensor = false;
         var fixedRotation = false;
+        var forcedWidthCalc = sprite.getBoundingBox().size.width;
+        var forcedWidth = forcedWidthCalc;
+        var forcedHeightCalc = sprite.getBoundingBox().size.height;
+        var forcedHeight = forcedHeightCalc;
 
         var objectBodyDef = new b2BodyDef();
 
@@ -1698,9 +1706,33 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         cc.log(sprite.getBoundingBox().size.width);
         cc.log(sprite.getBoundingBox().size.height);
 
+        // Ancho forzado
+        if (object.AnchoForzado) {
+            forcedWidthCalc = parseFloat(object.AnchoForzado);
+        }
+        else if (object.anchoforzado) {
+            forcedWidthCalc = parseFloat(object.anchoforzado);
+        }
+        if (!isNaN(forcedWidthCalc) &&
+            (forcedWidthCalc <= sprite.getBoundingBox().size.width)) {
+            forcedWidth = forcedWidthCalc;
+        }
+
+        // Alto forzado
+        if (object.AltoForzado) {
+            forcedHeightCalc = parseFloat(object.AltoForzado);
+        }
+        else if (object.altoforzado) {
+            forcedHeightCalc = parseFloat(object.altoforzado);
+        }
+        if (!isNaN(forcedHeightCalc) &&
+            (forcedHeightCalc <= sprite.getBoundingBox().size.height)) {
+            forcedHeight = forcedHeightCalc;
+        }
+
         var spriteShape = new b2PolygonShape();
-        spriteShape.SetAsBox(sprite.getBoundingBox().size.width / this.physics.scale / 2,
-                             sprite.getBoundingBox().size.height / this.physics.scale / 2);
+        spriteShape.SetAsBox(forcedWidth / this.physics.scale / 2,
+                             forcedHeight / this.physics.scale / 2);
 
         // Define the dynamic body fixture.
         var spriteShapeDef = new b2FixtureDef();
@@ -1737,8 +1769,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             var sensorFixtureDef = new b2FixtureDef();
             var sensorShape = new b2PolygonShape();
 
-            sensorShape.SetAsOrientedBox(sprite.getBoundingBox().size.width  / 2.2 / this.physics.scale,
-                                         sprite.getBoundingBox().size.height / 100 / this.physics.scale,
+            sensorShape.SetAsOrientedBox(forcedWidth  / 2.2 / this.physics.scale,
+                                         forcedHeight / 100 / this.physics.scale,
                                          new b2Vec2(0, -1 * sprite.getBoundingBox().size.height / 2 / this.physics.scale),
                                          0);
 
