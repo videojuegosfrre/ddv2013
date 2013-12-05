@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>viradium_1.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{1,1},{73,147}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{73,147}}</string>
+                <key>sourceSize</key>
+                <string>{73,147}</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>2</integer>
+            <key>realTextureFileName</key>
+            <string>viradium.png</string>
+            <key>size</key>
+            <string>{128,256}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:40857d967bfa0d3c7c448f547b100c0d:1fde8947b349dda7cc3269e70534f242:1222243f680beb3531c0fd0c1724d489$</string>
+            <key>textureFileName</key>
+            <string>viradium.png</string>
+        </dict>
+    </dict>
+</plist>

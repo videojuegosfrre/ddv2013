@@ -58,6 +58,9 @@ var s_roca_1_grande = h_1_img_dir + "roca_1_grande.png";
 var s_rocas_img = h_1_img_dir + "rocas.png";
 var s_rocas_plist = h_1_img_dir + "rocas.plist";
 
+var s_viradium_img = h_1_img_dir + "viradium.png";
+var s_viradium_plist = h_1_img_dir + "viradium.plist";
+
 // Sonido
 var h_1_music_dir = "resources/history_1/music/";
 
@@ -155,10 +158,12 @@ var g_resources = [
     {type:"image", src:s_roca_1_media},
     {type:"image", src:s_roca_1_grande},
     {type:"image", src:s_rocas_img},
+    {type:"image", src:s_viradium_img},
 
     //plist
     {type:"plist", src:s_cossino_plist},
     {type:"plist", src:s_rocas_plist},
+    {type:"plist", src:s_viradium_plist},
 
     //fnt
     {type:"fnt", src:s_font_bitmap_fnt},

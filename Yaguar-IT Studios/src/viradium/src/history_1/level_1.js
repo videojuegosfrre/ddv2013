@@ -748,8 +748,45 @@ var Cossino = (function () {
 })();
 
 
-var playerGroundSensorId = 1000;
-var objectGroundSensorCounter = playerGroundSensorId + 1;
+var ViradiumSprite = cc.Sprite.extend({
+    director: null,
+    wSizeWidth: null,
+    wSizeHeight: null,
+    frameCache: null,
+    audioEngine: null,
+    spriteDescription: null,
+
+    ctor:function () {
+        this._super();
+
+        this.setAnchorPoint(cc_Point(0.5, 0.5));
+
+        var cache = cc.SpriteFrameCache.getInstance();
+        cache.addSpriteFrames(s_viradium_plist, s_viradium_img);
+
+        this.director = cc.Director.getInstance();
+        this.wSizeWidth = this.director.getWinSize().width;
+        this.wSizeHeight = this.director.getWinSize().height;
+        this.frameCache = cc.SpriteFrameCache.getInstance();
+        this.audioEngine = cc.AudioEngine.getInstance();
+
+        this.spriteDescription = "Viradium";
+
+        this.initWithSpriteFrameName("viradium_1.png");
+
+        var next_frame = this.frameCache.getSpriteFrame("viradium_1.png");
+
+        this.setTextureRect(next_frame.getRect());
+        this.setContentSize(next_frame.getRect().width,
+                            next_frame.getRect().height);
+        this.setDisplayFrame(next_frame);
+
+        this.scheduleUpdate();
+    },
+
+    update:function () {
+    }
+});
 
 
 var Hist1Lvl1Layer = cc.Layer.extend({
@@ -798,6 +835,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     _playerRunDeltaMultiplier: 1.0,
     _playerWalkDeltaMultiplier: 1.0,
     _playerJumpDeltaMultiplier: 1.0,
+
 
     ctor:function () {
         cc.log("Init Function: Hist1Lvl1Layer.");
@@ -1259,10 +1297,15 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     sprite.setPosition(cc_Point(this_obj._wsizewidth / 2,
                                                 spritePosition.y));
                 }
-            }
-            else {
-                // Analizar objetos TMX
-                objectTMX = sprite;
+                else if (sprite instanceof ViradiumSprite) {
+                    spritePosition = cc_Point(bodyf.GetPosition().x * physics.scale,
+                                              bodyf.GetPosition().y * physics.scale);
+
+                    spriteAngle = -1 * cc_RADIANS_TO_DEGREES(bodyf.GetAngle());
+
+                    sprite.setPosition(cc_Point(spritePosition.x, spritePosition.y));
+                    sprite.setRotation(spriteAngle);
+                }
             }
         }
 
@@ -2236,6 +2279,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             this._processBackgroundLayer();
             this._processColisionesLayer();
             this._processTrayectoriasLayer();
+            this._processColeccionablesLayer();
             this._processFinishLayer();
         }
     },
@@ -2257,14 +2301,22 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             var userDataB = fixtureB.GetUserData();
 
             if (userDataA !== null) {
-                if (userDataA instanceof cc_Sprite) {
-                    cc.log("Begin Body A (Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
-                    userDataA.setColor(new cc.Color4B(0, 0, 255, 255));
+                if (userDataA instanceof CossinoSprite) {
+                    // TODO: Eliminar líneas de logging y color
+                    cc.log("Begin Body A (Cossino Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                    userDataA.setColor(new cc.Color4B(255, 0, 0, 128));
+                }
+                else if (userDataA instanceof ViradiumSprite) {
+                    // TODO: Eliminar líneas de logging y color
+                    cc.log("Begin Body A (Viradium Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                    userDataA.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
                 else if (userDataA instanceof Object) {
+                    // TODO: Eliminar líneas de logging y color
                     cc.log("Begin Body A (TMX Object): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
                 }
                 else if (userDataA == 1000) {
+                    // TODO: Eliminar líneas de logging y color
                     cc.log("Begin Ground Sensor A.");
                     cc.log(userDataA);
                     bodyA.GetUserData().setPlayerIsOnGround(true);
@@ -2272,14 +2324,22 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             }
 
             if (userDataB !== null) {
-                if (userDataB instanceof cc_Sprite) {
-                    cc.log("Begin Body B (Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
-                    userDataB.setColor(new cc.Color4B(255, 0, 0, 255));
+                if (userDataB instanceof CossinoSprite) {
+                    // TODO: Eliminar líneas de logging y color
+                    cc.log("Begin Body B (Cossino Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
+                    userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
+                }
+                else if (userDataB instanceof ViradiumSprite) {
+                    // TODO: Eliminar líneas de logging y color
+                    cc.log("Begin Body B (Viradium Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
+                    userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
                 else if (userDataB instanceof Object) {
+                    // TODO: Eliminar líneas de logging y color
                     cc.log("Begin Body B (TMX Object): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                 }
                 else if (userDataB == 1000) {
+                    // TODO: Eliminar líneas de logging y color
                     cc.log("Begin Ground Sensor B.");
                     cc.log(userDataB);
                     bodyB.GetUserData().setPlayerIsOnGround(true);
@@ -2297,14 +2357,22 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             var userDataB = fixtureB.GetUserData();
 
             if (userDataA !== null) {
-                if (userDataA instanceof cc_Sprite) {
-                    cc.log("End Body A (Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
-                    userDataA.setColor(new cc.Color4B(0, 0, 255, 255));
+                if (userDataA instanceof CossinoSprite) {
+                    // TODO: Eliminar líneas de logging y color
+                    cc.log("End Body A (Cossino Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                    userDataA.setColor(new cc.Color4B(0, 0, 255, 128));
+                }
+                else if (userDataA instanceof ViradiumSprite) {
+                    // TODO: Eliminar líneas de logging y color
+                    cc.log("Begin Body A (Viradium Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                    userDataA.setColor(new cc.Color4B(0, 0, 255, 128));
                 }
                 else if (userDataA instanceof Object) {
+                    // TODO: Eliminar líneas de logging y color
                     cc.log("End Body A (TMX Object): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
                 }
                 else if (userDataA == 1000) {
+                    // TODO: Eliminar líneas de logging y color
                     cc.log("End Ground Sensor A.");
                     cc.log(userDataA);
                     bodyA.GetUserData().setPlayerIsOnGround(false);
@@ -2312,14 +2380,22 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             }
 
             if (userDataB !== null) {
-                if (userDataB instanceof cc_Sprite) {
+                if (userDataB instanceof CossinoSprite) {
+                    // TODO: Eliminar líneas de logging y color
                     cc.log("End Body B (Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
-                    userDataB.setColor(new cc.Color4B(255, 0, 0, 255));
+                    userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
+                }
+                else if (userDataB instanceof ViradiumSprite) {
+                    // TODO: Eliminar líneas de logging y color
+                    cc.log("End Body B (Viradium Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
+                    userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
                 else if (userDataB instanceof Object) {
+                    // TODO: Eliminar líneas de logging y color
                     cc.log("End Body B (TMX Object): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                 }
                 else if (userDataB == 1000) {
+                    // TODO: Eliminar líneas de logging y color
                     cc.log("End Ground Sensor B.");
                     cc.log(userDataB);
                     bodyB.GetUserData().setPlayerIsOnGround(false);
@@ -2530,10 +2606,13 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         // Capa "Background"
         if (this._tileMap === null) { return false; }
 
-        var layerBackground = this._tileMap.getLayer("Background");
+        var layerBackground_1 = this._tileMap.getLayer("Background_1");
+        var layerBackground_2 = this._tileMap.getLayer("Background_2");
         cc.log("-----------------");
-        cc.log("Layer Background");
-        cc.log(layerBackground);
+        cc.log("Layer Background 1");
+        cc.log(layerBackground_1);
+        cc.log("Layer Background 2");
+        cc.log(layerBackground_1);
 
         return true;
     },
@@ -2592,7 +2671,24 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         cc.log(objectsColeccionables);
 
         var objColecLength = objectsColeccionables.length;
+        var collectable = null;
+        var viradiumSprite = null;
+
         for (var k = 0; k < objColecLength; k++) {
+            collectable = objectsColeccionables[k];
+
+            collectable.Sensor = "True";
+            collectable.Densidad = 0;
+            collectable.Friccion = 0;
+            collectable.Restitucion = 0;
+            collectable.Cuerpo = "Static";
+
+            viradiumSpr = new ViradiumSprite();
+            viradiumSpr.setScale(0.5);
+            cc.log(viradiumSpr);
+            this._tileMap.addChild(viradiumSpr, -1);
+
+            this.addBoxBodyForTMXObject(collectable, viradiumSpr);
         }
 
         return true;
