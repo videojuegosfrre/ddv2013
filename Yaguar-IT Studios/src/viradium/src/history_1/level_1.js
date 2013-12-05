@@ -2593,7 +2593,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         this._playerCurrUIPos = cc_Point(this._playerCurrPhyPos.x * this.physics.scale,
                                          this._playerCurrPhyPos.y * this.physics.scale);
-        this._playerPrevUIPos = this._playerPrevUIPos;
+        this._playerPrevUIPos = this._playerCurrUIPos;
+        this._playerPrevUIPos.y -= objPosicionInicial.y;
 
         this._playerCurrPhyRot = this._playerPhysicBody.GetAngle();
         this._playerCurrUIRot = -1 * cc_RADIANS_TO_DEGREES(this._playerCurrPhyRot);
@@ -2685,7 +2686,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
             viradiumSpr = new ViradiumSprite();
             viradiumSpr.setScale(0.5);
-            cc.log(viradiumSpr);
             this._tileMap.addChild(viradiumSpr, -1);
 
             this.addBoxBodyForTMXObject(collectable, viradiumSpr);
