@@ -5,6 +5,7 @@ var ViradiumSprite = cc.Sprite.extend({
     frameCache: null,
     audioEngine: null,
     spriteDescription: null,
+    _viradiumQuantity: 1,
 
     ctor:function () {
         this._super();
@@ -32,6 +33,16 @@ var ViradiumSprite = cc.Sprite.extend({
         this.setDisplayFrame(next_frame);
 
         this.scheduleUpdate();
+    },
+
+    getViradiumQuantity:function () {
+        return this._viradiumQuantity;
+    },
+
+    setViradiumQuantity:function (quantity) {
+        if (typeof quantity === 'number') {
+            this._viradiumQuantity = quantity;
+        }
     },
 
     update:function () {

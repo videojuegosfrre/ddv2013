@@ -205,7 +205,8 @@ var CossinoSprite = cc.Sprite.extend({
         switch (e) {
             case KEYS.GOLEFT:
                 if (this._currentStatus == CHR_STATUS.JUMP) {
-                    this.reqOnFinishJumpStop(this.beginWalk);
+                    //this.reqOnFinishJumpStop(this.beginWalk);
+                    this.reqOnFinishJumpStop();
                 } else {
                     this.turnLeft();
                     this.beginWalk();
@@ -213,7 +214,8 @@ var CossinoSprite = cc.Sprite.extend({
                 break;
             case KEYS.GORIGHT:
                 if (this._currentStatus == CHR_STATUS.JUMP) {
-                    this.reqOnFinishJumpStop(this.beginWalk);
+                    //this.reqOnFinishJumpStop(this.beginWalk);
+                    this.reqOnFinishJumpStop();
                 } else {
                     this.turnRight();
                     this.beginWalk();
@@ -221,7 +223,8 @@ var CossinoSprite = cc.Sprite.extend({
                 break;
             case KEYS.RUN:
                 if (this._currentStatus == CHR_STATUS.JUMP) {
-                    this.reqOnFinishJumpStop(this.beginRun);
+                    //this.reqOnFinishJumpStop(this.beginRun);
+                    this.reqOnFinishJumpStop();
                 } else {
                    this.beginRun();
                 }
@@ -250,7 +253,6 @@ var CossinoSprite = cc.Sprite.extend({
                 break;
             case KEYS.RUN:
                 if (this._currentStatus == CHR_STATUS.RUN) {
-                    // this.stopRun();
                     this.beginStand();
                  }
                 break;

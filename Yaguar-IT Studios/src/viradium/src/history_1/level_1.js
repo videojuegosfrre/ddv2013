@@ -362,6 +362,13 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 this._playerCurrentDirection = CHR_DIRECTION.LEFT;
                 this._playerCurrentStatus = CHR_STATUS.WALK;
                 break;
+            case KEYS.RUN:
+                this._playerCurrentStatus = CHR_STATUS.RUN;
+                break;
+            case KEYS.JUMP:
+                this._playerCurrentStatus = CHR_STATUS.JUMP;
+                this.makePlayerJump(100);
+                break;
             case cc.KEY.shift:
                 KEYMOD_FLAGS.SHIFT = true;
                 break;
@@ -370,17 +377,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 break;
             case cc.KEY.alt:
                 KEYMOD_FLAGS.ALT = true;
-                break;
-            case KEYS.RUN:
-                this._playerCurrentStatus = CHR_STATUS.RUN;
-                break;
-            case KEYS.JUMP:
-                this._playerCurrentStatus = CHR_STATUS.JUMP;
-
-                // FIXME: Refactorizar en un solo lugar
-                if (this._currentPlayer._currentStatus !== CHR_STATUS.JUMP) {
-                        this.makePlayerJump(100);
-                }
                 break;
         }
 
@@ -440,37 +436,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 break;
         }
 
-        // for (var body = bodyList; body; body = body.GetNext()) {
-        //     sprite = body.GetUserData();
-
-        //     if (sprite === null) { continue; }
-
-        //     if (sprite instanceof cc_Sprite) {
-        //         if (sprite === this_obj._currentPlayer) {
-        //             // Actualizar posición previa del jugador
-        //             this_obj._playerPrevUIPos = this_obj._playerCurrUIPos;
-
-        //             // Sumar ambos vectores para obtener el desplazamiento total
-        //             this_obj._playerCurrUIPos = cc_pAdd(this_obj._playerCurrUIPos,
-        //                                                 sprite.getDeltaPos());
-
-        //             // Crear vector de desplazamiento de Box2D
-        //             spritePosition = new b2Vec2(this_obj._playerCurrUIPos.x / physics.scale,
-        //                                         this_obj._playerCurrUIPos.y / physics.scale);
-
-        //             body.SetPosition(spritePosition);
-        //             body.SetAngle(spriteAngle);
-
-        //             // Actualizar referencias a posiciones físicas del jugador
-        //             this_obj._playerPrevPhyPos = this_obj._playerCurrPhyPos;
-        //             this_obj._playerCurrPhyPos = spritePosition;
-        //         }
-        //     }
-        //     else {
-        //         objectTMX = sprite;
-        //     }
-        // }
-
         // Instruct the world to perform a single step of simulation.
         physics.step(dt);
 
@@ -501,7 +466,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 sprite.setPosition(cc_Point(spritePosition.x, spritePosition.y));
                 sprite.setRotation(spriteAngle);
             }
-            else {
+            else if (sprite instanceof Object) {
                 // TMX Object
             }
         }
@@ -1224,9 +1189,11 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         };
 
         // Crear mapa TMX
-        this._tileMap = cc.TMXTiledMap.create(s_objects_layer_tmx);
+        if (s_objects_layer_tmx) {
+           this._tileMap = cc.TMXTiledMap.create(s_objects_layer_tmx);
+        }
 
-        if (this._tileMap !== null) {
+        if (this._tileMap !== null || this._tileMap !== undefined) {
             // Propiedades por defecto
             var mapGravityXCalc, mapGravityX = 0.0;
             var mapGravityYCalc, mapGravityY = 0.0;
@@ -1486,6 +1453,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 else if (userDataA instanceof ViradiumSprite) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("Begin Body A (Viradium Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                    cc.log(userDataA.getViradiumQuantity());
                     userDataA.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
                 else if (userDataA instanceof Object) {
@@ -1495,7 +1463,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 else if (userDataA == 1000) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("Begin Ground Sensor A.");
-                    cc.log(userDataA);
                     bodyA.GetUserData().setPlayerIsOnGround(true);
                 }
             }
@@ -1510,6 +1477,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     // TODO: Eliminar líneas de logging y color
                     cc.log("Begin Body B (Viradium Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                     userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
+                    cc.log(userDataB.getViradiumQuantity());
                 }
                 else if (userDataB instanceof Object) {
                     // TODO: Eliminar líneas de logging y color
@@ -1518,7 +1486,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 else if (userDataB == 1000) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("Begin Ground Sensor B.");
-                    cc.log(userDataB);
                     bodyB.GetUserData().setPlayerIsOnGround(true);
                 }
             }
@@ -1551,7 +1518,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 else if (userDataA == 1000) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("End Ground Sensor A.");
-                    cc.log(userDataA);
                     bodyA.GetUserData().setPlayerIsOnGround(false);
                 }
             }
@@ -1574,7 +1540,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 else if (userDataB == 1000) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("End Ground Sensor B.");
-                    cc.log(userDataB);
                     bodyB.GetUserData().setPlayerIsOnGround(false);
                 }
             }
@@ -1850,6 +1815,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var objColecLength = objectsColeccionables.length;
         var collectable = null;
         var viradiumSprite = null;
+        var cantidad = 1;
+        var cantidadCalc = 1;
 
         for (var k = 0; k < objColecLength; k++) {
             collectable = objectsColeccionables[k];
@@ -1860,8 +1827,21 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             collectable.Restitucion = 0;
             collectable.Cuerpo = "Static";
 
+            if (collectable.Cantidad) {
+                cantidadCalc = parseInt(collectable.Cantidad, 10);
+            }
+            else if (collectable.cantidad) {
+                cantidadCalc = parseInt(collectable.cantidad, 10);
+            }
+            if (!isNaN(cantidadCalc) && (cantidadCalc > 0)) { cantidad = cantidadCalc; }
+
             viradiumSpr = new ViradiumSprite();
-            viradiumSpr.setScale(0.5);
+            viradiumSpr.setScale(0.4);
+            viradiumSpr.setViradiumQuantity(cantidad);
+
+            // Resetear cantidad del coleccionable
+            cantidad = cantidadCalc = 1;
+
             this._tileMap.addChild(viradiumSpr, -1);
 
             this.addBoxBodyForTMXObject(collectable, viradiumSpr);
@@ -1949,6 +1929,10 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     },
 
     makePlayerJump:function () {
+            if (this._currentPlayer._currentStatus === CHR_STATUS.JUMP) {
+                return false;
+            }
+
             var this_obj = this;
             var body = this_obj._playerPhysicBody;
             var multiplier = this_obj._playerJumpDeltaMultiplier;
