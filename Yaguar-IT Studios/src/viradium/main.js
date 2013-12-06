@@ -40,7 +40,6 @@ var cocos2dApp = cc.Application.extend({
         if(cc.RenderDoesnotSupport()){
             // show Information to user
             cc.log("Browser doesn't support WebGL");
-            alert("Browser doesn't support WebGL");
             return false;
         }
 

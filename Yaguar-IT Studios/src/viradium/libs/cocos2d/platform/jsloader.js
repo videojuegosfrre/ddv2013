@@ -144,7 +144,7 @@
     var d = document;
     var c = d["ccConfig"];
 
-    if (c.loadExtension != null && c.loadExtension == true) {
+    if (c.loadExtension !== null && c.loadExtension === true) {
         engine = engine.concat([
             '../extensions/GUI/CCControlExtension/CCControl.js',
             '../extensions/GUI/CCControlExtension/CCControlButton.js',
@@ -236,7 +236,7 @@
         ]);
     }
 
-    if (c.loadPluginx != null && c.loadPluginx == true) {
+    if (c.loadPluginx !== null && c.loadPluginx === true) {
         engine = engine.concat([
             //protocols
             '../extensions/PluginX/protocols/Config.js',
@@ -290,13 +290,13 @@
         var canvasNode = document.getElementById(c.tag);
         canvasNode.style.backgroundColor = "black";
         canvasNode.parentNode.appendChild(loadJsImg);
-        
+
         var canvasStyle = getComputedStyle?getComputedStyle(canvasNode):canvasNode.currentStyle;
         loadJsImg.style.left = canvasNode.offsetLeft + (parseFloat(canvasStyle.width) - loadJsImg.width)/2 + "px";
         loadJsImg.style.top = canvasNode.offsetTop + (parseFloat(canvasStyle.height) - loadJsImg.height)/2 + "px";
         loadJsImg.style.position = "absolute";
     }
-    
+
     var updateLoading = function(p){
         if(p>=1) {
             loadJsImg.parentNode.removeChild(loadJsImg);
