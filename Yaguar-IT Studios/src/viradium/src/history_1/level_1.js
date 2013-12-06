@@ -1979,7 +1979,19 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var bodyMass = body.GetMass();
 
         body.ApplyImpulse(new b2Vec2(bodyMass * velChangeX, 0), body.GetWorldCenter());
-    }
+    },
+
+    turnPlayerToLeft:function () {
+        if (this._currentPlayer._currentDirection === CHR_DIRECTION.RIGHT) {
+            this._currentPlayer._currentDirection = CHR_DIRECTION.LEFT;
+        }
+    },
+
+    turnPlayerToRight:function () {
+        if (this._currentPlayer._currentDirection === CHR_DIRECTION.LEFT) {
+            this._currentPlayer._currentDirection = CHR_DIRECTION.RIGHT;
+        }
+    },
 });
 
 
