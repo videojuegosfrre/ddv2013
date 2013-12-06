@@ -40,6 +40,11 @@
         appFiles:[
             // Recursos
             'src/resources.js',
+            // Sprites managers
+            'src/sprites/cossino.js',
+            'src/sprites/viradium.js',
+            // HUD
+            'src/hud/hud.js',
             // Menú principal
             'src/menu/main_menu.js',
             'src/menu/ingame_menu.js',

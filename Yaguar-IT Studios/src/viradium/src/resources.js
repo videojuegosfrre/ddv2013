@@ -1,3 +1,20 @@
+if (!String.prototype.trim) {
+  String.prototype.trim = function () {
+    return this.replace(/^\s+|\s+$/gm, '');
+  };
+}
+
+/**
+ * Array.prototype.[method name] allows you to define/overwrite an objects method
+ * needle is the item you are searching for
+ * this is a special variable that refers to "this" instance of an Array.
+ * returns true if needle is in the array, and false otherwise
+ */
+Array.prototype.contains = function (v) {
+    return arr.indexOf(v) > -1;
+};
+
+
 // Menu Resources
 var menu_img_dir = "resources/menu/img/";
 var menu_music_dir = "resources/menu/music/";
@@ -246,5 +263,44 @@ var TERRAIN_TYPE = {
     WOOD: 3
 };
 
-
 var FOOT_SENSOR = 7676;
+
+var cc_Point = cc.p;
+var cc_pAdd = cc.pAdd;
+var cc_pSub = cc.pSub;
+var cc_Sprite = cc.Sprite;
+var cc_sprite_create = cc.Sprite.create;
+var cc_DEGREES_TO_RADIANS = cc.DEGREES_TO_RADIANS;
+var cc_RADIANS_TO_DEGREES = cc.RADIANS_TO_DEGREES;
+
+var lastEvent = -1;
+var heldKeys = {};
+
+var TAG_SPRITE_MANAGER = 8888;
+var PTM_RATIO = 30;
+
+var KEYS = {
+    GOLEFT: cc.KEY.left,
+    GORIGHT: cc.KEY.right,
+    JUMP: cc.KEY.w,
+    RUN: cc.KEY.s
+};
+
+var KEYMOD_FLAGS = {
+    ALT: false,
+    SHIFT: false,
+    CONTROL: false
+};
+
+// Box2D
+var b2Vec2 = Box2D.Common.Math.b2Vec2;
+var b2BodyDef = Box2D.Dynamics.b2BodyDef;
+var b2Body = Box2D.Dynamics.b2Body;
+var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
+var b2Fixture = Box2D.Dynamics.b2Fixture;
+var b2World = Box2D.Dynamics.b2World;
+var b2MassData = Box2D.Collision.Shapes.b2MassData;
+var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
+var b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
+var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
+var b2ContactListener = Box2D.Dynamics.b2ContactListener;

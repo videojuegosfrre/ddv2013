@@ -1,794 +1,3 @@
-if (!String.prototype.trim) {
-  String.prototype.trim = function () {
-    return this.replace(/^\s+|\s+$/gm, '');
-  };
-}
-
-/**
- * Array.prototype.[method name] allows you to define/overwrite an objects method
- * needle is the item you are searching for
- * this is a special variable that refers to "this" instance of an Array.
- * returns true if needle is in the array, and false otherwise
- */
-Array.prototype.contains = function (v) {
-    return arr.indexOf(v) > -1;
-};
-
-var cc_Point = cc.p;
-var cc_pAdd = cc.pAdd;
-var cc_pSub = cc.pSub;
-var cc_Sprite = cc.Sprite;
-var cc_sprite_create = cc.Sprite.create;
-var cc_DEGREES_TO_RADIANS = cc.DEGREES_TO_RADIANS;
-var cc_RADIANS_TO_DEGREES = cc.RADIANS_TO_DEGREES;
-
-var lastEvent = -1;
-var heldKeys = {};
-
-var TAG_SPRITE_MANAGER = 8888;
-var PTM_RATIO = 30;
-
-var KEYS = {
-    GOLEFT: cc.KEY.left,
-    GORIGHT: cc.KEY.right,
-    JUMP: cc.KEY.w,
-    RUN: cc.KEY.s
-};
-
-var KEYMOD_FLAGS = {
-    ALT: false,
-    SHIFT: false,
-    CONTROL: false
-};
-
-
-var CossinoSprite = cc.Sprite.extend({
-    _currentDirection: CHR_DIRECTION.RIGHT,
-    _currentStatus: CHR_STATUS.STAND,
-    _FNStandPrefix: "stand",
-    _FNStandIdx: 1,
-    _FNStandDir: 1,
-    _FNRunPrefix: "run",
-    _FNRunIdx: 1,
-    _FNJumpPrefix: "jump",
-    _FNJumpIdx: 1,
-    _FNWalkIdx: 1,
-    _FNWalkPrefix: "run",
-    _currentPos: null,
-    _executingAnimation: false,
-    _nextStatus: null,
-    _nextDirection: CHR_DIRECTION.NOTSET,
-    _antiKeyBounceCounter: 0,
-    _onFinishStandStop: false,
-    _onFinishRunStop: false,
-    _onFinishWalkStop: false,
-    _onFinishJumpStop: false,
-    director: null,
-    frameCache: null,
-    wSizeWidth: 0,
-    wSizeHeight: 0,
-    _walkDeltaPos: null,
-    _walkDeltaPostCount: 0,
-    _jumpDeltaPos: null,
-    _jumpDeltaPosCount: 0,
-    _runDeltaPos: null,
-    _runDeltaPosCount: 0,
-    _deltaPosTotal: null,
-    _onTerrainType: null,
-    audioEngine: null,
-    spriteDescription: null,
-    _footSoundCounter: 0,
-    _rocks: null,
-    _playerPhysicBody: null,
-    _parallaxNode: null,
-    _onGround: false,
-    _standDeltaPos: null,
-
-    ctor:function () {
-        cc.log("Constructor: CossinoSprite");
-        this._super();
-
-        this.setAnchorPoint(cc_Point(0.5, 0.5));
-
-        var cache = cc.SpriteFrameCache.getInstance();
-        cache.addSpriteFrames(s_cossino_plist, s_cossino_img);
-
-        this.director = cc.Director.getInstance();
-        this.wSizeWidth = this.director.getWinSize().width;
-        this.wSizeHeight = this.director.getWinSize().height;
-        this.frameCache = cc.SpriteFrameCache.getInstance();
-        this.audioEngine = cc.AudioEngine.getInstance();
-
-        this.spriteDescription = "Cossino";
-
-        this._standDeltaPos = cc_Point(0, 0);
-        this._walkDeltaPos = cc_Point(1.5, 0);
-        this._runDeltaPos = cc_Point(3.5, 0);
-        this._jumpDeltaPos = cc_Point(1, 0);
-        this._deltaPosTotal = cc_Point(0, 0);
-
-        this.initWithSpriteFrameName(this._FNStandPrefix + "1.png");
-        //this.init();
-
-        // Schedule updates
-        cc.log("Scheduling Cossino Global Update...");
-        this.scheduleUpdate();
-
-        // Inicialmente mostrar personaje apuntando hacia la derecha
-        // y parado
-        this.beginStand();
-        this._nextStatus = this.beginStand;
-    },
-
-    update:function (dt) {
-    },
-
-    updateStand:function () {
-        var menuItemX, menuItemY = 0;
-
-        menuItemX = this.wSizeWidth / 2;
-        menuItemY = this.wSizeHeight / 2;
-
-        if (this._FNStandIdx > 3) {
-            this._FNStandDir = -1;
-        }
-        else if (this._FNStandIdx < 2) {
-            this._FNStandDir = 1;
-
-            // FIXME:
-            if (this._onFinishStandStop) {
-                this.stopStand();
-                this._nextStatus();
-            }
-        }
-
-        // cc.log(cossino_pj.FNStandIdx);
-
-        var indexAsString = this._FNStandIdx.toString();
-        this._FNStandIdx += this._FNStandDir;
-
-        var next_frame = this.frameCache.getSpriteFrame(this._FNStandPrefix +
-                                                        indexAsString + ".png");
-
-        this.removeAllChildren();
-        this.setTextureRect(next_frame.getRect());
-        this.setContentSize(next_frame.getRect().width, next_frame.getRect().height);
-        this.setDisplayFrame(next_frame);
-    },
-
-    updateWalk:function () {
-        var menuItemX, menuItemY = 0;
-
-        menuItemX = this.wSizeWidth / 2;
-        menuItemY = this.wSizeHeight / 2;
-
-        if (this._FNWalkIdx > 17) {
-            this._FNWalkIdx = 1;
-
-            // FIXME:
-            if (this._onFinishWalkStop) {
-                this.stopWalk();
-                this._nextStatus();
-            }
-        }
-
-        // cc.log(this._FNWalkIdx);
-
-        var indexAsString = this._FNWalkIdx.toString();
-        this._FNWalkIdx += 1;
-
-        var next_frame = this.frameCache.getSpriteFrame(this._FNWalkPrefix +
-                                                        indexAsString + ".png");
-
-        this.removeAllChildren();
-        this.setTextureRect(next_frame.getRect());
-        this.setDisplayFrame(next_frame);
-    },
-
-    updateRun:function () {
-        var menuItemX, menuItemY = 0;
-
-        menuItemX = this.wSizeWidth / 2;
-        menuItemY = this.wSizeHeight / 2;
-
-        if (this._FNRunIdx > 17) {
-            this._FNRunIdx = 1;
-
-            // FIXME:
-            if (this._onFinishRunStop) {
-                this.stopRun();
-                this._nextStatus();
-            }
-        }
-
-        // cc.log(this._FNRunIdx);
-
-        var indexAsString = this._FNRunIdx.toString();
-        this._FNRunIdx += 1;
-
-        var next_frame = this.frameCache.getSpriteFrame(this._FNRunPrefix +
-                                                        indexAsString + ".png");
-
-        this.removeAllChildren();
-        this.setTextureRect(next_frame.getRect());
-        this.setDisplayFrame(next_frame);
-    },
-
-    updateJump:function () {
-        var menuItemX, menuItemY = 0;
-
-        menuItemX = this.wSizeWidth / 2;
-        menuItemY = this.wSizeHeight / 2;
-
-        if (this._FNJumpIdx > 22) {
-            this._FNJumpIdx = 1;
-
-            // FIXME:
-            if (this._onFinishJumpStop) {
-                this.stopJump();
-                this._nextStatus();
-            }
-        }
-
-        // cc.log(cossino_pj.FNStandIdx);
-
-        var indexAsString = this._FNJumpIdx.toString();
-        this._FNJumpIdx += 1;
-
-        var next_frame = this.frameCache.getSpriteFrame(this._FNJumpPrefix +
-                                                   indexAsString + ".png");
-
-        this.removeAllChildren();
-        this.setTextureRect(next_frame.getRect());
-        this.setDisplayFrame(next_frame);
-    },
-
-    handleKeyDown:function (e) {
-        cc.log("Handle Key Down Cossino.");
-
-        switch (e) {
-            case KEYS.GOLEFT:
-                if (this._currentStatus == CHR_STATUS.JUMP) {
-                    this.reqOnFinishJumpStop(this.beginWalk);
-                } else {
-                    this.turnLeft();
-                    this.beginWalk();
-                }
-                break;
-            case KEYS.GORIGHT:
-                if (this._currentStatus == CHR_STATUS.JUMP) {
-                    this.reqOnFinishJumpStop(this.beginWalk);
-                } else {
-                    this.turnRight();
-                    this.beginWalk();
-                }
-                break;
-            case KEYS.RUN:
-                if (this._currentStatus == CHR_STATUS.JUMP) {
-                    this.reqOnFinishJumpStop(this.beginRun);
-                } else {
-                   this.beginRun();
-                }
-                break;
-            case KEYS.JUMP:
-                this.beginJump();
-                break;
-            default:
-                // this.beginStand();
-        }
-    },
-
-    handleKeyUp:function (e) {
-        cc.log("Handle Key Up Cossino.");
-
-        switch (e) {
-            case KEYS.GOLEFT:
-                if (this._currentStatus == CHR_STATUS.WALK) {
-                    this.beginStand();
-                }
-                break;
-            case KEYS.GORIGHT:
-                if (this._currentStatus == CHR_STATUS.WALK) {
-                    this.beginStand();
-                }
-                break;
-            case KEYS.RUN:
-                if (this._currentStatus == CHR_STATUS.RUN) {
-                    // this.stopRun();
-                    this.beginStand();
-                 }
-                break;
-            case KEYS.JUMP:
-                if (this._currentStatus == CHR_STATUS.JUMP) {
-                    this.reqOnFinishJumpStop();
-                    //this.beginStand();
-                }
-                break;
-            default:
-                // this.beginStand();
-        }
-    },
-
-    handleTouchesEnded:function (touch, event) {
-        switch(touch.length) {
-            case 0:
-                this.beginStand();
-                break;
-            case 1:
-                this.beginWalk();
-                break;
-            case 2:
-                this.beginRun();
-                break;
-            default:
-                this.beginStand();
-        }
-    },
-
-    handleTouchesBegan:function (touch, event) {
-        switch (touch.length) {
-            case 1:
-                this.beginWalk();
-                break;
-            case 2:
-                this.beginRun();
-                break;
-            default:
-                this.beginStand();
-        }
-    },
-
-    handleTouchesMoved:function (touch, event) {
-    },
-
-    _stand:function () {
-        this.beginStand();
-    },
-
-    beginStand:function () {
-        cc.log("Stand Cossino.");
-        this.clearDeltaPos();
-        this._currentStatus = CHR_STATUS.STAND;
-        // Quick & Dirty, Hacky, Nasty...
-        // Must be refactored, improved...
-        this.unschedule(this.updateRun);
-        this.stopRunEffect();
-        this.unschedule(this.updateWalk);
-        this.stopWalkEffect();
-        this.unschedule(this.updateJump);
-        this.stopJumpEffect();
-
-        this.schedule(this.updateStand, 0.4);
-        this.schedule(this.playStandEffect);
-    },
-
-    stopStand:function () {
-        this.clearDeltaPos();
-        this.unschedule(this.updateStand);
-        this.stopStandEffect();
-        this._FNStandIdx = 1;
-        this._FNStandDir = 1;
-        this._onFinishStandStop = false;
-    },
-
-    reqOnFinishStandStop:function (next_status) {
-        cc.log("Detener Stand Cossino al finalizar sprites.");
-        this._onFinishStandStop = true;
-
-        if (typeof next_status === 'function') {
-            cc.log("Establecido próximo estado de Stand");
-            this._nextStatus = next_status;
-        } else {
-            this._nextStatus = this.beginStand;
-        }
-    },
-
-    _walk:function () {
-        this.beginWalk();
-    },
-
-    beginWalk:function () {
-        if (!this._onGround) { return; }
-
-        cc.log("Walk Cossino.");
-
-        switch (this._currentDirection) {
-            case CHR_DIRECTION.RIGHT:
-                this._setDeltaPos(this._walkDeltaPos.x, this._walkDeltaPos.y);
-                break;
-            case CHR_DIRECTION.LEFT:
-                this._setDeltaPos(this._walkDeltaPos.x * -1, this._walkDeltaPos.y);
-                break;
-            case CHR_DIRECTION.UP:
-                this._setDeltaPos(this._walkDeltaPos.x, this._walkDeltaPos.y);
-                break;
-            case CHR_DIRECTION.DOWN:
-                this._setDeltaPos(this._walkDeltaPos.x, this._walkDeltaPos.y * -1);
-                break;
-        }
-
-        this._currentStatus = CHR_STATUS.WALK;
-        // Quick & Dirty, Hacky, Nasty...
-        // Must be refactored, improved...
-        this.unschedule(this.updateRun);
-        this.stopRunEffect();
-        this.unschedule(this.updateStand);
-        this.stopStandEffect();
-        this.unschedule(this.updateJump);
-        this.stopJumpEffect();
-
-        // Importante: la luz es más rápida que el sonido.
-        // Reproducir sonido antes de animar.
-        this.schedule(this.playWalkEffect, 0.65);
-        this.schedule(this.updateWalk, 0);
-        this._executingAnimation = true;
-    },
-
-    stopWalk:function () {
-        this.clearDeltaPos();
-        this.unschedule(this.updateWalk);
-        this.stopWalkEffect();
-        this._FNWalkIdx = 1;
-        this._onFinishWalkStop = false;
-        this._footSoundCounter = 0;
-    },
-
-    reqOnFinishWalkStop:function (next_status) {
-        cc.log("Detener Walk Cossino al finalizar sprites.");
-        this._onFinishWalkStop = true;
-
-        if (typeof next_status === 'function') {
-            cc.log("Establecido próximo estado de Stand");
-            this._nextStatus = next_status;
-        } else {
-            this._nextStatus = this.beginStand;
-        }
-    },
-
-    _jump:function () {
-        this.beginJump();
-    },
-
-    beginJump:function () {
-        if (!this._onGround) { return; }
-
-        cc.log("Jump Cossino.");
-
-        switch (this._currentDirection) {
-            case CHR_DIRECTION.RIGHT:
-                this._setDeltaPos(this._jumpDeltaPos.x, this._jumpDeltaPos.y);
-                break;
-            case CHR_DIRECTION.LEFT:
-                this._setDeltaPos(this._jumpDeltaPos.x * -1, this._jumpDeltaPos.y);
-                break;
-            case CHR_DIRECTION.UP:
-                this._setDeltaPos(this._jumpDeltaPos.x, this._jumpDeltaPos.y);
-                break;
-            case CHR_DIRECTION.DOWN:
-                this._setDeltaPos(this._jumpDeltaPos.x, this._jumpDeltaPos.y * -1);
-                break;
-        }
-
-        this._currentStatus = CHR_STATUS.JUMP;
-        // Quick & Dirty, Hacky, Nasty...
-        // Must be refactored, improved...
-        this.unschedule(this.updateRun);
-        this.stopRunEffect();
-        this.unschedule(this.updateWalk);
-        this.stopWalkEffect();
-        this.unschedule(this.updateStand);
-        this.stopStandEffect();
-
-        this.audioEngine.playEffect(s_footstep_dirt_1, false);
-        // this.scheduleOnce(this.playJumpEffect);
-        this.schedule(this.updateJump, 0.1);
-        this._executingAnimation = true;
-    },
-
-    stopJump:function () {
-        this.clearDeltaPos();
-        this.unschedule(this.updateJump);
-
-        this.audioEngine.playEffect(s_footstep_dirt_1, false);
-        // this.stopJumpEffect();
-
-        this._FNJumpIdx = 1;
-        this._onFinishJumpStop = false;
-        this._footSoundCounter = 0;
-    },
-
-    reqOnFinishJumpStop:function (next_status) {
-        cc.log("Detener Jump Cossino al finalizar sprites.");
-        this._onFinishJumpStop = true;
-
-        if (typeof next_status === 'function') {
-            cc.log("Establecido próximo estado de Stand");
-            this._nextStatus = next_status;
-        } else {
-            this._nextStatus = this.beginStand;
-        }
-    },
-
-    _run:function () {
-        this.beginRun();
-    },
-
-    beginRun:function () {
-        if (!this._onGround) { return; }
-
-        cc.log("Run Cossino.");
-        switch (this._currentDirection) {
-            case CHR_DIRECTION.RIGHT:
-                this._setDeltaPos(this._runDeltaPos.x, this._runDeltaPos.y);
-                break;
-            case CHR_DIRECTION.LEFT:
-                this._setDeltaPos(this._runDeltaPos.x * -1, this._runDeltaPos.y);
-                break;
-            case CHR_DIRECTION.UP:
-                this._setDeltaPos(this._runDeltaPos.x, this._runDeltaPos.y);
-                break;
-            case CHR_DIRECTION.DOWN:
-                this._setDeltaPos(this._runDeltaPos.x, this._runDeltaPos.y * -1);
-                break;
-        }
-
-        this._currentStatus = CHR_STATUS.RUN;
-        // Quick & Dirty, Hacky, Nasty...
-        // Must be refactored, improved...
-        this.unschedule(this.updateJump);
-        this.stopJumpEffect();
-        this.unschedule(this.updateWalk);
-        this.stopWalkEffect();
-        this.unschedule(this.updateStand);
-        this.stopStandEffect();
-
-        // Importante: la luz es más rápida que el sonido.
-        // Reproducir sonido antes de animar.
-        this.schedule(this.playRunEffect, 0.5);
-        this.schedule(this.updateRun, 0.04);
-        this._executingAnimation = true;
-    },
-
-    stopRun:function () {
-        this.clearDeltaPos();
-        this.unschedule(this.updateRun);
-        this.stopRunEffect();
-        this._FNRunIdx = 1;
-        this._onFinishRunStop = false;
-        this._footSoundCounter = 0;
-    },
-
-    reqOnFinishRunStop:function (next_status) {
-        cc.log("Detener Run Cossino al finalizar sprites.");
-        this._onFinishRunStop = true;
-
-        if (typeof next_status === 'function') {
-            cc.log("Establecido próximo estado de Stand");
-            this._nextStatus = next_status;
-        } else {
-            this._nextStatus = this.beginStand;
-        }
-    },
-
-    onAnimFinish:function () {
-        cc.log("Finalizó la animación.");
-        this._executingAnimation = false;
-    },
-
-    turnLeft:function () {
-        if (this._currentDirection === CHR_DIRECTION.RIGHT) {
-            cc.log("Turn Left Cossino.");
-            this.setFlippedX(true);
-            this._currentDirection = CHR_DIRECTION.LEFT;
-        }
-    },
-
-    turnRight:function () {
-        if (this._currentDirection === CHR_DIRECTION.LEFT) {
-            cc.log("Turn Right Cossino.");
-            this.setFlippedX(false);
-            this._currentDirection = CHR_DIRECTION.RIGHT;
-        }
-    },
-
-    getSpriteRect:function () {
-        return this.displayFrame().getRect();
-    },
-
-    delay:function (ms) {
-        cc.log("Delay: " + ms);
-    },
-
-    getWalkDeltaPos:function() {
-        return this._walkDeltaPos;
-    },
-
-    getRunDeltaPos:function () {
-        return this._runDeltaPos;
-    },
-
-    getJumpDeltaPos: function () {
-        return this._jumpDeltaPos;
-    },
-
-    getCurrentStatus:function () {
-        return this._currentStatus;
-    },
-
-    getCurrentDirection:function () {
-        return this._currentDirection;
-    },
-
-    getDeltaPos:function () {
-        return this._deltaPosTotal;
-    },
-
-    clearDeltaPos:function () {
-        this._deltaPosTotal.x = 0;
-        this._deltaPosTotal.y = 0;
-    },
-
-    _setDeltaPos:function (x, y) {
-        this._deltaPosTotal.x = x;
-        this._deltaPosTotal.y = y;
-    },
-
-    _setNextStatus:function (nextStatus) {
-        this.nextStatus = nextStatus;
-    },
-
-    setTerrainType:function (type) {
-        this._onTerrainType = type;
-    },
-
-    playStandEffect:function () {
-    },
-
-    stopStandEffect:function () {
-        this.unschedule(this.playStandEffect);
-    },
-
-    playWalkEffect:function () {
-        cc.log("Efecto de caminar.");
-        if ((this._footSoundCounter % 2) === 0) {
-            this.audioEngine.playEffect(s_footstep_dirt_2, false);
-        }
-        else {
-            this.audioEngine.playEffect(s_footstep_dirt_1, false);
-        }
-
-        this._footSoundCounter += 1;
-    },
-
-    stopWalkEffect:function () {
-        this.unschedule(this.playWalkEffect);
-        this.audioEngine.stopEffect(s_footstep_dirt_1);
-        this.audioEngine.stopEffect(s_footstep_dirt_2);
-    },
-
-    playRunEffect:function () {
-        cc.log("Efecto de correr.");
-        if ((this._footSoundCounter % 2) === 0) {
-            this.audioEngine.playEffect(s_footstep_dirt_2, false);
-        }
-        else {
-            this.audioEngine.playEffect(s_footstep_dirt_1, false);
-        }
-
-        this._footSoundCounter += 1;
-    },
-
-    stopRunEffect:function () {
-        this.unschedule(this.playRunEffect);
-        this.audioEngine.stopEffect(s_footstep_dirt_1);
-        this.audioEngine.stopEffect(s_footstep_dirt_2);
-    },
-
-    playJumpEffect:function () {
-        if ((this._footSoundCounter % 2) === 0) {
-            this.audioEngine.playEffect(s_footstep_dirt_2, false);
-        }
-        else {
-            this.audioEngine.playEffect(s_footstep_dirt_1, false);
-        }
-
-        this._footSoundCounter += 1;
-    },
-
-    stopJumpEffect:function () {
-        // this.audioEngine.playEffect(s_footstep_dirt_1, false);
-        this.unschedule(this.playJumpEffect);
-    },
-
-    getSpriteDescription:function () {
-        return this.spriteDescription;
-    },
-
-    setWalkDeltaPos:function (deltaPoint) {
-        this._walkDeltaPos = deltaPoint;
-    },
-
-    setRunDeltaPos:function (deltaPoint) {
-        this._runDeltaPos = deltaPoint;
-    },
-
-    setJumpDeltaPos:function (deltaPoint) {
-        this._jumpDeltaPos = deltaPoint;
-    },
-
-    setPlayerIsOnGround:function (status) {
-        this._onGround = status;
-    },
-
-    isPlayerOnGround:function () {
-        return this._onGround;
-    }
-});
-
-
-var Cossino = (function () {
-  // Instance stores a reference to the Singleton
-  var instance;
-
-  function init() {
-    return new CossinoSprite();
-  }
-
-  return {
-    // Get the Singleton instance if one exists
-    // or create one if it doesn't
-    getInstance:function () {
-      if ( !instance ) {
-        instance = init();
-      }
-
-      return instance;
-    }
-  };
-})();
-
-
-var ViradiumSprite = cc.Sprite.extend({
-    director: null,
-    wSizeWidth: null,
-    wSizeHeight: null,
-    frameCache: null,
-    audioEngine: null,
-    spriteDescription: null,
-
-    ctor:function () {
-        this._super();
-
-        this.setAnchorPoint(cc_Point(0.5, 0.5));
-
-        var cache = cc.SpriteFrameCache.getInstance();
-        cache.addSpriteFrames(s_viradium_plist, s_viradium_img);
-
-        this.director = cc.Director.getInstance();
-        this.wSizeWidth = this.director.getWinSize().width;
-        this.wSizeHeight = this.director.getWinSize().height;
-        this.frameCache = cc.SpriteFrameCache.getInstance();
-        this.audioEngine = cc.AudioEngine.getInstance();
-
-        this.spriteDescription = "Viradium";
-
-        this.initWithSpriteFrameName("viradium_1.png");
-
-        var next_frame = this.frameCache.getSpriteFrame("viradium_1.png");
-
-        this.setTextureRect(next_frame.getRect());
-        this.setContentSize(next_frame.getRect().width,
-                            next_frame.getRect().height);
-        this.setDisplayFrame(next_frame);
-
-        this.scheduleUpdate();
-    },
-
-    update:function () {
-    }
-});
-
-
 var Hist1Lvl1Layer = cc.Layer.extend({
     _debug: cc.COCOS2D_DEBUG,
     physics: null,
@@ -922,18 +131,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         // -------------------------------------------------------------------
         // Configure Box2D ---------------------------------------------------
         // -------------------------------------------------------------------
-        // Box2D
-        var b2Vec2 = Box2D.Common.Math.b2Vec2;
-        var b2BodyDef = Box2D.Dynamics.b2BodyDef;
-        var b2Body = Box2D.Dynamics.b2Body;
-        var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
-        var b2Fixture = Box2D.Dynamics.b2Fixture;
-        var b2World = Box2D.Dynamics.b2World;
-        var b2MassData = Box2D.Collision.Shapes.b2MassData;
-        var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
-        var b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
-        var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
-        var b2ContactListener = Box2D.Dynamics.b2ContactListener;
 
         // Construct a world object, which will hold and simulate the rigid bodies.
         var Physics = function (gravedadX, gravedadY, doSleep, scale, stepAmount) {
@@ -1221,7 +418,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     update:function (dt) {
         var this_obj = this;
         var physics = this_obj.physics;
-        var b2Vec2 = Box2D.Common.Math.b2Vec2;
         var spriteAngle = 0;
         var spritePositionOffset = 0;
         var bodyList = physics.world.GetBodyList();
@@ -1284,28 +480,29 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
             if (sprite === null) { continue; }
 
-            if (sprite instanceof cc_Sprite) {
-                if (sprite === this_obj._currentPlayer) {
-                    spritePosition = cc_Point(bodyf.GetPosition().x * physics.scale,
-                                              bodyf.GetPosition().y * physics.scale);
+            if (sprite === this_obj._currentPlayer) {
+                spritePosition = cc_Point(bodyf.GetPosition().x * physics.scale,
+                                          bodyf.GetPosition().y * physics.scale);
 
-                    spriteAngle = -1 * cc_RADIANS_TO_DEGREES(bodyf.GetAngle());
+                spriteAngle = -1 * cc_RADIANS_TO_DEGREES(bodyf.GetAngle());
 
-                    this_obj._playerCurrUIPos = spritePosition;
-                    this_obj._playerCurrUIRot = spriteAngle;
-                    sprite.setRotation(spriteAngle);
-                    sprite.setPosition(cc_Point(this_obj._wsizewidth / 2,
-                                                spritePosition.y));
-                }
-                else if (sprite instanceof ViradiumSprite) {
-                    spritePosition = cc_Point(bodyf.GetPosition().x * physics.scale,
-                                              bodyf.GetPosition().y * physics.scale);
+                this_obj._playerCurrUIPos = spritePosition;
+                this_obj._playerCurrUIRot = spriteAngle;
+                sprite.setRotation(spriteAngle);
+                sprite.setPosition(cc_Point(this_obj._wsizewidth / 2,
+                                            spritePosition.y));
+            }
+            else if (sprite instanceof ViradiumSprite) {
+                spritePosition = cc_Point(bodyf.GetPosition().x * physics.scale,
+                                          bodyf.GetPosition().y * physics.scale);
 
-                    spriteAngle = -1 * cc_RADIANS_TO_DEGREES(bodyf.GetAngle());
+                spriteAngle = -1 * cc_RADIANS_TO_DEGREES(bodyf.GetAngle());
 
-                    sprite.setPosition(cc_Point(spritePosition.x, spritePosition.y));
-                    sprite.setRotation(spriteAngle);
-                }
+                sprite.setPosition(cc_Point(spritePosition.x, spritePosition.y));
+                sprite.setRotation(spriteAngle);
+            }
+            else {
+                // TMX Object
             }
         }
 
@@ -1344,12 +541,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         cc.log("Add box body for sprite...");
 
         cc.log(sprite);
-
-        var b2BodyDef = Box2D.Dynamics.b2BodyDef;
-        var b2Body = Box2D.Dynamics.b2Body;
-        var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
-        var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
-        var b2Fixture = Box2D.Dynamics.b2Fixture;
 
         var spriteBodyDef = new b2BodyDef();
 
@@ -1406,13 +597,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         if ((object === null) || !(object instanceof Object)) { return false; }
 
         cc.log("Add box body for TMX object...");
-        var b2BodyDef = Box2D.Dynamics.b2BodyDef;
-        var b2Body = Box2D.Dynamics.b2Body;
-        var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
-        var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
-        var b2Fixture = Box2D.Dynamics.b2Fixture;
-        var b2Vec2 = Box2D.Common.Math.b2Vec2;
-        var b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
         var spriteShape = null;
         var objectBodyDef = null;
         var objectBody = null;
@@ -1642,12 +826,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         cc.log("Add box body for TMX Object & Sprite...");
 
-        var b2BodyDef = Box2D.Dynamics.b2BodyDef;
-        var b2Body = Box2D.Dynamics.b2Body;
-        var b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
-        var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
-        var b2Fixture = Box2D.Dynamics.b2Fixture;
-        var b2Vec2 = Box2D.Common.Math.b2Vec2;
         var hasGroundSensor = false;
         var fixedRotation = false;
         var forcedWidthCalc = sprite.getBoundingBox().size.width;
@@ -1812,8 +990,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             var sensorFixtureDef = new b2FixtureDef();
             var sensorShape = new b2PolygonShape();
 
-            sensorShape.SetAsOrientedBox(forcedWidth  / 2.2 / this.physics.scale,
-                                         forcedHeight / 100 / this.physics.scale,
+            sensorShape.SetAsOrientedBox(forcedWidth  / 2.1 / this.physics.scale,
+                                         forcedHeight / 80 / this.physics.scale,
                                          new b2Vec2(0, -1 * sprite.getBoundingBox().size.height / 2 / this.physics.scale),
                                          0);
 
@@ -2288,7 +1466,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         if ((this.physics === null) && (this.physics === undefined)) { return; }
 
         // Collision listener override
-        var b2ContactListener = Box2D.Dynamics.b2ContactListener;
         var collisionListener = new b2ContactListener();
 
         collisionListener.BeginContact = function (contact) {
@@ -2414,7 +1591,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             objectCossino = layerCossino.objectNamed("Cossino");
         }
 
-        var b2Vec2 = Box2D.Common.Math.b2Vec2;
         var objEscala = 0.5;
         var escalaCalc = 0.5;
         var walkDeltaPos = cc_Point(1.5, 0);
@@ -2774,7 +1950,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
     makePlayerJump:function () {
             var this_obj = this;
-            var b2Vec2 = Box2D.Common.Math.b2Vec2;
             var body = this_obj._playerPhysicBody;
             var multiplier = this_obj._playerJumpDeltaMultiplier;
             cc.log(multiplier);
@@ -2796,7 +1971,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
     makePlayerRun:function () {
         var this_obj = this;
-        var b2Vec2 = Box2D.Common.Math.b2Vec2;
         var body = this_obj._playerPhysicBody;
         var multiplier = this_obj._playerRunDeltaMultiplier;
 
@@ -2811,7 +1985,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
     makePlayerWalk:function () {
         var this_obj = this;
-        var b2Vec2 = Box2D.Common.Math.b2Vec2;
         var body = this_obj._playerPhysicBody;
         var multiplier = this_obj._playerWalkDeltaMultiplier;
 
@@ -2822,19 +1995,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var bodyMass = body.GetMass();
 
         body.ApplyImpulse(new b2Vec2(bodyMass * velChangeX, 0), body.GetWorldCenter());
-    }
-});
-
-
-var gameHUDLayer = cc.Layer.extend({
-    ctor:function () {
-        this._super();
-        this.init();
-    },
-
-    init:function () {
-        this.setPosition(cc_Point(0, 0));
-        return true;
     }
 });
 
