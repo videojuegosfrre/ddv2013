@@ -110,6 +110,9 @@ var s_menu_laser_effect = menu_music_dir + "m_efecto_laser";
 var s_menu_laser_effect_ogg = s_menu_laser_effect + ".ogg";
 var s_menu_laser_effect_mp3 = s_menu_laser_effect + ".mp3";
 
+var s_cossino_shoot = h_1_music_dir + "weapon/hks1";
+var s_cossino_shoot_mp3 = s_cossino_shoot + ".mp3";
+var s_cossino_shoot_ogg = s_cossino_shoot + ".ogg";
 
 // History 2 Resources
 // ---------------------------------------------------------------------
@@ -211,6 +214,8 @@ var g_resources = [
     {type:"sound", src:s_footstep_dirt_2_mp3},
     {type:"sound", src:s_menu_laser_effect_ogg},
     {type:"sound", src:s_menu_laser_effect_mp3},
+    {type:"sound", src:s_cossino_shoot_ogg},
+    {type:"sound", src:s_cossino_shoot_mp3},
 ];
 
 var TAGS = {
@@ -247,7 +252,8 @@ var CHR_STATUS = {
     WALK: 1,
     RUN: 2,
     JUMP: 3,
-    NOTSET: 4,
+    SHOOT: 4,
+    NOTSET: 5,
 };
 
 var CHR_DIRECTION = {
@@ -285,7 +291,8 @@ var KEYS = {
     GOLEFT: cc.KEY.left,
     GORIGHT: cc.KEY.right,
     JUMP: cc.KEY.w,
-    RUN: cc.KEY.s
+    RUN: cc.KEY.s,
+    SHOOT: cc.KEY.d
 };
 
 var KEYMOD_FLAGS = {

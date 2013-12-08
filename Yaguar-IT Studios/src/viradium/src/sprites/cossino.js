@@ -9,7 +9,9 @@ var CossinoSprite = cc.Sprite.extend({
     _FNJumpPrefix: "jump",
     _FNJumpIdx: 1,
     _FNWalkIdx: 1,
-    _FNWalkPrefix: "run",
+    _FNWalkPrefix: "walk",
+    _FNShootIdx: 1,
+    _FNShootPrefix: "shooting",
     _currentPos: null,
     _executingAnimation: false,
     _nextStatus: null,
@@ -19,6 +21,7 @@ var CossinoSprite = cc.Sprite.extend({
     _onFinishRunStop: false,
     _onFinishWalkStop: false,
     _onFinishJumpStop: false,
+    _onFinishShootStop: false,
     director: null,
     frameCache: null,
     wSizeWidth: 0,
@@ -29,6 +32,7 @@ var CossinoSprite = cc.Sprite.extend({
     _jumpDeltaPosCount: 0,
     _runDeltaPos: null,
     _runDeltaPosCount: 0,
+    _shootDeltaPos: null,
     _deltaPosTotal: null,
     _onTerrainType: null,
     audioEngine: null,
@@ -62,6 +66,7 @@ var CossinoSprite = cc.Sprite.extend({
         this._runDeltaPos = cc_Point(3.5, 0);
         this._jumpDeltaPos = cc_Point(1, 0);
         this._deltaPosTotal = cc_Point(0, 0);
+        this._shootDeltaPos = cc_Point(0, 0);
 
         this.initWithSpriteFrameName(this._FNStandPrefix + "1.png");
         //this.init();
@@ -118,8 +123,8 @@ var CossinoSprite = cc.Sprite.extend({
         menuItemX = this.wSizeWidth / 2;
         menuItemY = this.wSizeHeight / 2;
 
-        if (this._FNWalkIdx > 17) {
-            this._FNWalkIdx = 1;
+        if (this._FNWalkIdx > 18) {
+            this._FNWalkIdx = 5;
 
             // FIXME:
             if (this._onFinishWalkStop) {
@@ -199,6 +204,39 @@ var CossinoSprite = cc.Sprite.extend({
         this.setDisplayFrame(next_frame);
     },
 
+    updateShoot:function () {
+        var menuItemX, menuItemY = 0;
+
+        menuItemX = this.wSizeWidth / 2;
+        menuItemY = this.wSizeHeight / 2;
+
+        if (this._FNShootIdx > 8) {
+            this._FNShootIdx = 2;
+
+            // FIXME:
+            if (this._onFinishShootStop) {
+                this.stopJump();
+                this._nextStatus();
+            }
+        }
+
+        // cc.log(cossino_pj.FNStandIdx);
+
+        var indexAsString = this._FNShootIdx.toString();
+        this._FNShootIdx += 1;
+
+        var next_frame = this.frameCache.getSpriteFrame(this._FNShootPrefix +
+                                                   indexAsString + ".png");
+
+        this.removeAllChildren();
+        this.setTextureRect(next_frame.getRect());
+        this.setDisplayFrame(next_frame);
+    },
+
+    updateGunDown:function () {
+
+    },
+
     handleKeyDown:function (e) {
         cc.log("Handle Key Down Cossino.");
 
@@ -232,6 +270,9 @@ var CossinoSprite = cc.Sprite.extend({
             case KEYS.JUMP:
                 this.beginJump();
                 break;
+            case KEYS.SHOOT:
+                this.beginShoot();
+                break;
             default:
                 // this.beginStand();
         }
@@ -260,6 +301,11 @@ var CossinoSprite = cc.Sprite.extend({
                 if (this._currentStatus == CHR_STATUS.JUMP) {
                     this.reqOnFinishJumpStop();
                     //this.beginStand();
+                }
+                break;
+            case KEYS.SHOOT:
+                if (this._currentStatus === CHR_STATUS.SHOOT) {
+                    this.beginStand();
                 }
                 break;
             default:
@@ -315,6 +361,8 @@ var CossinoSprite = cc.Sprite.extend({
         this.stopWalkEffect();
         this.unschedule(this.updateJump);
         this.stopJumpEffect();
+        this.unschedule(this.updateShoot);
+        this.stopShootEffect();
 
         this.schedule(this.updateStand, 0.4);
         this.schedule(this.playStandEffect);
@@ -378,7 +426,7 @@ var CossinoSprite = cc.Sprite.extend({
         // Importante: la luz es más rápida que el sonido.
         // Reproducir sonido antes de animar.
         this.schedule(this.playWalkEffect, 0.65);
-        this.schedule(this.updateWalk, 0);
+        this.schedule(this.updateWalk, 0.12);
         this._executingAnimation = true;
     },
 
@@ -514,6 +562,54 @@ var CossinoSprite = cc.Sprite.extend({
         this._FNRunIdx = 1;
         this._onFinishRunStop = false;
         this._footSoundCounter = 0;
+    },
+
+    _shoot:function () {
+        this.beginShoot();
+    },
+
+    beginShoot:function () {
+        cc.log("Cossino Shoot.");
+        switch (this._currentDirection) {
+            case CHR_DIRECTION.RIGHT:
+                this._setDeltaPos(this._shootDeltaPos.x, this._shootDeltaPos.y);
+                break;
+            case CHR_DIRECTION.LEFT:
+                this._setDeltaPos(this._shootDeltaPos.x * -1, this._shootDeltaPos.y);
+                break;
+            case CHR_DIRECTION.UP:
+                this._setDeltaPos(this._shootDeltaPos.x, this._shootDeltaPos.y);
+                break;
+            case CHR_DIRECTION.DOWN:
+                this._setDeltaPos(this._shootDeltaPos.x, this._shootDeltaPos.y * -1);
+                break;
+        }
+
+        this._currentStatus = CHR_STATUS.SHOOT;
+        // Quick & Dirty, Hacky, Nasty...
+        // Must be refactored, improved...
+        this.unschedule(this.updateJump);
+        this.stopJumpEffect();
+        this.unschedule(this.updateWalk);
+        this.stopWalkEffect();
+        this.unschedule(this.updateStand);
+        this.stopStandEffect();
+        this.unschedule(this.updateRun);
+        this.stopRunEffect();
+
+        // Importante: la luz es más rápida que el sonido.
+        // Reproducir sonido antes de animar.
+        this.schedule(this.playShootEffect, 0.8);
+        this.schedule(this.updateShoot, 0.1);
+        this._executingAnimation = true;
+    },
+
+    stopShoot:function () {
+        this.clearDeltaPos();
+        this.unschedule(this.updateShoot);
+        this.stopShootEffect();
+        this._FNShootIdx = 1;
+        this._onFinishShootStop = false;
     },
 
     reqOnFinishRunStop:function (next_status) {
@@ -656,6 +752,15 @@ var CossinoSprite = cc.Sprite.extend({
     stopJumpEffect:function () {
         // this.audioEngine.playEffect(s_footstep_dirt_1, false);
         this.unschedule(this.playJumpEffect);
+    },
+
+    playShootEffect:function () {
+        this.audioEngine.playEffect(s_cossino_shoot);
+    },
+
+    stopShootEffect:function () {
+        this.unschedule(this.playShootEffect);
+        this.audioEngine.stopEffect(s_cossino_shoot);
     },
 
     getSpriteDescription:function () {

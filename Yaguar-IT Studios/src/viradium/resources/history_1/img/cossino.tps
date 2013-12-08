@@ -58,7 +58,7 @@
         <key>jpgQuality</key>
         <uint>80</uint>
         <key>pngOptimizationLevel</key>
-        <uint>2</uint>
+        <uint>3</uint>
         <key>textureSubPath</key>
         <string></string>
         <key>textureFormat</key>
