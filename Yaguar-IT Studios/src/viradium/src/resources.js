@@ -65,7 +65,8 @@ var s_bg_h1_layer2_part7 = h_1_img_dir + "background_2_7.png";
 var s_espina_1 = h_1_img_dir + "espina_1.png";
 var s_espina_2 = h_1_img_dir + "espina_2.png";
 var s_espina_3 = h_1_img_dir + "espina_3.png";
-var s_bad_alien_1 = h_1_img_dir + "bad_alien.png";
+var s_bad_alien_tipo_1_img = h_1_img_dir + "bad_alien_tipo_1.png";
+var s_bad_alien_tipo_1_plist = h_1_img_dir + "bad_alien_tipo_1.plist";
 
 var s_objects_layer_tmx = h_1_img_dir + "objects_layer.tmx";
 var s_roca_1_chica = h_1_img_dir + "roca_1_chica.png";
@@ -170,17 +171,18 @@ var g_resources = [
     {type:"image", src:s_espina_1},
     {type:"image", src:s_espina_2},
     {type:"image", src:s_espina_3},
-    {type:"image", src:s_bad_alien_1},
     {type:"image", src:s_roca_1_chica},
     {type:"image", src:s_roca_1_media},
     {type:"image", src:s_roca_1_grande},
     {type:"image", src:s_rocas_img},
     {type:"image", src:s_viradium_img},
+    {type:"image", src:s_bad_alien_tipo_1_img},
 
     //plist
     {type:"plist", src:s_cossino_plist},
     {type:"plist", src:s_rocas_plist},
     {type:"plist", src:s_viradium_plist},
+    {type:"plist", src:s_bad_alien_tipo_1_plist},
 
     //fnt
     {type:"fnt", src:s_font_bitmap_fnt},

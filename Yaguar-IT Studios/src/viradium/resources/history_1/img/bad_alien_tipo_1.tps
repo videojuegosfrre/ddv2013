@@ -36,7 +36,7 @@
         <key>dataFormat</key>
         <string>cocos2d</string>
         <key>textureFileName</key>
-        <filename>cossino.png</filename>
+        <filename>bad_alien_tipo_1.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>ditherType</key>
@@ -54,23 +54,23 @@
             </struct>
         </struct>
         <key>shapePadding</key>
-        <uint>2</uint>
+        <uint>1</uint>
         <key>jpgQuality</key>
         <uint>80</uint>
         <key>pngOptimizationLevel</key>
-        <uint>2</uint>
+        <uint>0</uint>
         <key>textureSubPath</key>
         <string></string>
         <key>textureFormat</key>
         <enum type="SettingsBase::TextureFormat">png</enum>
         <key>borderPadding</key>
-        <uint>2</uint>
+        <uint>1</uint>
         <key>maxTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>2048</int>
-            <key>height</key>
             <int>1024</int>
+            <key>height</key>
+            <int>512</int>
         </QSize>
         <key>fixedTextureSize</key>
         <QSize>
@@ -84,7 +84,7 @@
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
             <key>algorithm</key>
-            <enum type="AlgorithmSettings::AlgorithmId">MaxRects</enum>
+            <enum type="AlgorithmSettings::AlgorithmId">Basic</enum>
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
@@ -127,7 +127,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>cossino.plist</filename>
+                <filename>bad_alien_tipo_1.plist</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -160,13 +160,14 @@
             <key>trimThreshold</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">Trim</enum>
+            <enum type="SpriteSettings::TrimMode">None</enum>
             <key>heuristicMask</key>
             <false/>
         </struct>
         <key>fileList</key>
         <array>
-            <filename>../Sprite</filename>
+            <filename>C:/Users/Sebastian/Desktop/bad_alien_2.png</filename>
+            <filename>C:/Users/Sebastian/Desktop/bad_alien_1.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

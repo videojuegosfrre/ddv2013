@@ -466,6 +466,15 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 sprite.setPosition(cc_Point(spritePosition.x, spritePosition.y));
                 sprite.setRotation(spriteAngle);
             }
+            else if (sprite instanceof BadAlienSprite) {
+                spritePosition = cc_Point(bodyf.GetPosition().x * physics.scale,
+                                          bodyf.GetPosition().y * physics.scale);
+
+                spriteAngle = -1 * cc_RADIANS_TO_DEGREES(bodyf.GetAngle());
+
+                sprite.setPosition(cc_Point(spritePosition.x, spritePosition.y));
+                sprite.setRotation(spriteAngle);
+            }
             else if (sprite instanceof Object) {
                 // TMX Object
             }
@@ -1771,8 +1780,10 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         cc.log(objectsColisiones);
 
         var objColisionesLength = objectsColisiones.length;
+        var colision = null;
+
         for (var c = 0; c < objColisionesLength; c++) {
-            var colision = objectsColisiones[c];
+            colision = objectsColisiones[c];
             cc.log(colision);
 
             this.addBoxBodyForTMXObject(colision);
@@ -1795,7 +1806,81 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         cc.log(objectsTrayectorias);
 
         var objTrayecLength = objectsTrayectorias.length;
+        var trayectoria = null;
+        var tipoPersonaje = "";
+        var spritePersonaje = null;
+        var escalaPersonaje = 1.0;
+        var escalaPersonajeCalc = 1.0;
+        var boxPhyCharacter = null;
+
         for (var t = 0; t < objTrayecLength; t++) {
+            trayectoria = objectsTrayectorias[t];
+
+            if (trayectoria.Personaje) {
+                tipoPersonaje = trayectoria.Personaje.trim().toLowerCase();
+            }
+            else if (trayectoria.personaje) {
+                tipoPersonaje = trayectoria.personaje.trim().toLowerCase();
+            }
+
+            if (trayectoria.EscalaPersonaje) {
+                escalaPersonajeCalc = parseFloat(trayectoria.EscalaPersonaje);
+            }
+            else if (trayectoria.escalapersonaje) {
+                escalaPersonajeCalc = parseFloat(trayectoria.escalapersonaje);
+            }
+            if (!isNaN(escalaPersonajeCalc) && (escalaPersonajeCalc > 0)) {
+                escalapersonaje = escalaPersonajeCalc;
+            }
+
+            switch (tipoPersonaje) {
+                case "cossino":
+                    spritePersonaje = new Cossino();
+                    break;
+                case "viradium":
+                    spritePersonaje = new ViradiumSprite();
+                    break;
+                case "badalien1":
+                    spritePersonaje = new BadAlienSprite();
+                    break;
+                default:
+                    spritePersonaje = null;
+            }
+
+            if (spritePersonaje) {
+                spritePersonaje.setScale(escalaPersonaje);
+
+                boxPhyCharacter = Object.create({},
+                    { x: {
+                          value: trayectoria.x,
+                          writable: true,
+                          enumerable: true,
+                          configurable: true
+                          },
+                      y : {
+                          value: trayectoria.y,
+                          writable: true,
+                          enumerable: true,
+                          configurable: true
+                          },
+                      height : {
+                          value: spritePersonaje.getContentSize().height * spritePersonaje.getScaleY(),
+                          writable: true,
+                          enumerable: true,
+                          configurable: true
+                          },
+                      width : {
+                          value: spritePersonaje.getContentSize().width * spritePersonaje.getScaleX(),
+                          writable: true,
+                          enumerable: true,
+                          configurable: true
+                          }
+                    });
+
+                this._tileMap.addChild(spritePersonaje, -1);
+
+                this.addBoxBodyForTMXObject(boxPhyCharacter, spritePersonaje);
+            }
         }
 
         return true;
