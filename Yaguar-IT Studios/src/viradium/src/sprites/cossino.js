@@ -124,7 +124,7 @@ var CossinoSprite = cc.Sprite.extend({
         menuItemY = this.wSizeHeight / 2;
 
         if (this._FNWalkIdx > 18) {
-            this._FNWalkIdx = 5;
+            this._FNWalkIdx = 6;
 
             // FIXME:
             if (this._onFinishWalkStop) {
