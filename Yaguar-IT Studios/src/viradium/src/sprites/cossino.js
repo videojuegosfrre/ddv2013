@@ -1,17 +1,17 @@
 var CossinoSprite = cc.Sprite.extend({
     _currentDirection: CHR_DIRECTION.RIGHT,
     _currentStatus: CHR_STATUS.STAND,
-    _FNStandPrefix: "stand",
+    _FNStandPrefix: "cossino_stand",
     _FNStandIdx: 1,
     _FNStandDir: 1,
-    _FNRunPrefix: "run",
+    _FNRunPrefix: "cossino_run",
     _FNRunIdx: 1,
-    _FNJumpPrefix: "jump",
+    _FNJumpPrefix: "cossino_jump",
     _FNJumpIdx: 1,
     _FNWalkIdx: 1,
-    _FNWalkPrefix: "walk",
+    _FNWalkPrefix: "cossino_walk",
     _FNShootIdx: 1,
-    _FNShootPrefix: "shooting",
+    _FNShootPrefix: "cossino_shooting",
     _currentPos: null,
     _executingAnimation: false,
     _nextStatus: null,
@@ -426,7 +426,7 @@ var CossinoSprite = cc.Sprite.extend({
         // Importante: la luz es más rápida que el sonido.
         // Reproducir sonido antes de animar.
         this.schedule(this.playWalkEffect, 0.65);
-        this.schedule(this.updateWalk, 0.12);
+        this.schedule(this.updateWalk, 0.1);
         this._executingAnimation = true;
     },
 

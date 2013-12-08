@@ -43,7 +43,7 @@
             // Sprites managers
             'src/sprites/cossino.js',
             'src/sprites/viradium.js',
-            'src/sprites/aliens.js',
+            'src/sprites/lander.js',
             // HUD
             'src/hud/hud.js',
             // Menú principal

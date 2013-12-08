@@ -466,7 +466,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 sprite.setPosition(cc_Point(spritePosition.x, spritePosition.y));
                 sprite.setRotation(spriteAngle);
             }
-            else if (sprite instanceof BadAlienSprite) {
+            else if (sprite instanceof LanderSprite) {
                 spritePosition = cc_Point(bodyf.GetPosition().x * physics.scale,
                                           bodyf.GetPosition().y * physics.scale);
 
@@ -965,7 +965,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             var sensorShape = new b2PolygonShape();
 
             sensorShape.SetAsOrientedBox(forcedWidth  / 2.1 / this.physics.scale,
-                                         forcedHeight / 80 / this.physics.scale,
+                                         forcedHeight / 60 / this.physics.scale,
                                          new b2Vec2(0, -1 * sprite.getBoundingBox().size.height / 2 / this.physics.scale),
                                          0);
 
@@ -1457,7 +1457,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 if (userDataA instanceof CossinoSprite) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("Begin Body A (Cossino Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
-                    userDataA.setColor(new cc.Color4B(255, 0, 0, 128));
+                    // userDataA.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
                 else if (userDataA instanceof ViradiumSprite) {
                     // TODO: Eliminar líneas de logging y color
@@ -1465,11 +1465,14 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     cc.log(userDataA.getViradiumQuantity());
                     userDataA.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
+                else if (userDataA instanceof LanderSprite) {
+                    bodyA.GetUserData().playerIsOnRange();
+                }
                 else if (userDataA instanceof Object) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("Begin Body A (TMX Object): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
                 }
-                else if (userDataA == 1000) {
+                else if ((userDataA == 1000) && (!fixtureB.IsSensor())) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("Begin Ground Sensor A.");
                     bodyA.GetUserData().setPlayerIsOnGround(true);
@@ -1480,7 +1483,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 if (userDataB instanceof CossinoSprite) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("Begin Body B (Cossino Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
-                    userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
+                    // userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
                 else if (userDataB instanceof ViradiumSprite) {
                     // TODO: Eliminar líneas de logging y color
@@ -1488,11 +1491,14 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
                     cc.log(userDataB.getViradiumQuantity());
                 }
+                else if (userDataB instanceof LanderSprite) {
+                    bodyB.GetUserData().playerIsOnRange();
+                }
                 else if (userDataB instanceof Object) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("Begin Body B (TMX Object): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                 }
-                else if (userDataB == 1000) {
+                else if ((userDataB == 1000) && (!fixtureA.IsSensor())) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("Begin Ground Sensor B.");
                     bodyB.GetUserData().setPlayerIsOnGround(true);
@@ -1513,18 +1519,21 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 if (userDataA instanceof CossinoSprite) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("End Body A (Cossino Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
-                    userDataA.setColor(new cc.Color4B(0, 0, 255, 128));
+                    // userDataA.setColor(new cc.Color4B(0, 0, 255, 128));
                 }
                 else if (userDataA instanceof ViradiumSprite) {
                     // TODO: Eliminar líneas de logging y color
-                    cc.log("Begin Body A (Viradium Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                    cc.log("End Body A (Viradium Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
                     userDataA.setColor(new cc.Color4B(0, 0, 255, 128));
+                }
+                else if (userDataA instanceof LanderSprite) {
+                    bodyA.GetUserData().playerIsOnRange();
                 }
                 else if (userDataA instanceof Object) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("End Body A (TMX Object): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
                 }
-                else if (userDataA == 1000) {
+                else if ((userDataA == 1000) && (!fixtureB.IsSensor())) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("End Ground Sensor A.");
                     bodyA.GetUserData().setPlayerIsOnGround(false);
@@ -1535,18 +1544,21 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 if (userDataB instanceof CossinoSprite) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("End Body B (Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
-                    userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
+                    // userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
                 else if (userDataB instanceof ViradiumSprite) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("End Body B (Viradium Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                     userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
+                else if (userDataB instanceof LanderSprite) {
+                    bodyB.GetUserData().playerIsOnRange();
+                }
                 else if (userDataB instanceof Object) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("End Body B (TMX Object): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                 }
-                else if (userDataB == 1000) {
+                else if ((userDataB == 1000) && (!fixtureA.IsSensor())) {
                     // TODO: Eliminar líneas de logging y color
                     cc.log("End Ground Sensor B.");
                     bodyB.GetUserData().setPlayerIsOnGround(false);
@@ -1840,8 +1852,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 case "viradium":
                     spritePersonaje = new ViradiumSprite();
                     break;
-                case "badalien1":
-                    spritePersonaje = new BadAlienSprite();
+                case "lander":
+                    spritePersonaje = new LanderSprite();
                     break;
                 default:
                     spritePersonaje = null;

@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>jump1.png</key>
+            <key>cossino_jump1.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{487,816},{63,200}}</string>
@@ -17,7 +17,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump10.png</key>
+            <key>cossino_jump10.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1228,677},{155,152}}</string>
@@ -30,7 +30,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump11.png</key>
+            <key>cossino_jump11.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{973,737},{165,162}}</string>
@@ -43,7 +43,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump12.png</key>
+            <key>cossino_jump12.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1160,864},{157,158}}</string>
@@ -56,7 +56,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump13.png</key>
+            <key>cossino_jump13.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{807,186},{149,174}}</string>
@@ -69,7 +69,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump14.png</key>
+            <key>cossino_jump14.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{950,362},{125,172}}</string>
@@ -82,7 +82,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump15.png</key>
+            <key>cossino_jump15.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1104,172},{111,164}}</string>
@@ -95,7 +95,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump16.png</key>
+            <key>cossino_jump16.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1366,335},{97,154}}</string>
@@ -108,7 +108,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump17.png</key>
+            <key>cossino_jump17.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1319,834},{85,146}}</string>
@@ -121,7 +121,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump18.png</key>
+            <key>cossino_jump18.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1137,702},{89,160}}</string>
@@ -134,7 +134,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump19.png</key>
+            <key>cossino_jump19.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1007,2},{85,170}}</string>
@@ -147,7 +147,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump2.png</key>
+            <key>cossino_jump2.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{689,404},{89,190}}</string>
@@ -160,7 +160,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump20.png</key>
+            <key>cossino_jump20.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{728,200},{77,184}}</string>
@@ -173,7 +173,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump21.png</key>
+            <key>cossino_jump21.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{609,810},{71,194}}</string>
@@ -186,7 +186,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump22.png</key>
+            <key>cossino_jump22.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{702,2},{71,196}}</string>
@@ -199,7 +199,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump3.png</key>
+            <key>cossino_jump3.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{900,2},{105,174}}</string>
@@ -212,7 +212,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump4.png</key>
+            <key>cossino_jump4.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1273,494},{143,154}}</string>
@@ -225,7 +225,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump5.png</key>
+            <key>cossino_jump5.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1146,517},{125,158}}</string>
@@ -238,7 +238,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump6.png</key>
+            <key>cossino_jump6.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{775,2},{123,182}}</string>
@@ -251,7 +251,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump7.png</key>
+            <key>cossino_jump7.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,834},{119,186}}</string>
@@ -264,7 +264,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump8.png</key>
+            <key>cossino_jump8.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{834,737},{137,166}}</string>
@@ -277,7 +277,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>jump9.png</key>
+            <key>cossino_jump9.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1094,2},{137,168}}</string>
@@ -290,7 +290,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run1.png</key>
+            <key>cossino_run1.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{780,386},{175,168}}</string>
@@ -303,7 +303,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run10.png</key>
+            <key>cossino_run10.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{682,799},{173,150}}</string>
@@ -316,7 +316,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run11.png</key>
+            <key>cossino_run11.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1217,172},{161,154}}</string>
@@ -329,7 +329,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run12.png</key>
+            <key>cossino_run12.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1371,2},{135,160}}</string>
@@ -342,7 +342,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run13.png</key>
+            <key>cossino_run13.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{834,905},{117,164}}</string>
@@ -355,7 +355,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run14.png</key>
+            <key>cossino_run14.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1000,904},{117,158}}</string>
@@ -368,7 +368,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run15.png</key>
+            <key>cossino_run15.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1218,335},{157,146}}</string>
@@ -381,7 +381,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run16.png</key>
+            <key>cossino_run16.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{662,606},{191,148}}</string>
@@ -394,7 +394,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run17.png</key>
+            <key>cossino_run17.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{266,616},{201,146}}</string>
@@ -407,7 +407,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run2.png</key>
+            <key>cossino_run2.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{812,563},{171,172}}</string>
@@ -420,7 +420,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run3.png</key>
+            <key>cossino_run3.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{985,536},{159,164}}</string>
@@ -433,7 +433,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run4.png</key>
+            <key>cossino_run4.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1077,351},{139,164}}</string>
@@ -446,7 +446,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run5.png</key>
+            <key>cossino_run5.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1373,164},{139,152}}</string>
@@ -459,7 +459,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run6.png</key>
+            <key>cossino_run6.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1508,2},{149,148}}</string>
@@ -472,7 +472,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run7.png</key>
+            <key>cossino_run7.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{1233,2},{161,136}}</string>
@@ -485,7 +485,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run8.png</key>
+            <key>cossino_run8.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{958,178},{171,144}}</string>
@@ -498,7 +498,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>run9.png</key>
+            <key>cossino_run9.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{123,834},{185,142}}</string>
@@ -511,7 +511,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>shooting1.png</key>
+            <key>cossino_shooting1.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{463,2},{89,200}}</string>
@@ -524,7 +524,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>shooting10.png</key>
+            <key>cossino_shooting10.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{422,816},{63,200}}</string>
@@ -537,7 +537,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>shooting2.png</key>
+            <key>cossino_shooting2.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{461,204},{123,200}}</string>
@@ -550,7 +550,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>shooting3.png</key>
+            <key>cossino_shooting3.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{457,408},{145,200}}</string>
@@ -563,7 +563,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>shooting4.png</key>
+            <key>cossino_shooting4.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{300,412},{155,200}}</string>
@@ -576,7 +576,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>shooting5.png</key>
+            <key>cossino_shooting5.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{267,819},{153,200}}</string>
@@ -589,7 +589,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>shooting6.png</key>
+            <key>cossino_shooting6.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{314,2},{147,200}}</string>
@@ -602,7 +602,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>shooting7.png</key>
+            <key>cossino_shooting7.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{414,614},{149,200}}</string>
@@ -615,7 +615,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>shooting8.png</key>
+            <key>cossino_shooting8.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{312,206},{147,200}}</string>
@@ -628,7 +628,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>shooting9.png</key>
+            <key>cossino_shooting9.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{554,2},{81,200}}</string>
@@ -641,7 +641,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>stand1.png</key>
+            <key>cossino_stand1.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{229,412},{69,202}}</string>
@@ -654,7 +654,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>stand2.png</key>
+            <key>cossino_stand2.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{162,2},{69,204}}</string>
@@ -667,7 +667,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>stand3.png</key>
+            <key>cossino_stand3.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{158,208},{69,204}}</string>
@@ -680,7 +680,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>stand4.png</key>
+            <key>cossino_stand4.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,626},{69,206}}</string>
@@ -693,7 +693,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk1.png</key>
+            <key>cossino_walk1.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{73,626},{65,206}}</string>
@@ -706,7 +706,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk10.png</key>
+            <key>cossino_walk10.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{83,210},{73,204}}</string>
@@ -719,7 +719,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk11.png</key>
+            <key>cossino_walk11.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{168,414},{59,204}}</string>
@@ -732,7 +732,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk12.png</key>
+            <key>cossino_walk12.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{209,620},{55,204}}</string>
@@ -745,7 +745,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk13.png</key>
+            <key>cossino_walk13.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{233,2},{79,202}}</string>
@@ -758,7 +758,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk14.png</key>
+            <key>cossino_walk14.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{565,610},{95,198}}</string>
@@ -771,7 +771,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk15.png</key>
+            <key>cossino_walk15.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{604,406},{83,198}}</string>
@@ -784,7 +784,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk16.png</key>
+            <key>cossino_walk16.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{552,816},{55,200}}</string>
@@ -797,7 +797,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk17.png</key>
+            <key>cossino_walk17.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{637,2},{63,200}}</string>
@@ -810,7 +810,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk18.png</key>
+            <key>cossino_walk18.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{79,418},{87,204}}</string>
@@ -823,7 +823,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk2.png</key>
+            <key>cossino_walk2.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{91,2},{69,204}}</string>
@@ -836,7 +836,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk3.png</key>
+            <key>cossino_walk3.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,210},{79,206}}</string>
@@ -849,7 +849,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk4.png</key>
+            <key>cossino_walk4.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{87,206}}</string>
@@ -862,7 +862,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk5.png</key>
+            <key>cossino_walk5.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,418},{75,206}}</string>
@@ -875,7 +875,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk6.png</key>
+            <key>cossino_walk6.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{140,624},{67,204}}</string>
@@ -888,7 +888,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk7.png</key>
+            <key>cossino_walk7.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{586,204},{67,200}}</string>
@@ -901,7 +901,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk8.png</key>
+            <key>cossino_walk8.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{655,204},{71,198}}</string>
@@ -914,7 +914,7 @@
                 <key>sourceSize</key>
                 <string>{255,206}</string>
             </dict>
-            <key>walk9.png</key>
+            <key>cossino_walk9.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{229,208},{81,202}}</string>
@@ -937,7 +937,7 @@
             <key>size</key>
             <string>{2048,1024}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:8a349c195f5b881c0887f7978db4436a:e56a099e7d140d225900857a79b8a31b:afe759d740d7797feecc74fc361e3a44$</string>
+            <string>$TexturePacker:SmartUpdate:a67a2af0f4b8db1f5cb475c831381a7e:e56a099e7d140d225900857a79b8a31b:afe759d740d7797feecc74fc361e3a44$</string>
             <key>textureFileName</key>
             <string>cossino.png</string>
         </dict>
