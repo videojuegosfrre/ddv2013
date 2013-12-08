@@ -1527,7 +1527,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     userDataA.setColor(new cc.Color4B(0, 0, 255, 128));
                 }
                 else if (userDataA instanceof LanderSprite) {
-                    bodyA.GetUserData().playerIsOnRange();
+                    bodyA.GetUserData().playerIsOutOfRange();
                 }
                 else if (userDataA instanceof Object) {
                     // TODO: Eliminar líneas de logging y color
@@ -1552,7 +1552,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
                 else if (userDataB instanceof LanderSprite) {
-                    bodyB.GetUserData().playerIsOnRange();
+                    bodyB.GetUserData().playerIsOutOfRange();
                 }
                 else if (userDataB instanceof Object) {
                     // TODO: Eliminar líneas de logging y color
