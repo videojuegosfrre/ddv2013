@@ -7,9 +7,9 @@
   <property name="ParallaxBG0RatioX" value="2.1"/>
   <property name="ParallaxBG0RatioY" value="0.0"/>
   <property name="ParallaxBG1RatioX" value="1.5"/>
-  <property name="ParallaxBG1RatioY" value="-0.09"/>
+  <property name="ParallaxBG1RatioY" value="-0.1"/>
   <property name="ParallaxBG2RatioX" value="1.0"/>
-  <property name="ParallaxBG2RatioY" value="-0.15"/>
+  <property name="ParallaxBG2RatioY" value="-0.2"/>
   <property name="ParallaxTilemapRatioX" value="2.1"/>
   <property name="ParallaxTilemapRatioY" value="0"/>
  </properties>
@@ -33,17 +33,27 @@
  <tileset firstgid="4" name="RocasTileset" tilewidth="32" tileheight="32">
   <image source="rocas.png" width="1024" height="1024"/>
  </tileset>
+ <layer name="Background_3" width="350" height="19">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3YQY6DMAwFUG7Zsusx5jhzlDnasK1UIAGj2PQ9CbGpinCSb5JpAgAAAAAAAACAPOZpej2Xe8Q1F3guwGhLbr1+lnvEtfzXb/bnRovsH/pMn73aqxNZLXPz7xl0zR35N+q50SL7R5Y+cyTPRmTgXu1H9mPgOpH9I0ufOZJnkRm4leHz++/S9mO2tY5xRj173Ozvkk1Lbe9a0yN5FpmBWxnuG/YeKo/x3jdGpXfJpqW21Wpa5Ty08pqkzVafvnqfcvZbu2ePa8/Vp6W21Wq610uyZJrcranKHtH8GqfKHImU8Tz00zg8rIuSsu0R19a4+TVOtjnyrVrGwZjUEL1HPHse0Du3zK/r3fEcoSK5y5qz5wFyFz6Tu6yRu3ANucsauQvX+Nbc/Qcjvr8A6GcAAA==
+  </data>
+ </layer>
+ <layer name="Background_4" width="350" height="19">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3SuU0EQRRF0Z5xAYclCsBhiQJwWKIAHJZEBkiEJQogEiAHntl2q41S/XOka5ZUT/rDAAAAAAAAAAAAAAAAAAAAAAAAVLGZttJ22pnw/nMxDF/pezHvv1rR+76xClsrbKR9B+kwHaXjCe9/cr+/6a/TO+5931iFrRU20r7zdJEu09WE92vLYVhPG8t5/9WK3veNVdhaYSPtu0v36SE9Tni/m/vdS/ud3nHv+8YqbK2wkfat0lN6Ti8T3p/kfk/TWad33Pu+sQpbK2ykfa/pLb2njwnvr3O/N+m20zvufd9Yha0VNs7hH3mbolPoZwAA
+  </data>
+ </layer>
  <layer name="Background_2" width="350" height="19">
   <properties>
    <property name="Name" value="Background"/>
   </properties>
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3PNVJEURgG0XkB7u62ONzdLQAGd/fF4e4uTTQLIICgu+6p+rNbXyhkZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZm9rsOcIgjHOMEpzjDOS5wiStc4wa3uMM9HvCIJzzjBa94wzs+8Imvn88CHsqDyP9V3NWoQS3qUI8GNKIJzWhBK9rQjg50ogvd6EEv+tCPAQxiCMPB3+2sQGXgTne6052RnVHc0YhBLOIQjwQkIgnJSEEq0pCODGQiC9nIQS7ykI8CFKIIxShBKcowglGMIYxxTGASU5jGDGYxh3ksYBFLWMYKVrGGdWxgE1vYxg52sYf9wJ3udKc7/8/ObxuCpyDoZwAA
+   H4sIAAAAAAAAA+3PNVJEURgG0XkB7u62ONzdLQAGd/fF4e4uTTQLIICgu+6p+rNbXyhkZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZm9rsOcIgjHOMEpzjDOS5wiStc4wa3uMM9HvCIJzzjBa94wzs+8Imvn88CHsqDyP9V3NWoQS3qUI8GNKIJzWhBK9rQjg50ogvd6EEv+tCPAQxiCMPB3+2sQGXgTne6052RnVHc0YhBLOIQjwQkIgnJSEEq0pCODGQiC9nIQS7ykI8CFKIIxShBKcowglGMIYxxTGASU5jGDGYxh3ksYBFLWMYKVrGGdWxgE1vYxg52sYf9wJ3udKc7/8/ObxuCpyDoZwAA
   </data>
  </layer>
  <layer name="Background_1" width="350" height="19">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3YV0rFQBgF4Pti2YhlIxZQLIuwgGJZh2LZsf9LIISBlJmY5Ob74BAmhJkDf55mswEAAAAAAAAAAAAAAAAAAKCLnchuZC+yP3EXgDU4iBxGjiLHE3cBWIOTyGnkLHI+cReANbiL3EceIo8TdwHYNu5ygW1yEblMPOdkyF3uVeQ6chO5TayXoNm5mk3f97nq+3c9u7Sc/cfqVmo+bf/qmJ1LfUs/T5HnxHNOhtzlvkReI2+R98R6CZqdq9n0fZ+rvn/Xs0vL2X+sbqXm0/avjtm51Lf08xH5TDznZMhd7lfkO/IT+U2sl6DZuZpN3/e56vt3Pbu0nP3H6lZqPm3/6pidS3373/4AWYoGwOhnAAA=
+   H4sIAAAAAAAAA+3SbWoCMRAGYO9X0XoOpdZztPhx486fhWUJ7IZMpIHngZeQECYDk90OAAAAAAAAAAAAAAAAAAAAAAAAAAAA+G8+IvvCOrpD5Bj5jJwK+xEse55mU3veal5/69vZWur36i1rPmt/tWfPWXepc45cCuvoviLXyHfkVtiPYNnzNJva81bz+lvfztZSv1dvWfNZ+6s9e866S52fyG9hHd098og8I6/CfgTLnqfZ1J63mtff+na2lvq9esuaz9pf7dlz1t13+wP/V4uQ6GcAAA==
   </data>
  </layer>
  <objectgroup name="Coleccionables" width="350" height="19">
@@ -163,48 +173,48 @@
   </properties>
   <object name="Trayectoria" type="Trayectoria" x="9760" y="576">
    <properties>
-    <property name="EscalaPersonaje" value="0.8"/>
-    <property name="Personaje" value="Lander"/>
+    <property name="EscalaPersonaje" value="0.7"/>
+    <property name="Personaje" value="BadAlien1"/>
     <property name="RotacionFija" value="True"/>
    </properties>
    <polyline points="0,0 192,0"/>
   </object>
   <object name="Trayectoria" type="Trayectoria" x="4320" y="576">
    <properties>
-    <property name="EscalaPersonaje" value="0.8"/>
-    <property name="Personaje" value="Lander"/>
+    <property name="EscalaPersonaje" value="0.7"/>
+    <property name="Personaje" value="BadAlien1"/>
     <property name="RotacionFija" value="True"/>
    </properties>
    <polyline points="0,0 416,0"/>
   </object>
   <object name="Trayectoria" type="Trayectoria" x="5088" y="224">
    <properties>
-    <property name="EscalaPersonaje" value="0.8"/>
-    <property name="Personaje" value="Lander"/>
+    <property name="EscalaPersonaje" value="0.7"/>
+    <property name="Personaje" value="BadAlien1"/>
     <property name="RotacionFija" value="True"/>
    </properties>
    <polyline points="0,0 416,0"/>
   </object>
   <object name="Trayectoria" type="Trayectoria" x="5504" y="576">
    <properties>
-    <property name="EscalaPersonaje" value="0.8"/>
-    <property name="Personaje" value="Lander"/>
+    <property name="EscalaPersonaje" value="0.7"/>
+    <property name="Personaje" value="BadAlien1"/>
     <property name="RotacionFija" value="True"/>
    </properties>
    <polyline points="0,0 416,0"/>
   </object>
-  <object name="Trayectoria" type="Trayectoria" x="6560" y="572">
+  <object name="Trayectoria" type="Trayectoria" x="6560" y="576">
    <properties>
-    <property name="EscalaPersonaje" value="0.8"/>
-    <property name="Personaje" value="Lander"/>
+    <property name="EscalaPersonaje" value="0.7"/>
+    <property name="Personaje" value="BadAlien1"/>
     <property name="RotacionFija" value="True"/>
    </properties>
    <polyline points="0,0 416,0"/>
   </object>
   <object name="Trayectoria" type="Trayectoria" x="7168" y="256">
    <properties>
-    <property name="EscalaPersonaje" value="0.8"/>
-    <property name="Personaje" value="Lander"/>
+    <property name="EscalaPersonaje" value="0.7"/>
+    <property name="Personaje" value="BadAlien1"/>
     <property name="RotacionFija" value="True"/>
    </properties>
    <polyline points="0,0 416,0"/>
