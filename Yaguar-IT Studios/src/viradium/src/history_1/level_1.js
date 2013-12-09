@@ -2032,6 +2032,13 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         ctx.canvas.height = 600;
         ctx.canvas.width = 1024;
 
+        if ((deltaPoint.x !== 0) && this._debugCanvasCtx) {
+            this._debugCanvasCtx.fillRect(this._debugCanvas.x,
+                                          this._debugCanvas.y,
+                                          this._debugCanvas.width,
+                                          this._debugCanvas.height);
+        }
+
         // Destroy everything
         this.removeChild(this.parallaxChild);
         this.removeChild(this._currentPlayer);
