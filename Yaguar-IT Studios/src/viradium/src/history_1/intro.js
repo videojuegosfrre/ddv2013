@@ -28,6 +28,8 @@ var IntroHist1Layer = cc.LayerColor.extend({
                                                    this.saltarIntro,
                                                    this);
 
+        menuItem0.setColor(new cc.Color3B(0, 255, 0));
+
         menuItemX = wSizeWidth / 2;
         menuItemY = wSizeHeight / 2;
 

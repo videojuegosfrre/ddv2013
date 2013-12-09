@@ -1103,7 +1103,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
     _createStatsLabel: null,
 
     _createStatsLabelForWebGL:function(){
-        if((cc.Director._fpsImageLoaded == null) || (cc.Director._fpsImageLoaded == false))
+        if((cc.Director._fpsImageLoaded === null) || (cc.Director._fpsImageLoaded === false))
             return;
 
         var texture = new cc.Texture2D();
@@ -1147,8 +1147,11 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
 
         var locStatsPosition = cc.DIRECTOR_STATS_POSITION;
         this._drawsLabel.setPosition(cc.pAdd(cc.p(0, 34 * factor), locStatsPosition));
+        this._drawsLabel.setColor(new cc.Color3B(0, 255, 0));
         this._SPFLabel.setPosition(cc.pAdd(cc.p(0, 17 * factor), locStatsPosition));
+        this._SPFLabel.setColor(new cc.Color3B(0, 255, 0));
         this._FPSLabel.setPosition(locStatsPosition);
+        this._FPSLabel.setColor(new cc.Color3B(0, 255, 0));
     },
 
     _createStatsLabelForCanvas:function(){
@@ -1165,10 +1168,13 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
         var locStatsPosition = cc.DIRECTOR_STATS_POSITION;
         var contentSize = this._drawsLabel.getContentSize();
         this._drawsLabel.setPosition(cc.pAdd(cc.p(contentSize.width / 2, contentSize.height * 5 / 2), locStatsPosition));
+        this._drawsLabel.setColor(new cc.Color3B(0, 255, 0));
         contentSize = this._SPFLabel.getContentSize();
         this._SPFLabel.setPosition(cc.pAdd(cc.p(contentSize.width / 2, contentSize.height * 3 / 2), locStatsPosition));
+        this._SPFLabel.setColor(new cc.Color3B(0, 255, 0));
         contentSize = this._FPSLabel.getContentSize();
         this._FPSLabel.setPosition(cc.pAdd(cc.p(contentSize.width / 2, contentSize.height / 2), locStatsPosition));
+        this._FPSLabel.setColor(new cc.Color3B(0, 255, 0));
     },
 
     _calculateMPF: function () {

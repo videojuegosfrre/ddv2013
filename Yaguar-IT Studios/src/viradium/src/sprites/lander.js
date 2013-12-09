@@ -24,6 +24,7 @@ var LanderSprite = cc.Sprite.extend({
     _playerPhysicBody: null,
     _onGround: false,
     _standDeltaPos: null,
+    _health: 0,
 
     ctor:function () {
         cc.log("Constructor: LanderSprite");
@@ -318,5 +319,13 @@ var LanderSprite = cc.Sprite.extend({
 
     hitByEnemy:function () {
         cc.log("Lander ha sido alcanzado por fuego enemigo!");
+    },
+
+    setHealth:function (health) {
+        this._health = health;
+    },
+
+    getHealth:function () {
+        return this._health;
     }
 });

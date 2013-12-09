@@ -7,14 +7,14 @@ var MainMenuLayer = cc.LayerColor.extend({
 
     init:function()
     {
-        this._super(new cc.Color4B(0, 0, 0, 255), 200, 200);
+        this._super(new cc.Color4B(0, 0, 0, 255));
 
         var director = cc.Director.getInstance();
         var wSizeWidth = director.getWinSize().width;
         var wSizeHeight = director.getWinSize().height;
         var audioEngine = cc.AudioEngine.getInstance();
         var systemCapabilities = sys.capabilities;
-        var cc_Point = cc.Point;
+        var cc_Point = cc.p;
         var cc_MenuItemFont = cc.MenuItemFont;
         var menuItemX, menuItemY = 0;
 
@@ -25,8 +25,8 @@ var MainMenuLayer = cc.LayerColor.extend({
         cc_MenuItemFont.setFontSize(30);
 
         var menuItem0 = new cc_MenuItemFont.create("Debug menu",
-                                                        this.showDebugMenu,
-                                                        this);
+                                                    this.showDebugMenu,
+                                                    this);
         var menuItem1 = new cc_MenuItemFont.create("Nuevo juego",
                                                    this.playNewGame,
                                                    this);
@@ -43,11 +43,16 @@ var MainMenuLayer = cc.LayerColor.extend({
         menuItemX = wSizeWidth / 2;
         menuItemY = wSizeHeight / 2;
 
-        menuItem0.setPosition(new cc_Point(menuItemX, menuItemY + 100));
-        menuItem1.setPosition(new cc_Point(menuItemX, menuItemY + 50));
-        menuItem2.setPosition(new cc_Point(menuItemX, menuItemY));
-        menuItem3.setPosition(new cc_Point(menuItemX, menuItemY - 50));
-        menuItem4.setPosition(new cc_Point(menuItemX, menuItemY - 100));
+        menuItem0.setColor(new cc.Color3B(0, 255, 0));
+        menuItem0.setPosition(cc_Point(menuItemX, menuItemY + 100));
+        menuItem1.setColor(new cc.Color3B(0, 255, 0));
+        menuItem1.setPosition(cc_Point(menuItemX, menuItemY + 50));
+        menuItem2.setColor(new cc.Color3B(0, 255, 0));
+        menuItem2.setPosition(cc_Point(menuItemX, menuItemY));
+        menuItem3.setColor(new cc.Color3B(0, 255, 0));
+        menuItem3.setPosition(cc_Point(menuItemX, menuItemY - 50));
+        menuItem4.setColor(new cc.Color3B(0, 255, 0));
+        menuItem4.setPosition(cc_Point(menuItemX, menuItemY - 100));
 
         var main_menu = cc.Menu.create(menuItem0,
                                        menuItem1,
@@ -55,7 +60,7 @@ var MainMenuLayer = cc.LayerColor.extend({
                                        menuItem3,
                                        menuItem4);
 
-        main_menu.setPosition(new cc_Point(0, 0));
+        main_menu.setPosition(cc_Point(0, 0));
 
         this.addChild(main_menu);
 
