@@ -44,6 +44,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     _playerRunDeltaMultiplier: 1.0,
     _playerWalkDeltaMultiplier: 1.0,
     _playerJumpDeltaMultiplier: 1.0,
+    _playerJumpExtraImpulse: null,
     _debugCanvas: null,
     _debugCanvasCtx: null,
 
@@ -358,12 +359,16 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 this._currentDirection = CHR_DIRECTION.RIGHT;
                 this._playerCurrentDirection = CHR_DIRECTION.RIGHT;
                 this._playerCurrentStatus = CHR_STATUS.WALK;
+                // FIXME
+                this.adjustJumpToRight();
                 break;
             case KEYS.GOLEFT:
                 this._previousDirection = this._currentDirection;
                 this._currentDirection = CHR_DIRECTION.LEFT;
                 this._playerCurrentDirection = CHR_DIRECTION.LEFT;
                 this._playerCurrentStatus = CHR_STATUS.WALK;
+                // FIXME
+                this.adjustJumpToLeft();
                 break;
             case KEYS.RUN:
                 this._playerCurrentStatus = CHR_STATUS.RUN;
@@ -1611,6 +1616,9 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var runDeltaMultiplierCalc = 1.0;
         var jumpDeltaMultiplier = 1.0;
         var jumpDeltaMultiplierCalc = 1.0;
+        var playerXtraImpulse = cc_Point(0, 0);
+        var playerXtraImpulseX = 0;
+        var playerXtraImpulseY = 0;
         // Posición inicial de Cossino
         var objPosicionInicial = cc_Point(this._wsizewidth / 2, 300);
         // var objPosicionInicial = cc_Point(objectCossino.x + (objectCossino.width / 2),
@@ -1721,6 +1729,24 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 jumpDeltaMultiplierCalc = parseFloat(objectCossino.multdeltasaltar);
             }
             if (!isNaN(jumpDeltaMultiplierCalc)) { jumpDeltaMultiplier = jumpDeltaMultiplierCalc; }
+
+            if (objectCossino.SaltarImpulsoExtraX) {
+                playerXtraImpulseX = parseFloat(objectCossino.SaltarImpulsoExtraX);
+            }
+            else if (objectCossino.saltarimpulsoextrax) {
+                playerXtraImpulseX = parseFloat(objectCossino.saltarimpulsoextrax);
+            }
+
+            if (objectCossino.SaltarImpulsoExtraY) {
+                playerXtraImpulseY = parseFloat(objectCossino.SaltarImpulsoExtraY);
+            }
+            else if (objectCossino.saltarimpulsoextray) {
+                playerXtraImpulseY = parseFloat(objectCossino.saltarimpulsoextray);
+            }
+
+            if (!isNaN(playerXtraImpulseX) && !isNaN(playerXtraImpulseY)) {
+                playerXtraImpulse = cc_Point(playerXtraImpulseX, playerXtraImpulseY);
+            }
         }
 
         // -------------------------------------------------------------------
@@ -1747,6 +1773,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         this._playerWalkDeltaMultiplier = walkDeltaMultiplier;
         this._playerRunDeltaMultiplier = runDeltaMultiplier;
         this._playerJumpDeltaMultiplier = jumpDeltaMultiplier;
+
+        this._playerJumpExtraImpulse = playerXtraImpulse;
 
         // Agregar físicas al personaje actual
         if ((objectCossino !== null & objectCossino !== undefined)) {
@@ -2032,7 +2060,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         ctx.canvas.height = 600;
         ctx.canvas.width = 1024;
 
-        if ((deltaPoint.x !== 0) && this._debugCanvasCtx) {
+        if (this._debugCanvasCtx) {
             this._debugCanvasCtx.fillRect(this._debugCanvas.x,
                                           this._debugCanvas.y,
                                           this._debugCanvas.width,
@@ -2134,6 +2162,30 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             this._currentPlayer._currentDirection = CHR_DIRECTION.RIGHT;
         }
     },
+
+    adjustJumpToLeft:function () {
+        var this_obj = this;
+
+        if (this_obj._currentPlayer._currentStatus !== CHR_STATUS.JUMP) { return; }
+
+        var body = this_obj._playerPhysicBody;
+        var bodyMass = body.GetMass();
+
+        body.ApplyImpulse(new b2Vec2(bodyMass * this_obj._playerJumpExtraImpulse.x * -1, 0),
+                                     body.GetWorldCenter());
+    },
+
+    adjustJumpToRight:function () {
+        var this_obj = this;
+
+        if (this_obj._currentPlayer._currentStatus !== CHR_STATUS.JUMP) { return; }
+
+        var body = this_obj._playerPhysicBody;
+        var bodyMass = body.GetMass();
+
+        body.ApplyImpulse(new b2Vec2(bodyMass * this_obj._playerJumpExtraImpulse.x, 0),
+                                     body.GetWorldCenter());
+    }
 });
 
 

@@ -18,7 +18,7 @@
  </tileset>
  <layer name="Background_3" width="350" height="19">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3YQY6DMAwFUA7Zsu4l5j5zlDnasK1UIAGj2PQ9CbGpinCSb5JpAgAAAAAAAACAPOZpej2Xe8Q1F3guwGhLbr1+lnvEtfzXb/bnRovsH/pMn73aqxNZLXPz7xl0zR35N+q50SL7R5Y+cyTPRmTgXu1H9mPgOpH9I0ufOZJnkRm4leHz++/S9mO2tY5xRj173Ozvkk1Lbe9a0yN5FpmBWxnuG/YeKo/x3jdGpXfJpqW21Wpa5Ty08pqkzVafvnqfcvZbu2ePa8/Vp6W21Wq610uyZJrcranKHtH8GqfKHImU8Tz00zg8rIuSsu0R19a4+TVOtjnyrVrGwZjUEL1HPHse0Du3zK/r3fEcoSK5y5qz5wFyFz6Tu6yRu3ANucsauQvX+Nbc/QcvVAuz6GcAAA==
+   H4sIAAAAAAAAC+3ZwY2DQAwFUIpMOKeJ7WdLSWk715UCzBAjbHhPQrlEQXjMN0OmCQAAAAAAAAAA8pin6fVsnxHHXOC8AGdrufX6aZ8RR/ut3+znjRY5P8yZMVu1Vyeyar35fgYd80D+nXXeaJHzI8uc2ZNnZ2TgVu3PnMfAcSLnR5Y5syfPIjNwLcPn/99LO49Z17vGGY3scbNfSzY9tb1qTffkWWQGrmW4Z9hrqLzGW88Yla4lm57aVqtplfehle9J+qzN6aP3Kd8+a4/sce25xvTUtlpNt2ZJlkyTuzVV2SPqr/NU6ZFIGd+HflqHh/uipKx7RP2VR9YeuZuedbAmNUTvEaP+e9NfeVzxPUJFcpcl374PGO0t/cVdyF2WyF04htxlidyFY9w1d/8AsDGwLOhnAAA=
   </data>
  </layer>
  <layer name="Background_4" width="350" height="19">
@@ -229,6 +229,8 @@
     <property name="RotacionFija" value="True"/>
     <property name="SaltarDeltaX" value="1"/>
     <property name="SaltarDeltaY" value="2"/>
+    <property name="SaltarImpulsoExtraX" value="0.4"/>
+    <property name="SaltarImpulsoExtraY" value="0"/>
     <property name="Sensor" value="False"/>
     <property name="SensorTierra" value="True"/>
    </properties>
