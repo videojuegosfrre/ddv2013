@@ -785,6 +785,10 @@ var CossinoSprite = cc.Sprite.extend({
 
     isPlayerOnGround:function () {
         return this._onGround;
+    },
+
+    hitByEnemy:function () {
+        cc.log("¡Cossino ha sido alcanzado por fuego enemigo!");
     }
 });
 

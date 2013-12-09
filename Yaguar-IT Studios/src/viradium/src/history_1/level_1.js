@@ -1466,6 +1466,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     userDataA.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
                 else if (userDataA instanceof LanderSprite) {
+                    cc.log("Begin Body A (Lander Sprite)");
                     bodyA.GetUserData().playerIsOnRange();
                 }
                 else if (userDataA instanceof Object) {
@@ -1492,6 +1493,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     cc.log(userDataB.getViradiumQuantity());
                 }
                 else if (userDataB instanceof LanderSprite) {
+                    cc.log("Begin Body B (Lander Sprite)");
                     bodyB.GetUserData().playerIsOnRange();
                 }
                 else if (userDataB instanceof Object) {
@@ -1527,6 +1529,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     userDataA.setColor(new cc.Color4B(0, 0, 255, 128));
                 }
                 else if (userDataA instanceof LanderSprite) {
+                    cc.log("End Body A (Lander Sprite)");
                     bodyA.GetUserData().playerIsOutOfRange();
                 }
                 else if (userDataA instanceof Object) {
@@ -1552,6 +1555,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
                 else if (userDataB instanceof LanderSprite) {
+                    cc.log("End Body B (Lander Sprite)");
                     bodyB.GetUserData().playerIsOutOfRange();
                 }
                 else if (userDataB instanceof Object) {
@@ -1824,6 +1828,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var escalaPersonaje = 1.0;
         var escalaPersonajeCalc = 1.0;
         var boxPhyCharacter = null;
+        var fixedRotation = "false";
+        var fixedRotationCalc = "false";
 
         for (var t = 0; t < objTrayecLength; t++) {
             trayectoria = objectsTrayectorias[t];
@@ -1844,6 +1850,15 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             if (!isNaN(escalaPersonajeCalc) && (escalaPersonajeCalc > 0)) {
                 escalapersonaje = escalaPersonajeCalc;
             }
+
+            if (trayectoria.RotacionFija) {
+                fixedRotationCalc = trayectoria.RotacionFija.trim().toLowerCase() === "true" ? "true" : "false";
+            }
+            else if (trayectoria.rotacionfija) {
+                fixedRotationCalc = trayectoria.rotacionfija.trim().toLowerCase() === "true" ? "true" : "false";
+            }
+
+            fixedRotation = fixedRotationCalc;
 
             switch (tipoPersonaje) {
                 case "cossino":
@@ -1883,6 +1898,12 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                           },
                       width : {
                           value: spritePersonaje.getContentSize().width * spritePersonaje.getScaleX(),
+                          writable: true,
+                          enumerable: true,
+                          configurable: true
+                          },
+                      RotacionFija : {
+                          value: fixedRotation,
                           writable: true,
                           enumerable: true,
                           configurable: true

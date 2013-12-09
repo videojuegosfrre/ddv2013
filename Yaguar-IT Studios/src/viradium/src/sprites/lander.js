@@ -314,5 +314,9 @@ var LanderSprite = cc.Sprite.extend({
 
     playerIsOutOfRange:function () {
         this.beginStand();
+    },
+
+    hitByEnemy:function () {
+        cc.log("Lander ha sido alcanzado por fuego enemigo!");
     }
 });
