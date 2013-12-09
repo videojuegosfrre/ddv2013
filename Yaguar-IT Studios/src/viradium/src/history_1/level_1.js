@@ -2099,7 +2099,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     },
 
     makePlayerJump:function () {
-            if (this._currentPlayer._currentStatus === CHR_STATUS.JUMP) {
+            if (this._currentPlayer._currentStatus === CHR_STATUS.JUMP ||
+                !this._currentPlayer.isPlayerOnGround()) {
                 return false;
             }
 
