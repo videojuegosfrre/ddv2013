@@ -44,7 +44,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     _playerRunDeltaMultiplier: 1.0,
     _playerWalkDeltaMultiplier: 1.0,
     _playerJumpDeltaMultiplier: 1.0,
-
+    _debugCanvas: null,
+    _debugCanvasCtx: null,
 
     ctor:function () {
         cc.log("Init Function: Hist1Lvl1Layer.");
@@ -220,11 +221,13 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         if (this._debugPhysicsDraw) {
             // Enable debug draw
             var canvasDebug = document.getElementById("debugCanvas");
+            this._debugCanvas = canvasDebug;
             var debugDraw = new b2DebugDraw();  // Objeto de visualización de depuración
             var ctx = canvasDebug.getContext("2d");
-            ctx.canvas.height /= 5;
+            this._debugCanvasCtx = ctx;
+            ctx.canvas.height /= 4;
             debugDraw.SetSprite(ctx);  // Establecemos el canvas para visualizarlo
-            debugDraw.SetDrawScale(5);     // Escala de la visualización
+            debugDraw.SetDrawScale(6);     // Escala de la visualización
             debugDraw.SetFillAlpha(0.5);    // Transparencia de los elementos (debug)
             debugDraw.SetLineThickness(1.0);
             debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_centerOfMassBit);
@@ -1123,13 +1126,23 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     },
 
     _updateParallax:function () {
-        var node = this.parallaxChild;
+        var this_obj = this;
+        var node = this_obj.parallaxChild;
         var currentPos = node.getPosition();
-        var deltaPoint = cc_pSub(this._playerPrevUIPos, this._playerCurrUIPos);
+        var deltaPoint = cc_pSub(this_obj._playerPrevUIPos, this_obj._playerCurrUIPos);
         // Corregir desplazamiento para que el parallax se mueva
         // de acuerdo a Cossino
         deltaPoint.x *= 10/21;
         node.setPosition(cc_pAdd(currentPos, deltaPoint));
+
+        if ((deltaPoint.x !== 0) && this_obj._debugCanvasCtx) {
+            this_obj._debugCanvasCtx.fillRect(this_obj._debugCanvas.x,
+                                              this_obj._debugCanvas.y,
+                                              this_obj._debugCanvas.width,
+                                              this_obj._debugCanvas.height);
+
+            this_obj._debugCanvasCtx.translate(deltaPoint.x / 3.6, 0);
+        }
     },
 
     scrollParallaxLeft:function (deltaX, deltaY) {
@@ -1993,6 +2006,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 this.physics.world.DestroyBody(bodyf);
             }
 
+            this.physics.world.ClearForces();
+
             this.physics.step(1/60);
             this.physics.world = null;
             this.physics = null;
@@ -2011,7 +2026,9 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         this._destroyPhysicWorld();
 
         var canvasDebug = document.getElementById("debugCanvas");
+        this._debugCanvas = canvasDebug;
         var ctx = canvasDebug.getContext("2d");
+        this._debugCanvasCtx = ctx;
         ctx.canvas.height = 600;
         ctx.canvas.width = 1024;
 
