@@ -213,7 +213,7 @@
   <object name="Cossino" type="Cossino" x="544" y="384" width="128" height="192">
    <properties>
     <property name="AltoForzado" value="250"/>
-    <property name="AnchoForzado" value="95"/>
+    <property name="AnchoForzado" value="90"/>
     <property name="CaminarDeltaX" value="1.5"/>
     <property name="CaminarDeltaY" value="0"/>
     <property name="CorrerDeltaX" value="3.5"/>

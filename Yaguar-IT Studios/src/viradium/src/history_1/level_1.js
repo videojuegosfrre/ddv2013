@@ -560,8 +560,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         cc.log(sprite.getBoundingBox().size.height);
 
         var spriteShape = new b2PolygonShape();
-        spriteShape.SetAsBox(sprite.getBoundingBox().size.width / this.physics.scale / 2,
-                             sprite.getBoundingBox().size.height / this.physics.scale / 2);
+        spriteShape.SetAsBox((sprite.getContentSize().width * sprite.getScaleX()) / this.physics.scale / 2,
+                             (sprite.getContentSize().height * sprite.getScaleY()) / this.physics.scale / 2);
 
         // Define the dynamic body fixture.
         var spriteShapeDef = new b2FixtureDef();
@@ -974,7 +974,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
             sensorShape.SetAsOrientedBox(forcedWidth  / 2.1 / this.physics.scale,
                                          forcedHeight / 60 / this.physics.scale,
-                                         new b2Vec2(0, -1 * sprite.getBoundingBox().size.height / 2 / this.physics.scale),
+                                         new b2Vec2(0, -1 * (sprite.getContentSize().height * sprite.getScaleY()) / 2 / this.physics.scale),
                                          0);
 
             sensorFixtureDef.density = 0;

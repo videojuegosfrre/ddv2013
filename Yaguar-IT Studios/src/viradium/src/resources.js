@@ -18,6 +18,7 @@ Array.prototype.contains = function (v) {
 // Menu Resources
 var menu_img_dir = "resources/menu/img/";
 var menu_music_dir = "resources/menu/music/";
+var menu_video_dir = "resources/menu/video/";
 
 // History 1 Resources
 // ---------------------------------------------------------------------
@@ -114,6 +115,12 @@ var s_menu_laser_effect_mp3 = s_menu_laser_effect + ".mp3";
 var s_cossino_shoot = h_1_music_dir + "weapon/hks1";
 var s_cossino_shoot_mp3 = s_cossino_shoot + ".mp3";
 var s_cossino_shoot_ogg = s_cossino_shoot + ".ogg";
+
+// Video
+var h_1_video_dir = "resources/history_1/video/";
+
+var s_video_intro_h_1 = h_1_video_dir + "video_intro_historia_1";
+var s_video_intro_h_1_ogg = s_video_intro_h_1 + ".ogg";
 
 // History 2 Resources
 // ---------------------------------------------------------------------
@@ -217,6 +224,9 @@ var g_resources = [
     {type:"sound", src:s_menu_laser_effect_mp3},
     {type:"sound", src:s_cossino_shoot_ogg},
     {type:"sound", src:s_cossino_shoot_mp3},
+
+    // video
+    {src:s_video_intro_h_1_ogg},
 ];
 
 var TAGS = {
