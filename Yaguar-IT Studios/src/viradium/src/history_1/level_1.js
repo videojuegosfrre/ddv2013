@@ -39,8 +39,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     _parallaxTilemapRatio: null,
     _playerGroundSensorId: 1000,
     _groundSensorIdCounter: 1,
-    _playerVisionSensorId: 10000,
-    _playerVisionSensorCounter: 1,
     _playerCurrentDirection: null,
     _playerCurrentStatus: null,
     _playerRunDeltaMultiplier: 1.0,
@@ -591,8 +589,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var forcedWidth = forcedWidthCalc;
         var forcedHeightCalc = object.height;
         var forcedHeight = forcedHeightCalc;
-        var longSensorVision = 0;
-        var longSensorCalc = 0;
 
         var objType = "";
         if (object.Cuerpo) {
@@ -657,14 +653,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 fixedRotation = true;
             }
             else { fixedRotation = false; }
-        }
-
-        // Determinar si posee sensor de visión
-        if (object.LongitudSensorVision) {
-            longSensorCalc = parseFloat(object.LongitudSensorVision);
-        }
-        else if (object.longitudsensorvision) {
-            longSensorCalc = parseFloat(object.longitudsensorvision);
         }
 
         objectBodyDef = new b2BodyDef();
@@ -810,28 +798,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             var footSensorFixture = objectBody.CreateFixture(sensorFixtureDef);
             footSensorFixture.userData = this._playerGroundSensorId + this._groundSensorIdCounter;
             this._groundSensorIdCounter += 1;
-        }
-
-        // Add vision sensor fixture
-        if (!isNaN(longSensorCalc) && longSensorCalc > 0) {
-            cc.log("HAS VISION SENSOR");
-            var visionSensorFixtureDef = new b2FixtureDef();
-            var visionSensorShape = new b2PolygonShape();
-
-            visionSensorShape.SetAsOrientedBox(longSensorCalc / 2 / this.physics.scale,
-                                         objCenterHeight / this.physics.scale,
-                                         new b2Vec2((((longSensorCalc / 2) + objCenterWidth) * -1) / this.physics.scale, 0),
-                                         0);
-
-            visionSensorFixtureDef.density = 0;
-            visionSensorFixtureDef.friction = 0;
-            visionSensorFixtureDef.restitution = 0;
-            visionSensorFixtureDef.shape = visionSensorShape;
-            visionSensorFixtureDef.isSensor = true;
-            visionSensorFixtureDef.userData = 2000;
-
-            var visionSensorFixture = objectBody.CreateFixture(visionSensorFixtureDef);
-            visionSensorFixture.userData = 2000;
         }
 
         return objectBody;
@@ -1508,62 +1474,54 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             if (userDataA !== null) {
                 if (userDataA instanceof CossinoSprite) {
                     // TODO: Eliminar líneas de logging y color
-                    // cc.log("Begin Body A (Cossino Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                    cc.log("Begin Body A (Cossino Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
                     // userDataA.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
                 else if (userDataA instanceof ViradiumSprite) {
                     // TODO: Eliminar líneas de logging y color
-                    // cc.log("Begin Body A (Viradium Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
-                    // cc.log(userDataA.getViradiumQuantity());
+                    cc.log("Begin Body A (Viradium Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                    cc.log(userDataA.getViradiumQuantity());
                     userDataA.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
                 else if (userDataA instanceof LanderSprite) {
-                    // cc.log("Begin Body A (Lander Sprite)");
+                    cc.log("Begin Body A (Lander Sprite)");
                     bodyA.GetUserData().playerIsOnRange();
                 }
                 else if (userDataA instanceof Object) {
                     // TODO: Eliminar líneas de logging y color
-                    // cc.log("Begin Body A (TMX Object): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                    cc.log("Begin Body A (TMX Object): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
                 }
-                else if ((userDataA === 1000) && !fixtureB.IsSensor()) {
+                else if ((userDataA == 1000) && (!fixtureB.IsSensor())) {
                     // TODO: Eliminar líneas de logging y color
-                    // cc.log("Begin Ground Sensor A.");
+                    cc.log("Begin Ground Sensor A.");
                     bodyA.GetUserData().setPlayerIsOnGround(true);
-                }
-                else if ((userDataA === 2000) && (userDataB instanceof CossinoSprite)) {
-                    cc.log("Lander A ha empezado a ver a Cossino.");
-                    bodyA.GetUserData().playerIsOnRange();
                 }
             }
 
             if (userDataB !== null) {
                 if (userDataB instanceof CossinoSprite) {
                     // TODO: Eliminar líneas de logging y color
-                    // cc.log("Begin Body B (Cossino Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
+                    cc.log("Begin Body B (Cossino Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                     // userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
                 else if (userDataB instanceof ViradiumSprite) {
                     // TODO: Eliminar líneas de logging y color
-                    // cc.log("Begin Body B (Viradium Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
+                    cc.log("Begin Body B (Viradium Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                     userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
-                    // cc.log(userDataB.getViradiumQuantity());
+                    cc.log(userDataB.getViradiumQuantity());
                 }
                 else if (userDataB instanceof LanderSprite) {
-                    // cc.log("Begin Body B (Lander Sprite)");
+                    cc.log("Begin Body B (Lander Sprite)");
                     bodyB.GetUserData().playerIsOnRange();
                 }
                 else if (userDataB instanceof Object) {
                     // TODO: Eliminar líneas de logging y color
-                    // cc.log("Begin Body B (TMX Object): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
+                    cc.log("Begin Body B (TMX Object): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                 }
-                else if ((userDataB === 1000) && !fixtureA.IsSensor()) {
+                else if ((userDataB == 1000) && (!fixtureA.IsSensor())) {
                     // TODO: Eliminar líneas de logging y color
-                    // cc.log("Begin Ground Sensor B.");
+                    cc.log("Begin Ground Sensor B.");
                     bodyB.GetUserData().setPlayerIsOnGround(true);
-                }
-                else if ((userDataB === 2000) && (userDataA instanceof CossinoSprite)) {
-                    cc.log("Lander B ha empezado a ver a Cossino.");
-                    bodyB.GetUserData().playerIsOnRange();
                 }
             }
         };
@@ -1580,60 +1538,52 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             if (userDataA !== null) {
                 if (userDataA instanceof CossinoSprite) {
                     // TODO: Eliminar líneas de logging y color
-                    // cc.log("End Body A (Cossino Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                    cc.log("End Body A (Cossino Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
                     // userDataA.setColor(new cc.Color4B(0, 0, 255, 128));
                 }
                 else if (userDataA instanceof ViradiumSprite) {
                     // TODO: Eliminar líneas de logging y color
-                    // cc.log("End Body A (Viradium Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                    cc.log("End Body A (Viradium Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
                     userDataA.setColor(new cc.Color4B(0, 0, 255, 128));
                 }
                 else if (userDataA instanceof LanderSprite) {
-                    // cc.log("End Body A (Lander Sprite)");
+                    cc.log("End Body A (Lander Sprite)");
                     bodyA.GetUserData().playerIsOutOfRange();
                 }
                 else if (userDataA instanceof Object) {
                     // TODO: Eliminar líneas de logging y color
-                    // cc.log("End Body A (TMX Object): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
+                    cc.log("End Body A (TMX Object): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
                 }
-                else if ((userDataA === 1000) && (!fixtureB.IsSensor())) {
+                else if ((userDataA == 1000) && (!fixtureB.IsSensor())) {
                     // TODO: Eliminar líneas de logging y color
-                    // cc.log("End Ground Sensor A.");
+                    cc.log("End Ground Sensor A.");
                     bodyA.GetUserData().setPlayerIsOnGround(false);
-                }
-                else if ((userDataA === 2000) && (userDataB instanceof CossinoSprite)) {
-                    cc.log("Lander A ha dejado de ver a Cossino.");
-                    bodyA.GetUserData().playerIsOutOfRange();
                 }
             }
 
             if (userDataB !== null) {
                 if (userDataB instanceof CossinoSprite) {
                     // TODO: Eliminar líneas de logging y color
-                    // cc.log("End Body B (Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
+                    cc.log("End Body B (Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                     // userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
                 else if (userDataB instanceof ViradiumSprite) {
                     // TODO: Eliminar líneas de logging y color
-                    // cc.log("End Body B (Viradium Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
+                    cc.log("End Body B (Viradium Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                     userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
                 else if (userDataB instanceof LanderSprite) {
-                    // cc.log("End Body B (Lander Sprite)");
+                    cc.log("End Body B (Lander Sprite)");
                     bodyB.GetUserData().playerIsOutOfRange();
                 }
                 else if (userDataB instanceof Object) {
                     // TODO: Eliminar líneas de logging y color
-                    // cc.log("End Body B (TMX Object): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
+                    cc.log("End Body B (TMX Object): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                 }
-                else if ((userDataB === 1000) && (!fixtureA.IsSensor())) {
+                else if ((userDataB == 1000) && (!fixtureA.IsSensor())) {
                     // TODO: Eliminar líneas de logging y color
-                    // cc.log("End Ground Sensor B.");
+                    cc.log("End Ground Sensor B.");
                     bodyB.GetUserData().setPlayerIsOnGround(false);
-                }
-                else if ((userDataB === 2000) && (userDataA instanceof CossinoSprite)) {
-                    cc.log("Lander B ha dejado de ver a Cossino.");
-                    bodyB.GetUserData().playerIsOutOfRange();
                 }
             }
         };
@@ -1921,7 +1871,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var boxPhyCharacter = null;
         var fixedRotation = "false";
         var fixedRotationCalc = "false";
-        var longSensorVision = 0;
 
         for (var t = 0; t < objTrayecLength; t++) {
             trayectoria = objectsTrayectorias[t];
@@ -1996,12 +1945,6 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                           },
                       RotacionFija : {
                           value: fixedRotation,
-                          writable: true,
-                          enumerable: true,
-                          configurable: true
-                          },
-                      LongitudSensorVision : {
-                          value: trayectoria.LongitudSensorVision ? trayectoria.LongitudSensorVision : "0",
                           writable: true,
                           enumerable: true,
                           configurable: true
