@@ -318,7 +318,7 @@ var LanderSprite = cc.Sprite.extend({
     },
 
     hitByEnemy:function (damage) {
-        cc.log("Lander ha sido alcanzado por fuego enemigo! - Daño = " + damage);
+        cc.log("Lander ha sido alcanzado por fuego enemigo - Daño = " + damage);
     },
 
     setHealth:function (health) {

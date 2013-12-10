@@ -156,6 +156,7 @@
   </properties>
   <object name="Trayectoria" type="Trayectoria" x="9760" y="576">
    <properties>
+    <property name="Cuerpo" value="Static"/>
     <property name="EscalaPersonaje" value="0.8"/>
     <property name="LongitudSensorVision" value="200"/>
     <property name="Personaje" value="Lander"/>
@@ -165,6 +166,7 @@
   </object>
   <object name="Trayectoria" type="Trayectoria" x="4320" y="576">
    <properties>
+    <property name="Cuerpo" value="Static"/>
     <property name="EscalaPersonaje" value="0.8"/>
     <property name="LongitudSensorVision" value="500"/>
     <property name="Personaje" value="Lander"/>
@@ -174,6 +176,7 @@
   </object>
   <object name="Trayectoria" type="Trayectoria" x="5088" y="224">
    <properties>
+    <property name="Cuerpo" value="Static"/>
     <property name="EscalaPersonaje" value="0.8"/>
     <property name="LongitudSensorVision" value="600"/>
     <property name="Personaje" value="Lander"/>
@@ -183,6 +186,7 @@
   </object>
   <object name="Trayectoria" type="Trayectoria" x="5504" y="576">
    <properties>
+    <property name="Cuerpo" value="Static"/>
     <property name="EscalaPersonaje" value="0.8"/>
     <property name="LongitudSensorVision" value="500"/>
     <property name="Personaje" value="Lander"/>
@@ -190,8 +194,9 @@
    </properties>
    <polyline points="0,0 416,0"/>
   </object>
-  <object name="Trayectoria" type="Trayectoria" x="6656" y="576">
+  <object name="Trayectoria" type="Trayectoria" x="6688" y="576">
    <properties>
+    <property name="Cuerpo" value="Static"/>
     <property name="EscalaPersonaje" value="0.8"/>
     <property name="LongitudSensorVision" value="300"/>
     <property name="Personaje" value="Lander"/>
@@ -201,6 +206,7 @@
   </object>
   <object name="Trayectoria" type="Trayectoria" x="7168" y="256">
    <properties>
+    <property name="Cuerpo" value="Static"/>
     <property name="EscalaPersonaje" value="0.8"/>
     <property name="LongitudSensorVision" value="500"/>
     <property name="Personaje" value="Lander"/>

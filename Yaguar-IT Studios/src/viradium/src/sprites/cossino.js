@@ -600,8 +600,8 @@ var CossinoSprite = cc.Sprite.extend({
 
         // Importante: la luz es más rápida que el sonido.
         // Reproducir sonido antes de animar.
-        this.schedule(this.playShootEffect, 0.8);
-        this.schedule(this.updateShoot, 0.1);
+        this.schedule(this.playShootEffect, 0.5);
+        this.schedule(this.updateShoot, 0.055);
         this._executingAnimation = true;
     },
 

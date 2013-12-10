@@ -50,6 +50,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     _debugCanvas: null,
     _debugCanvasCtx: null,
     _bodiesScheduledToDelete: [],
+    _playerShootIntervalId: null,
+    _playerShootCount: 0,
 
     ctor:function () {
         cc.log("Init Function: Hist1Lvl1Layer.");
@@ -440,6 +442,9 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             case KEYS.RUN:
             case KEYS.WALK:
                 this._playerCurrentStatus = CHR_STATUS.STAND;
+                break;
+            case KEYS.SHOOT:
+                clearInterval(this._playerShootIntervalId);
                 break;
         }
 
@@ -1553,7 +1558,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 }
                 else if (userDataA instanceof LanderSprite) {
                     // cc.log("Begin Body A (Lander Sprite)");
-                    bodyA.GetUserData().playerIsOnRange();
+                    // bodyA.GetUserData().playerIsOnRange();
                 }
                 else if (userDataA instanceof Object) {
                     // TODO: Eliminar líneas de logging y color
@@ -1593,7 +1598,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 }
                 else if (userDataB instanceof LanderSprite) {
                     // cc.log("Begin Body B (Lander Sprite)");
-                    bodyB.GetUserData().playerIsOnRange();
+                    // bodyB.GetUserData().playerIsOnRange();
                 }
                 else if (userDataB instanceof Object) {
                     // TODO: Eliminar líneas de logging y color
@@ -1642,7 +1647,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 }
                 else if (userDataA instanceof LanderSprite) {
                     // cc.log("End Body A (Lander Sprite)");
-                    bodyA.GetUserData().playerIsOutOfRange();
+                    // bodyA.GetUserData().playerIsOutOfRange();
                 }
                 else if (userDataA instanceof Object) {
                     // TODO: Eliminar líneas de logging y color
@@ -1675,7 +1680,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 }
                 else if (userDataB instanceof LanderSprite) {
                     // cc.log("End Body B (Lander Sprite)");
-                    bodyB.GetUserData().playerIsOutOfRange();
+                    // bodyB.GetUserData().playerIsOutOfRange();
                 }
                 else if (userDataB instanceof Object) {
                     // TODO: Eliminar líneas de logging y color
@@ -2063,6 +2068,12 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                           writable: true,
                           enumerable: true,
                           configurable: true
+                          },
+                      Cuerpo : {
+                          value: trayectoria.Cuerpo ? trayectoria.Cuerpo : "dynamic",
+                          writable: true,
+                          enumerable: true,
+                          configurable: true
                           }
                     });
 
@@ -2270,12 +2281,9 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     makePlayerShoot:function (bulletCount) {
         var this_obj = this;
         var cantidadBalas = (!isNaN(bulletCount) && bulletCount > 0) ? bulletCount : 0;
-        var direction = (this_obj._currentPlayer._currentDirection === CHR_DIRECTION.RIGHT) ? 1 : -1;
 
         var bulletBodyDef = new b2BodyDef();
         bulletBodyDef.type = b2Body.b2_dynamicBody;
-        bulletBodyDef.position.Set(this_obj._playerPhysicBody.GetPosition().x + 1.5 * direction,
-                                   this_obj._playerPhysicBody.GetPosition().y + 0.5);
 
         bulletBodyDef.userData = 3000;
 
@@ -2289,15 +2297,34 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         bulletShapeDef.friction = 0.1;
         bulletShapeDef.restitution = 0;
 
-        var bulletImpulse = new b2Vec2(550 * direction, 0);
+        var bulletImpulse = new b2Vec2(450, 0);
+
+        this_obj._playerShootIntervalId = setInterval.call(this_obj,
+                                                           this_obj._shootBullet,
+                                                           500,
+                                                           bulletBodyDef,
+                                                           bulletShapeDef,
+                                                           bulletImpulse);
+    },
+
+    _shootBullet:function (bulletBodyDef, bulletShapeDef, bulletImpulse) {
+        cc.log("Shoot bullet.");
+        var this_obj = this;
+        var direction = (this_obj._currentPlayer._currentDirection === CHR_DIRECTION.RIGHT) ? 1 : -1;
+        var initialPosition = this_obj._playerPhysicBody.GetPosition();
+
+        // Actualizar posisión del jugador
+        bulletBodyDef.position.Set(initialPosition.x + (1.5 * direction),
+                                   initialPosition.y + 0.6);
 
         var bulletBody = this_obj.physics.world.CreateBody(bulletBodyDef);
+
         bulletBody.SetBullet(true);
         bulletBody.SetFixedRotation(true);
         bulletBody.CreateFixture(bulletShapeDef);
-        // ¡Shoot!
-        bulletBody.ApplyImpulse(bulletImpulse,
-                                bulletBody.GetWorldCenter());
+        // Disparar bala
+        bulletImpulse.x *= direction;
+        bulletBody.ApplyImpulse(bulletImpulse, bulletBody.GetWorldCenter());
     },
 
     turnPlayerToLeft:function () {

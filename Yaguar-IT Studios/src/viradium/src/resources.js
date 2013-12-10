@@ -15,6 +15,25 @@ Array.prototype.contains = function (v) {
 };
 
 
+// https://developer.mozilla.org/en-US/docs/Web/API/Window.setInterval
+// Enable the passage of the 'this' object through the JavaScript timers
+
+var __nativeST__ = window.setTimeout, __nativeSI__ = window.setInterval;
+
+window.setTimeout = function (vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */) {
+  var oThis = this, aArgs = Array.prototype.slice.call(arguments, 2);
+  return __nativeST__(vCallback instanceof Function ? function () {
+    vCallback.apply(oThis, aArgs);
+  } : vCallback, nDelay);
+};
+
+window.setInterval = function (vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */) {
+  var oThis = this, aArgs = Array.prototype.slice.call(arguments, 2);
+  return __nativeSI__(vCallback instanceof Function ? function () {
+    vCallback.apply(oThis, aArgs);
+  } : vCallback, nDelay);
+};
+
 // Menu Resources
 var menu_img_dir = "resources/menu/img/";
 var menu_music_dir = "resources/menu/music/";
