@@ -411,6 +411,28 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             case cc.KEY.r:
                 if (KEYMOD_FLAGS.SHIFT) { this._reloadObjsAndEnemiesLayer(); }
                 break;
+            case cc.KEY.f:
+                if (KEYMOD_FLAGS.SHIFT) {
+                    this._debugPhysicsDraw = !this._debugPhysicsDraw;
+                    cc.log(this._debugPhysicsDraw);
+
+                    if (this._debugCanvas && this._debugCanvasCtx) {
+                        this._debugCanvasCtx.fillRect(this._debugCanvas.x,
+                                                      this._debugCanvas.y,
+                                                      this._debugCanvas.width,
+                                                      this._debugCanvas.height);
+
+                        this._debugCanvasCtx.strokeRect(this._debugCanvas.x,
+                                                        this._debugCanvas.y,
+                                                        this._debugCanvas.width,
+                                                        this._debugCanvas.height);
+
+                        this._debugCanvas.width = this._debugCanvas.width;
+
+                        cc.log("Fill Stroke Rect Debug Canvas.");
+                    }
+                }
+                break;
             case KEYS.RUN:
             case KEYS.WALK:
                 this._playerCurrentStatus = CHR_STATUS.STAND;
@@ -490,7 +512,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             }
         }
 
-        physics.world.DrawDebugData();
+        if (this._debugPhysicsDraw) { physics.world.DrawDebugData(); }
         physics.world.ClearForces();
 
         // Actualizar parallax
@@ -1511,7 +1533,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     // cc.log("Begin Body A (Cossino Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
                     // userDataA.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
-                else if (userDataA instanceof ViradiumSprite) {
+                else if (userDataA instanceof ViradiumSprite && userDataB instanceof CossinoSprite) {
                     // TODO: Eliminar líneas de logging y color
                     // cc.log("Begin Body A (Viradium Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
                     // cc.log(userDataA.getViradiumQuantity());
@@ -1542,7 +1564,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     // cc.log("Begin Body B (Cossino Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                     // userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
-                else if (userDataB instanceof ViradiumSprite) {
+                else if (userDataB instanceof ViradiumSprite && userDataA instanceof CossinoSprite) {
                     // TODO: Eliminar líneas de logging y color
                     // cc.log("Begin Body B (Viradium Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                     userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
@@ -1583,7 +1605,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     // cc.log("End Body A (Cossino Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
                     // userDataA.setColor(new cc.Color4B(0, 0, 255, 128));
                 }
-                else if (userDataA instanceof ViradiumSprite) {
+                else if (userDataA instanceof ViradiumSprite && userDataB instanceof CossinoSprite) {
                     // TODO: Eliminar líneas de logging y color
                     // cc.log("End Body A (Viradium Sprite): " + bodyA.GetPosition().x + " " + bodyA.GetPosition().y);
                     userDataA.setColor(new cc.Color4B(0, 0, 255, 128));
@@ -1613,7 +1635,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     // cc.log("End Body B (Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                     // userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
                 }
-                else if (userDataB instanceof ViradiumSprite) {
+                else if (userDataB instanceof ViradiumSprite && userDataA instanceof CossinoSprite) {
                     // TODO: Eliminar líneas de logging y color
                     // cc.log("End Body B (Viradium Sprite): " + bodyB.GetPosition().x + " " + bodyB.GetPosition().y);
                     userDataB.setColor(new cc.Color4B(255, 0, 0, 128));
