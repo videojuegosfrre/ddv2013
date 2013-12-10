@@ -226,7 +226,7 @@
     <property name="CorrerDeltaY" value="0"/>
     <property name="Cuerpo" value="Dynamic"/>
     <property name="Densidad" value="4"/>
-    <property name="Escala" value="0.9"/>
+    <property name="Escala" value="0.85"/>
     <property name="Friccion" value="0.5"/>
     <property name="MultDeltaCaminar" value="50"/>
     <property name="MultDeltaCorrer" value="50"/>

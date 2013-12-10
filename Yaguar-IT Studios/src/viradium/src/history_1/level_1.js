@@ -49,6 +49,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
     _playerJumpExtraImpulse: null,
     _debugCanvas: null,
     _debugCanvasCtx: null,
+    _bodiesScheduledToDelete: [],
 
     ctor:function () {
         cc.log("Init Function: Hist1Lvl1Layer.");
@@ -379,6 +380,9 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 this._playerCurrentStatus = CHR_STATUS.JUMP;
                 this.makePlayerJump(100);
                 break;
+            case KEYS.SHOOT:
+                this.makePlayerShoot(100);
+                break;
             case cc.KEY.shift:
                 KEYMOD_FLAGS.SHIFT = true;
                 break;
@@ -466,6 +470,8 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 break;
             case CHR_STATUS.JUMP:
                 break;
+            case CHR_STATUS.SHOOT:
+                break;
         }
 
         // Instruct the world to perform a single step of simulation.
@@ -514,6 +520,11 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         if (this._debugPhysicsDraw) { physics.world.DrawDebugData(); }
         physics.world.ClearForces();
+
+        // Eliminar cuerpos no utilizados
+        for (var d = 0, len = this_obj._bodiesScheduledToDelete.length; d < len; d++) {
+            this_obj.physics.world.DestroyBody(this_obj._bodiesScheduledToDelete[d]);
+        }
 
         // Actualizar parallax
         this_obj._updateParallax();
@@ -1029,7 +1040,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             var sensorShape = new b2PolygonShape();
 
             sensorShape.SetAsOrientedBox(forcedWidth  / 2.1 / this.physics.scale,
-                                         forcedHeight / 60 / this.physics.scale,
+                                         forcedHeight / 30 / this.physics.scale,
                                          new b2Vec2(0, -1 * (sprite.getContentSize().height * sprite.getScaleY()) / 2 / this.physics.scale),
                                          0);
 
@@ -1517,6 +1528,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
         // Collision listener override
         var collisionListener = new b2ContactListener();
+        var bodiesScheduledToDelete = this._bodiesScheduledToDelete;
 
         collisionListener.BeginContact = function (contact) {
             var fixtureA = contact.GetFixtureA();
@@ -1556,6 +1568,15 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     cc.log("Lander A ha empezado a ver a Cossino.");
                     bodyA.GetUserData().playerIsOnRange();
                 }
+                else if (userDataA === 3000) {
+                    if (userDataB instanceof LanderSprite) {
+                        bodyB.GetUserData().hitByEnemy(1);
+                    }
+
+                    if (!fixtureB.IsSensor()) {
+                        bodiesScheduledToDelete.push(bodyA);
+                    }
+                }
             }
 
             if (userDataB !== null) {
@@ -1586,6 +1607,15 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 else if ((userDataB === 2000) && (userDataA instanceof CossinoSprite)) {
                     cc.log("Lander B ha empezado a ver a Cossino.");
                     bodyB.GetUserData().playerIsOnRange();
+                }
+                else if (userDataB === 3000) {
+                    if (userDataA instanceof LanderSprite) {
+                        bodyA.GetUserData().hitByEnemy(1);
+                    }
+
+                    if (!fixtureA.IsSensor()) {
+                        bodiesScheduledToDelete.push(bodyB);
+                    }
                 }
             }
         };
@@ -1627,6 +1657,9 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                     cc.log("Lander A ha dejado de ver a Cossino.");
                     bodyA.GetUserData().playerIsOutOfRange();
                 }
+                else if (userDataA === 3000 && !fixtureB.IsSensor()) {
+                    bodiesScheduledToDelete.push(bodyA);
+                }
             }
 
             if (userDataB !== null) {
@@ -1656,6 +1689,9 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 else if ((userDataB === 2000) && (userDataA instanceof CossinoSprite)) {
                     cc.log("Lander B ha dejado de ver a Cossino.");
                     bodyB.GetUserData().playerIsOutOfRange();
+                }
+                else if (userDataB === 3000 && !fixtureA.IsSensor()) {
+                    bodiesScheduledToDelete.push(bodyB);
                 }
             }
         };
@@ -2074,7 +2110,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
             if (!isNaN(cantidadCalc) && (cantidadCalc > 0)) { cantidad = cantidadCalc; }
 
             viradiumSpr = new ViradiumSprite();
-            viradiumSpr.setScale(0.4);
+            viradiumSpr.setScale(0.3);
             viradiumSpr.setViradiumQuantity(cantidad);
 
             // Resetear cantidad del coleccionable
@@ -2229,6 +2265,39 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         var bodyMass = body.GetMass();
 
         body.ApplyImpulse(new b2Vec2(bodyMass * velChangeX, 0), body.GetWorldCenter());
+    },
+
+    makePlayerShoot:function (bulletCount) {
+        var this_obj = this;
+        var cantidadBalas = (!isNaN(bulletCount) && bulletCount > 0) ? bulletCount : 0;
+        var direction = (this_obj._currentPlayer._currentDirection === CHR_DIRECTION.RIGHT) ? 1 : -1;
+
+        var bulletBodyDef = new b2BodyDef();
+        bulletBodyDef.type = b2Body.b2_dynamicBody;
+        bulletBodyDef.position.Set(this_obj._playerPhysicBody.GetPosition().x + 1.5 * direction,
+                                   this_obj._playerPhysicBody.GetPosition().y + 0.5);
+
+        bulletBodyDef.userData = 3000;
+
+        var bulletShape = new b2PolygonShape();
+        bulletShape.SetAsBox(0.03, 0.01);
+
+        var bulletShapeDef = new b2FixtureDef();
+        bulletShapeDef.userData = 3000;
+        bulletShapeDef.shape = bulletShape;
+        bulletShapeDef.density = 0.01;
+        bulletShapeDef.friction = 0.1;
+        bulletShapeDef.restitution = 0;
+
+        var bulletImpulse = new b2Vec2(550 * direction, 0);
+
+        var bulletBody = this_obj.physics.world.CreateBody(bulletBodyDef);
+        bulletBody.SetBullet(true);
+        bulletBody.SetFixedRotation(true);
+        bulletBody.CreateFixture(bulletShapeDef);
+        // ¡Shoot!
+        bulletBody.ApplyImpulse(bulletImpulse,
+                                bulletBody.GetWorldCenter());
     },
 
     turnPlayerToLeft:function () {

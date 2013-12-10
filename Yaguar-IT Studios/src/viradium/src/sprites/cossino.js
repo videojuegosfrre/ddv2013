@@ -43,7 +43,7 @@ var CossinoSprite = cc.Sprite.extend({
     _parallaxNode: null,
     _onGround: false,
     _standDeltaPos: null,
-    _lifePower: 0,
+    _health: 100,
 
     ctor:function () {
         cc.log("Constructor: CossinoSprite");
@@ -788,8 +788,8 @@ var CossinoSprite = cc.Sprite.extend({
         return this._onGround;
     },
 
-    hitByEnemy:function () {
-        cc.log("¡Cossino ha sido alcanzado por fuego enemigo!");
+    hitByEnemy:function (damage) {
+        cc.log("¡Cossino ha sido alcanzado por fuego enemigo! - Daño = " + damage);
     },
 
     setHealth:function (health) {
