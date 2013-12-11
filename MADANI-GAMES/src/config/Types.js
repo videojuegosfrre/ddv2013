@@ -51,10 +51,24 @@ var ObjectType = [
         textureName:"tiburon.png"
     },
     {
-        type:7,
+        type:3,
         desplazamiento:20,
         speed:5,
         moveType:BB.OBJECT_MOVE_TYPE.ZICZAC,
         textureName:"piraña1.png"
+    },
+    {
+        type:BB.OBJECT_TYPE.LIFE,
+        desplazamiento:20,
+        speed:5,
+        moveType:BB.OBJECT_MOVE_TYPE.HORIZONTAL,
+        textureName:"corazon.png"
+   },
+    {
+        type:BB.OBJECT_TYPE.WOOD,
+        desplazamiento:20,
+        speed:5,
+        moveType:BB.OBJECT_MOVE_TYPE.HORIZONTAL,
+        textureName:"madera.png"
     }
 ];

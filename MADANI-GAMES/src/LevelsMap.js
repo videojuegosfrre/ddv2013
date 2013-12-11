@@ -57,7 +57,10 @@ var MapLayer = cc.Layer.extend({
         return bRet;
     },
 
-    onMenu:function (pSender) {       
+    onMenu:function (pSender) {
+        if (BB.SOUND) {
+            cc.AudioEngine.getInstance().playEffect(s_buttonClick);
+        }
         var scene = cc.Scene.create();
         scene.addChild(SysMenu.create());
         cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));

@@ -51,7 +51,7 @@ var HelpLayer = cc.Layer.extend({
         var scene = cc.Scene.create();
         scene.addChild(AboutLayer.create());
         cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));
-    },
+    }
 });
 
 HelpLayer.create = function () {

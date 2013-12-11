@@ -40,27 +40,33 @@ var LevelManager = cc.Class.extend({
     },
 
     loadLevelResource:function(deltaTime){
+        var bMax = false;
         if(BB.ACTIVE_OBJECTS >= this._currentLevel.objectMax){
-            return;
+            bMax = true;
         }
         //load objects
         for(var i = 0; i< this._currentLevel.objects.length; i++){
             var selObject = this._currentLevel.objects[i];
             if(selObject){
                 if(deltaTime % selObject.ShowTime === 0){
-                    if (selObject.ShowType == "Repeat"){
+                    if (selObject.ShowType == "Repeat" && !bMax){
                         for(var rIndex = 0; rIndex < this._currentLevel.lines; rIndex++ ){
                             this.addObjectToGameLayer(selObject.Types, rIndex);
                         }
                     }else{
+                        if (selObject.ShowType == "Once" && bMax){
+                            return;
+                        }
                         var o = Math.trunc((Math.random() * 100) % this._linesPositions.length);
                         if (o == 0){
                             o += 1;
                         }
-                        if (o == this._linesPositions.length -1){
+                        if (o == (this._linesPositions.length - 1)){
                             o -= 1;
                         }
                         this.addObjectToGameLayer(selObject.Types, o);
+
+                        return;
                     }
                 }
             }
@@ -68,8 +74,13 @@ var LevelManager = cc.Class.extend({
     },
 
     addObjectToGameLayer:function(oTypes, oLine){
+        var i;
+        if (oTypes[0] == BB.OBJECT_TYPE.LIFE || oTypes[0] == BB.OBJECT_TYPE.WOOD){
+            i = 0;
+        }else{
+            i = Math.trunc((Math.random() * 100) % oTypes.length);
+        }
 
-        var i = Math.trunc((Math.random() * 100) % oTypes.length);
         var addObject = Objeto.getOrCreateObjeto(ObjectType[oTypes[i]]);
 
         var tmpAction;
