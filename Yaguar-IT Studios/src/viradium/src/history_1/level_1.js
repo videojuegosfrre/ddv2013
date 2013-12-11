@@ -499,6 +499,11 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 sprite.setRotation(spriteAngle);
                 sprite.setPosition(cc_Point(this_obj._wsizewidth / 2,
                                             spritePosition.y));
+
+                if (sprite.getHealth() <= 0) {
+                    this_obj._bodiesScheduledToDelete.push(bodyf);
+                    this_obj.parallaxChild.removeChild(sprite, true);
+                }
             }
             else if (sprite instanceof ViradiumSprite) {
                 spritePosition = cc_Point(bodyf.GetPosition().x * physics.scale,
@@ -517,6 +522,11 @@ var Hist1Lvl1Layer = cc.Layer.extend({
 
                 sprite.setPosition(cc_Point(spritePosition.x, spritePosition.y));
                 sprite.setRotation(spriteAngle);
+
+                if (sprite.getHealth() <= 0) {
+                    this_obj._bodiesScheduledToDelete.push(bodyf);
+                    this_obj.parallaxChild.removeChild(sprite, true);
+                }
             }
             else if (sprite instanceof Object) {
                 // TMX Object
@@ -1575,7 +1585,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 }
                 else if (userDataA === 3000) {
                     if (userDataB instanceof LanderSprite) {
-                        bodyB.GetUserData().hitByEnemy(1);
+                        bodyB.GetUserData().hitByEnemy(25);
                     }
 
                     if (!fixtureB.IsSensor()) {
@@ -1615,7 +1625,7 @@ var Hist1Lvl1Layer = cc.Layer.extend({
                 }
                 else if (userDataB === 3000) {
                     if (userDataA instanceof LanderSprite) {
-                        bodyA.GetUserData().hitByEnemy(1);
+                        bodyA.GetUserData().hitByEnemy(25);
                     }
 
                     if (!fixtureA.IsSensor()) {

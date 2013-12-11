@@ -319,6 +319,15 @@ var LanderSprite = cc.Sprite.extend({
 
     hitByEnemy:function (damage) {
         cc.log("Lander ha sido alcanzado por fuego enemigo - Daño = " + damage);
+        this.setColor(new cc.Color4B(255, 0, 0, 64));
+
+        this._health -= damage;
+
+        setTimeout.call(this, this._restoreColor, 250);
+    },
+
+    _restoreColor:function () {
+        this.setColor(cc.white());
     },
 
     setHealth:function (health) {
