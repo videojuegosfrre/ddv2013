@@ -2288,12 +2288,12 @@ var Hist1Lvl1Layer = cc.Layer.extend({
         bulletBodyDef.userData = 3000;
 
         var bulletShape = new b2PolygonShape();
-        bulletShape.SetAsBox(0.03, 0.01);
+        bulletShape.SetAsBox(0.015, 0.005);
 
         var bulletShapeDef = new b2FixtureDef();
         bulletShapeDef.userData = 3000;
         bulletShapeDef.shape = bulletShape;
-        bulletShapeDef.density = 0.01;
+        bulletShapeDef.density = 0.001;
         bulletShapeDef.friction = 0.1;
         bulletShapeDef.restitution = 0;
 
