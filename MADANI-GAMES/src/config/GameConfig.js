@@ -25,6 +25,13 @@ BB.OBJECT_MOVE_TYPE = {
     ZICZAC:4
 };
 
+BB.OBJECT_TYPE = {
+    OBJECT:0,
+    LIFE:4,
+    WOOD:5,
+    ENEMY:3
+};
+
 //game state
 BB.GAME_STATE = {
     HOME:0,

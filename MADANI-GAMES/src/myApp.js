@@ -48,11 +48,11 @@ var GameLayer = cc.Layer.extend({
 	_lbTime:null,
     damItemPos:null,
 
-    init:function (level) {
+    init2:function (level) {
 
         //////////////////////////////
         // 1. super init first
-        this._super();
+        //this._super();
 
         cc.SpriteFrameCache.getInstance().addSpriteFrames(s_sprites_plist);
 
@@ -106,6 +106,9 @@ var GameLayer = cc.Layer.extend({
 				}else{
 					this._state = STATE_PAUSED;
 				}
+                if (BB.SOUND) {
+                   cc.AudioEngine.getInstance().playEffect(s_buttonClick);
+                }
 			},this);
         pauseItem.setAnchorPoint(cc.p(0.5, 0.5));
 		pauseItem.setScale(0.2);
@@ -141,7 +144,7 @@ var GameLayer = cc.Layer.extend({
         this.scheduleUpdate();
         this.schedule(this.timeCounter, 1);
         //Dibuja temporalmente una madera
-        this.schedule(this.madera_temporal,20);
+        //this.schedule(this.madera_temporal,20);
 
 		g_sharedGameLayer = this;
         this._levelManager = new LevelManager(level);
@@ -228,12 +231,19 @@ var GameLayer = cc.Layer.extend({
 				break;
 
             case STATE_GAMEOVER:
+                this.unscheduleUpdate();
+                if (BB.SOUND) {
+                    cc.AudioEngine.getInstance().playEffect(s_gameFail);
+                }
                 this.runAction(cc.Sequence.create(
-                    cc.DelayTime.create(0.2),
+                    cc.DelayTime.create(2),
                     cc.CallFunc.create(this.onGameOver, this)));
                 break;
 
             case STATE_WIN:
+                if (BB.SOUND) {
+                    cc.AudioEngine.getInstance().playEffect(s_gamePass);
+                }
                 this._beaver.jump();
                 this.runAction(cc.Sequence.create(
                     cc.DelayTime.create(2),
@@ -252,8 +262,14 @@ var GameLayer = cc.Layer.extend({
 				continue;
 
 			if (this.collide(selChild, this._beaver)) {
-				this._beaver.hurt();
-				selChild.hurt();
+                if (selChild.objetoType == BB.OBJECT_TYPE.WOOD){
+                    this._beaver.wood();
+                }else if (selChild.objetoType == BB.OBJECT_TYPE.LIFE){
+                    BB.LIFE ++;
+                }else{
+                    this._beaver.hurt();
+                }
+                selChild.hurt();
 			}
 		}
     },
@@ -319,7 +335,8 @@ var GameLayer = cc.Layer.extend({
 
 GameLayer.create = function (level) {
     var sg = new GameLayer();
-    if (sg && sg.init(level)) {
+    if (sg && sg.init()) {
+        sg.init2(level);
         return sg;
     }
     return null;

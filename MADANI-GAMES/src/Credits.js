@@ -8,14 +8,14 @@ var AboutLayer = cc.Layer.extend({
         if (this._super()) {
            
             winSize = cc.Director.getInstance().getWinSize();
-            var sp = cc.Sprite.create(s_menuhelp);
+            var sp = cc.Sprite.create(s_menuCdtos);
             sp.setAnchorPoint(cc.p(0,0));
 			sp.setScale(winSize.height/sp.getContentSize().height);
             this.addChild(sp, 0, 1);
         
             var gameMenuNormal = cc.Sprite.create(s_menunormal);
             var gameMenuSelected = cc.Sprite.create(s_menuselected);
-                            var gamemenu = cc.MenuItemSprite.create(gameMenuNormal, gameMenuSelected, this.onMenu , this);
+           var gamemenu = cc.MenuItemSprite.create(gameMenuNormal, gameMenuSelected, this.onMenu , this);
            
             var menu = cc.Menu.create(gamemenu);
             menu.alignItemsVerticallyWithPadding(10);

@@ -44,19 +44,26 @@ var SysMenu = cc.Layer.extend({
         return bRet;
     },
     onNewGame:function (pSender) {
+        if (BB.SOUND) {
+            cc.AudioEngine.getInstance().playEffect(s_buttonClick);
+        }
         var scene = cc.Scene.create();
         scene.addChild(MapLayer.create());
         cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));
 	},
 
     onHelp:function (pSender) {
-       
+        if (BB.SOUND) {
+            cc.AudioEngine.getInstance().playEffect(s_buttonClick);
+        }
         var scene = cc.Scene.create();
         scene.addChild(HelpLayer.create());
         cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));
     },
     onAbout:function (pSender) {
-      
+        if (BB.SOUND) {
+            cc.AudioEngine.getInstance().playEffect(s_buttonClick);
+        }
         var scene = cc.Scene.create();
         scene.addChild(AboutLayer.create());
         cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));
