@@ -44,6 +44,11 @@ var ButtonLevel = cc.MenuItemSprite.extend({
         var killflare = cc.CallFunc.create(function () {
             this.getParent().removeChild(this,true);
         }, flare);
+
+        if (BB.SOUND) {
+            cc.AudioEngine.getInstance().playEffect(s_buttonMapClick);
+        }
+
         flare.runAction(cc.Sequence.create(opacityAnim, biggerEase, opacDim, killflare, onComplete));
         //flare.runAction(easeMove);
         flare.runAction(rotateEase);

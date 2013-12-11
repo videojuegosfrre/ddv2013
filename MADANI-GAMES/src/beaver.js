@@ -147,6 +147,11 @@ Beaver = cc.Sprite.extend({
         this.born();
     },
 
+    wood: function () {
+        this._state = STATE_BACK;
+        this.animate(this.imageDown);
+    },
+
     collideRect: function (p) {
         var a = this.getContentSize();
         return cc.rect(p.x - a.width / 2, p.y - a.height / 2, a.width, a.height);
@@ -162,41 +167,43 @@ Beaver = cc.Sprite.extend({
     },
 
     animar_agua:function(){
-        sprite = cc.Sprite.create(s_adentro);
-        //sprite.setAnchorPoint(AnchorPointCenter);
-        this.addChild(sprite, -1, 1000);
-        sprite.setPosition(15,50);
-        var delay = cc.DelayTime.create(0.6);
-        var action = cc.FadeIn.create(0,5);
-        var actionBack = action.reverse();
+        if (this.getPosition().y > (maxbottom + 39) && this.getPosition().y < (maxtop - 69)){
+            sprite = cc.Sprite.create(s_adentro);
+            //sprite.setAnchorPoint(AnchorPointCenter);
+            this.addChild(sprite, -1, 1000);
+            sprite.setPosition(15,50);
+            var delay = cc.DelayTime.create(0.6);
+            var action = cc.FadeIn.create(0,5);
+            var actionBack = action.reverse();
 
-        sprite.runAction(cc.Sequence.create(action, delay.clone(), actionBack));
-        //----Sprite 2 de animacion del agua con circulo en el medio;
-        //sprite2=cc.Sprite.create(s_adentro2);
-        //this.addChild(sprite2, 1, 1000);
-        //sprite2.setPosition(15,50);
-        //var delay2 = cc.DelayTime.create(0.7);
-        //var action2 = cc.FadeIn.create(0,6);
-        //var actionBack2 = action2.reverse();
-        //sprite2.runAction(cc.Sequence.create(action2, delay2.clone(), actionBack2));
-        //----Sprite 3 de animacion del agua con circulo fuera;
-        sprite3=cc.Sprite.create(s_medio);
-        this.addChild(sprite3, -1, 1000);
-        sprite3.setPosition(15,50);
-        var delay3 = cc.DelayTime.create(0.8);
-        var action3 = cc.FadeIn.create(0,7);
-        var actionBack3 = action3.reverse();
+            sprite.runAction(cc.Sequence.create(action, delay.clone(), actionBack));
+            //----Sprite 2 de animacion del agua con circulo en el medio;
+            //sprite2=cc.Sprite.create(s_adentro2);
+            //this.addChild(sprite2, 1, 1000);
+            //sprite2.setPosition(15,50);
+            //var delay2 = cc.DelayTime.create(0.7);
+            //var action2 = cc.FadeIn.create(0,6);
+            //var actionBack2 = action2.reverse();
+            //sprite2.runAction(cc.Sequence.create(action2, delay2.clone(), actionBack2));
+            //----Sprite 3 de animacion del agua con circulo fuera;
+            sprite3=cc.Sprite.create(s_medio);
+            this.addChild(sprite3, -1, 1000);
+            sprite3.setPosition(15,50);
+            var delay3 = cc.DelayTime.create(0.8);
+            var action3 = cc.FadeIn.create(0,7);
+            var actionBack3 = action3.reverse();
 
-        sprite3.runAction(cc.Sequence.create(action3, delay3.clone(), actionBack3));
-        //---Otro sprite para ver como queda;
-        sprite4=cc.Sprite.create(s_afuera);
-        this.addChild(sprite4, -1, 1000);
-        sprite4.setPosition(15,50);
-        var delay4 = cc.DelayTime.create(0.9);
-        var action4 = cc.FadeIn.create(0,8);
-        var actionBack4 = action4.reverse();
+            sprite3.runAction(cc.Sequence.create(action3, delay3.clone(), actionBack3));
+            //---Otro sprite para ver como queda;
+            sprite4=cc.Sprite.create(s_afuera);
+            this.addChild(sprite4, -1, 1000);
+            sprite4.setPosition(15,50);
+            var delay4 = cc.DelayTime.create(0.9);
+            var action4 = cc.FadeIn.create(0,8);
+            var actionBack4 = action4.reverse();
 
-        sprite4.runAction(cc.Sequence.create(action4, delay4.clone(), actionBack4));
+            sprite4.runAction(cc.Sequence.create(action4, delay4.clone(), actionBack4));
+        }
     }
 });
 

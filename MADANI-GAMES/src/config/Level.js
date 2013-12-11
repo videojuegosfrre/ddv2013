@@ -1,10 +1,10 @@
 var LevelsConfig =[
     {
         level:1,
-        objectMax:12,
+        objectMax:15,
         lines:3,
         maxObjectsLine:2,
-        gameTime:180,
+        gameTime:150,
         objects:[
             {
                 ShowType:"Repeat",
@@ -16,12 +16,21 @@ var LevelsConfig =[
                 ShowType:"Repeat",
                 ShowTime:"00:05",
                 Types:[0,1]
-
             },
             {
                 ShowType:"Once",
                 ShowTime:"00:10",
-                Types:[3,2,2,3]
+                Types:[3,2]
+            },
+            {
+                ShowType:"Ever",
+                ShowTime:"00:20",
+                Types:[BB.OBJECT_TYPE.WOOD]
+            },
+            {
+                ShowType:"Ever",
+                ShowTime:"00:30",
+                Types:[BB.OBJECT_TYPE.LIFE]
             }
         ],
         border:{
@@ -37,17 +46,32 @@ var LevelsConfig =[
         objectMax:15,
         lines:4,
         maxObjectsLine:2,
-        gameTime:180,
+        gameTime:120,
         objects:[
             {
                 ShowType:"Repeat",
                 ShowTime:"00:02",
-                Types:[0,1,3,2]
+                Types:[0,1]
+            },
+            {
+                ShowType:"Repeat",
+                ShowTime:"00:04",
+                Types:[0,1]
             },
             {
                 ShowType:"Once",
-                ShowTime:"00:05",
-                Types:[2,0,3,1]
+                ShowTime:"00:09",
+                Types:[2,3]
+            },
+            {
+                ShowType:"Ever",
+                ShowTime:"00:60",
+                Types:[BB.OBJECT_TYPE.WOOD]
+            },
+            {
+                ShowType:"Ever",
+                ShowTime:"01:00",
+                Types:[BB.OBJECT_TYPE.LIFE]
             }
         ],
         border:{
@@ -60,7 +84,7 @@ var LevelsConfig =[
     },
     {
         level:3,
-        objectMax:12,
+        objectMax:18,
         lines:4,
         maxObjectsLine:2,
         gameTime:180,
@@ -74,6 +98,16 @@ var LevelsConfig =[
                 ShowType:"Once",
                 ShowTime:"00:05",
                 Types:[0,1,3]
+            },
+            {
+                ShowType:"Ever",
+                ShowTime:"00:70",
+                Types:[BB.OBJECT_TYPE.WOOD]
+            },
+            {
+                ShowType:"Ever",
+                ShowTime:"01:10",
+                Types:[BB.OBJECT_TYPE.LIFE]
             }
         ],
         border:{

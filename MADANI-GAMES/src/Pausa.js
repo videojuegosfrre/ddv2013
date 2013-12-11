@@ -24,7 +24,10 @@ var PauseLayer = cc.Layer.extend({
 		var restartItem = cc.MenuItemImage.create(
             s_reanudarNormal,
             s_reanudarSelected,
-             function () {       
+             function () {
+                 if (BB.SOUND) {
+                     cc.AudioEngine.getInstance().playEffect(s_buttonClick);
+                 }
 				this.setVisible(false);
 				g_sharedGameLayer._state = STATE_PLAYING;
 			},this);
@@ -32,7 +35,10 @@ var PauseLayer = cc.Layer.extend({
 		var quitItem = cc.MenuItemImage.create(
             s_salirNormal,
             s_salirSelected,
-             function () {            
+             function () {
+                 if (BB.SOUND) {
+                     cc.AudioEngine.getInstance().playEffect(s_buttonClick);
+                 }
 				var scene = cc.Scene.create();
 				scene.addChild(SysMenu.create());
 				cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));				

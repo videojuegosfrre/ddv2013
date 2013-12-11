@@ -5,7 +5,7 @@ var Objeto = cc.Sprite.extend({
     active:true,
     desplazamiento:null,
     speed:0,
-	objetoType:1,
+	objetoType:0,
 	moveType:null,
 
     ctor:function(arg){
@@ -14,6 +14,7 @@ var Objeto = cc.Sprite.extend({
         this.desplazamiento = arg.desplazamiento;
         this.moveType = arg.moveType;
         this.speed = arg.speed;
+        this.objetoType = arg.type;
 
         this.initWithSpriteFrameName(arg.textureName);
         this.setAnchorPoint(AnchorPointCenter);	
@@ -64,7 +65,11 @@ var Objeto = cc.Sprite.extend({
         this.runAction(cc.Sequence.create(blink, fade));
 
         if (BB.SOUND) {
-            cc.AudioEngine.getInstance().playEffect(s_explodeEffect_mp3);
+            if (this.objetoType == BB.OBJECT_TYPE.WOOD || this.objetoType == BB.OBJECT_TYPE.LIFE){
+                cc.AudioEngine.getInstance().playEffect(s_takeLife);
+            }else{
+                cc.AudioEngine.getInstance().playEffect(s_choque);
+            }
         }
         this.setVisible(false);
         this.active = false;
