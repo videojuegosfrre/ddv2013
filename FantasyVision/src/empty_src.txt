@@ -1,0 +1,1 @@
+El .exe pesa más de 500MB por lo que no lo subimos al repo.
